@@ -8,8 +8,6 @@ import PatientSignUpForm from './patient/auth/PatientSignUp';
 import PatientSignInForm from './patient/auth/PatientSignIn';
 import DoctorSignInForm from './doctor/auth/DoctorSignIn';
 import DoctorSignUpForm from './doctor/auth/DoctorSignUp';
-import LPopup from './components/popup';
-import SPopup from './components/spopup';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 let allroutes = createBrowserRouter(
@@ -34,14 +32,7 @@ let allroutes = createBrowserRouter(
       path:'/doctor-signup',
       element:<DoctorSignUpForm/>
     },
-    {
-      path:'/signin-popup',
-      element:<LPopup/>
-    },
-    {
-      path:'/signup-popup',
-      element:<SPopup/>
-    },
+    
   ]
 )
 root.render(
