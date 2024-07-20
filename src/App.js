@@ -26,6 +26,7 @@ function App() {
       <HeroSection />
 
       {/* Contact Section Component */}
+      <h2 className=''>Contact Us</h2>
       <ContactSection />
 
       {/* Footer Component */}
