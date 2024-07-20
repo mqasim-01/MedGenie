@@ -1,6 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase"; // Adjust the path as needed
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-function DoctorSignInForm() {
+function PatientSignInForm() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      if (user.emailVerified) {
+        toast.success("Login Successful!", {
+          position: "top-center",
+        });
+        navigate("/"); // redirect to the homepage or another protected route
+      } else {
+        toast.error("Please verify your email before logging in.", {
+          position: "top-center",
+        });
+        auth.signOut();
+      }
+    } catch (error) {
+      toast.error(error.message, {
+        position: "top-center",
+      });
+    }
+  };
+
   return (
     <section>
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 md:px-12 lg:px-24 lg:py-24">
@@ -27,6 +60,8 @@ function DoctorSignInForm() {
                     id="email"
                     className="block w-full transform rounded-lg border border-transparent bg-gray-50 px-5 py-3 text-base text-neutral-600 placeholder-gray-300 transition duration-500 ease-in-out focus:border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
                     placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
                 <div>
@@ -37,12 +72,15 @@ function DoctorSignInForm() {
                     id="password"
                     className="block w-full transform rounded-lg border border-transparent bg-gray-50 px-5 py-3 text-base text-neutral-600 placeholder-gray-300 transition duration-500 ease-in-out focus:border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
                     placeholder="Enter your password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
                 <div className="mt-4 flex flex-col lg:space-y-2">
                   <button
                     type="button"
                     className="flex w-full transform items-center justify-center rounded-xl bg-blue-600 px-10 py-4 text-center text-base font-medium text-white transition duration-500 ease-in-out hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    onClick={handleLogin}
                   >
                     Sign In
                   </button>
@@ -91,8 +129,9 @@ function DoctorSignInForm() {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </section>
   );
 }
 
-export default DoctorSignInForm;
+export default PatientSignInForm;

@@ -1,92 +1,133 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import { auth, db } from "../../firebase"; // Import from MedGinie firebase.js
+import { toast, ToastContainer } from "react-toastify";
+import { setDoc, doc } from "firebase/firestore";
+import "react-toastify/dist/ReactToastify.css";
 
-function PatientSignUpForm() {
-  return (
-    <section>
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 md:px-12 lg:px-24 lg:py-24">
-        <div className="mx-auto transform justify-center rounded-lg bg-white text-left align-bottom transition-all sm:w-full sm:max-w-2xl sm:align-middle">
-          <div className="mx-auto grid grid-cols-1 flex-wrap items-center justify-center rounded-xl shadow-xl lg:grid-cols-2">
-            <div className="w-full px-6 py-3">
-              <div>
-                <div className="mt-3 text-left sm:mt-5">
-                  <div className="inline-flex w-full items-center">
-                    <h3 className="leading-6 text-lg font-bold text-neutral-600 lg:text-5xl">Sign up</h3>
-                  </div>
-                  <div className="mt-4 text-base text-gray-500">
-                    <p>Sign up and get our newest news.</p>
-                  </div>
-                </div>
-              </div>
+function SignupForm() {
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [cpass, setcPass] = useState("");
 
-              <div className="mt-6 space-y-2">
-                <div>
-                  <label htmlFor="email" className="sr-only">Email</label>
-                  <input
-                    type="text"
-                    name="email"
-                    id="email"
-                    className="block w-full transform rounded-lg border border-transparent bg-gray-50 px-5 py-3 text-base text-neutral-600 placeholder-gray-300 transition duration-500 ease-in-out focus:border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
-                    placeholder="Enter your email"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="password" className="sr-only">Password</label>
-                  <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    className="block w-full transform rounded-lg border border-transparent bg-gray-50 px-5 py-3 text-base text-neutral-600 placeholder-gray-300 transition duration-500 ease-in-out focus:border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
-                    placeholder="Enter your password"
-                  />
-                </div>
-                <div className="mt-4 flex flex-col lg:space-y-2">
-                  <button
-                    type="button"
-                    className="flex w-full transform items-center justify-center rounded-xl bg-blue-600 px-10 py-4 text-center text-base font-medium text-white transition duration-500 ease-in-out hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                  >
-                    Sign up
-                  </button>
-                  <div className="relative my-4">
-                    <div className="absolute inset-0 flex items-center">
-                      <div className="w-full border-t border-gray-300"></div>
+    const navigate = useNavigate();
+
+    const handleSignup = async (e) => {
+        e.preventDefault();
+        if (password !== cpass) {
+            toast.error("Passwords do not match", {
+                position: "top-center",
+            });
+            return;
+        }
+    
+        const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+        if (!passwordRegex.test(password)) {
+            toast.error("Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, and one number.", {
+                position: "top-center",
+            });
+            return;
+        }
+    
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+            if (user) {
+                await sendEmailVerification(user);
+                toast.success("Verification email sent. Please verify your email.", {
+                    position: "top-center",
+                });
+                await setDoc(doc(db, "Patients", user.uid), {
+                    email: user.email,
+                    name: name,
+                    photo: ""
+                });
+                toast.success("User Registered Successfully!!", {
+                    position: "top-center",
+                });
+                navigate("/patient-signin");
+            }
+        } catch (error) {
+            toast.error(error.message, {
+                position: "top-center",
+            });
+        }
+    };
+    
+
+    return (
+        <div className="flex flex-col justify-center items-center h-screen bg-gradient-to-b from-slate-700 via-slate-800 to-slate-900">
+            <div className="md:w-auto w-[90%] p-8 rounded-xl m-4 flex flex-col items-center shadow-lg shadow-cyan-300 border border-cyan-400 bg-white/2 backdrop-blur-lg opacity-90">
+                <div className="flex justify-center">
+                    <div className="h-[90%] w-full md:w-3/4 m-4">
+                        <div className="text-xl cursor-pointer flex flex-col justify-center items-center mt-5 md:mt-0">
+                            <h1 className="font-semibold text-3xl text-white m-2">Sign Up</h1>
+                        </div>
+                        <div className="flex flex-col justify-center items-center mt-10 md:mt-4 space-y-6 md:space-y-8">
+                            <div>
+                                <input
+                                    type="text"
+                                    placeholder="Name"
+                                    className="bg-slate-700 shadow-lg rounded-lg px-5 py-2 focus:border border-cyan-400 focus:outline-none text-zinc-300 placeholder:text-zinc-300 placeholder-opacity-50 font-semibold md:w-72 lg:w-[340px]"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                />
+                            </div>
+                            <div>
+                                <input
+                                    type="text"
+                                    placeholder="Email"
+                                    className="bg-slate-700 shadow-lg rounded-lg px-5 py-2 focus:border border-cyan-400 focus:outline-none text-zinc-300 placeholder:text-zinc-300 placeholder-opacity-50 font-semibold md:w-72 lg:w-[340px]"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                            </div>
+                            <div>
+                                <input
+                                    type="password"
+                                    placeholder="Password"
+                                    className="bg-slate-700 shadow-lg rounded-lg px-5 py-2 focus:border border-cyan-400 focus:outline-none text-zinc-300 placeholder:text-zinc-300 placeholder-opacity-50 font-semibold md:w-72 lg:w-[340px]"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                            </div>
+                            <div>
+                                <input
+                                    type="password"
+                                    placeholder="Confirm Password"
+                                    className="bg-slate-700 shadow-lg rounded-lg px-5 py-2 focus:border border-cyan-400 focus:outline-none text-zinc-300 placeholder:text-zinc-300 placeholder-opacity-50 font-semibold md:w-72 lg:w-[340px]"
+                                    value={cpass}
+                                    onChange={(e) => setcPass(e.target.value)}
+                                />
+                            </div>
+                            <div className="flex space-x-2 -ml-28 md:-ml-40 lg:-ml-52">
+                                <input className="" type="checkbox" id="checkbox" name="checkbox" />
+                                <h3 className="text-sm font-semibold text-zinc-300 -mt-1 cursor-pointer">Remember Me</h3>
+                            </div>
+                        </div>
+                        <div className="text-center mt-7 flex justify-center">
+                            <button
+                                onClick={handleSignup}
+                                className="uppercase rounded-lg hover:before:bg-redborder-red-500 relative h-[40px] w-80 overflow-hidden border border-cyan-500 bg-slate-700 px-3 text-white shadow-2xl transition-all before:absolute before:bottom-0 before:left-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-cyan-500 before:transition-all before:duration-500 hover:font-bold hover:shadow-cyan-500 hover:before:left-0 hover:before:w-full">
+                                <span className="relative z-10">sign up</span>
+                            </button>
+                        </div>
                     </div>
-                    <div className="relative flex justify-center text-sm">
-                      <span className="bg-white px-2 text-neutral-600"> Or continue with </span>
-                    </div>
-                  </div>
-                  <div>
-                    <button
-                      type="submit"
-                      className="block w-full transform items-center rounded-xl border-2 border-white px-10 py-3.5 text-center text-base font-medium text-blue-600 shadow-md transition duration-500 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
-                    >
-                      <div className="flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" className="h-6 w-6" viewBox="0 0 48 48">
-                          <defs>
-                            <path id="a" d="M44.5 20H24v8.5h11.8C34.7 33.9 30.1 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.6 4.1 29.6 2 24 2 11.8 2 2 11.8 2 24s9.8 22 22 22c11 0 21-8 21-22 0-1.3-.2-2.7-.5-4z"></path>
-                          </defs>
-                          <clipPath id="b">
-                            <use xlinkHref="#a" overflow="visible"></use>
-                          </clipPath>
-                          <path clipPath="url(#b)" fill="#FBBC05" d="M0 37V11l17 13z"></path>
-                          <path clipPath="url(#b)" fill="#EA4335" d="M0 11l17 13 7-6.1L48 14V0H0z"></path>
-                          <path clipPath="url(#b)" fill="#34A853" d="M0 37l30-23 7.9 1L48 0v48H0z"></path>
-                          <path clipPath="url(#b)" fill="#4285F4" d="M48 48L17 24l-4-3 35-10z"></path>
-                        </svg>
-                        <span className="ml-4"> Log in with Google</span>
-                      </div>
-                    </button>
-                  </div>
                 </div>
-              </div>
+                <div className="text-center my-6 flex flex-col">
+                    <div className="text-sm font-bold text-zinc-300 ">
+                        Already have an account? 
+                        <Link className='hover:text-cyan-400 m-1' to='/login'>
+                            login
+                        </Link>
+                    </div>
+                </div>
             </div>
-            <div className="order-first hidden w-full lg:block">
-              <img className="h-full rounded-l-lg bg-cover object-cover" src="https://images.unsplash.com/photo-1491933382434-500287f9b54b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1000&amp;q=80" alt="" />
-            </div>
-          </div>
+            <ToastContainer />
         </div>
-      </div>
-    </section>
-  );
+    );
 }
 
-export default PatientSignUpForm;
+export default SignupForm;
