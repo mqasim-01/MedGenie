@@ -5,6 +5,7 @@ import ContactSection from './components/contactform';
 import Footer from './components/footer';
 import Header from './components/header';
 import HeroSection from './components/hero';
+import LandingPage from './components/landing';
 
 function App() {
   const [isPopupOpen, setPopupOpen] = useState(false);
@@ -20,14 +21,9 @@ function App() {
   return (
     <div className="App">
       {/* Header Component */}
-      <Header/>
+      <LandingPage/>
 
-      {/* Hero Section Component */}
-      <HeroSection />
-
-      {/* Contact Section Component */}
-      <h2 className=''>Contact Us</h2>
-      <ContactSection />
+      
 
       {/* Footer Component */}
       <Footer />
