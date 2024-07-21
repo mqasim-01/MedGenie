@@ -8,7 +8,6 @@ import PatientSignUpForm from './patient/auth/PatientSignUp';
 import PatientSignInForm from './patient/auth/PatientSignIn';
 import DoctorSignInForm from './doctor/auth/DoctorSignIn';
 import DoctorSignUpForm from './doctor/auth/DoctorSignUp';
-import LandingPage from './components/landing';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 let allroutes = createBrowserRouter(
