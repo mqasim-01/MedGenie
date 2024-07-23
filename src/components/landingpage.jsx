@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import assets from '../assets/images';
 import { Link } from 'react-router-dom';
 import Testimonials from './testimonial/testimonials';
-import MyComponent from './services';
+import Services from './services';
 
 const LandingPage = () => {
   const [isPopupOpen, setPopupOpen] = useState(false);
@@ -47,7 +47,7 @@ const LandingPage = () => {
 
   return (
     <div className="leading-normal tracking-normal">
-      <div className={`gradient bg-gradient-to-r from-seablue to-seablue2 ${scrollNav ? 'bg-white' : ''}`}>
+      <div className={`gradient bg-gradient-to-r from-seablue to-seablue-200 ${scrollNav ? 'bg-white' : ''}`}>
         <nav id="header" className={`fixed w-full z-30 top-0 ${scrollNav ? 'bg-white shadow-md' : ''}`}>
           <div className="w-full container mx-auto flex flex-wrap items-center justify-between py-4 px-6">
             <Link to='/'>
@@ -77,7 +77,7 @@ const LandingPage = () => {
               </ul>
               <button
                 id="navAction"
-                className={`mx-auto lg:mx-0 hover:underline ${scrollNav ? 'bg-gradient-to-r from-seablue to-seablue2' : 'bg-white'} text-${scrollNav ? 'white' : 'black'} hover:font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out`}
+                className={`mx-auto lg:mx-0 hover:underline ${scrollNav ? 'bg-gradient-to-r from-seablue to-seablue-200' : 'bg-white'} text-${scrollNav ? 'white' : 'black'} hover:font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out`}
                 onClick={() => togglePopup('signin')}
               >
                 Sign In
@@ -124,7 +124,7 @@ const LandingPage = () => {
           </svg>
 
           <div>
-            <MyComponent/>
+            <Services/>
           </div>
 
 
@@ -159,12 +159,12 @@ const LandingPage = () => {
                 <h2 className="text-lg text-center font-bold mb-4">Sign In As</h2>
                 <div className="flex gap-4">
                   <Link to='/patient-signin'>
-                    <button className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seablue to-seablue2 text-white hover:font-bold rounded-full my-6 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-100 duration-300 ease-in-out">
+                    <button className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seablue to-seablue-200 text-white hover:font-bold rounded-full my-6 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-100 duration-300 ease-in-out">
                       Patient
                     </button>
                   </Link>
                   <Link to='/doctor-signin'>
-                    <button className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seablue2 to-seablue text-white hover:font-bold rounded-full my-6 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-100 duration-300 ease-in-out">
+                    <button className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seablue-200 to-seablue text-white hover:font-bold rounded-full my-6 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-100 duration-300 ease-in-out">
                       Doctor
                     </button>
                   </Link>
@@ -176,12 +176,12 @@ const LandingPage = () => {
                 <h2 className="text-lg text-center font-bold mb-4">Sign Up As</h2>
                 <div className="flex gap-4">
                   <Link to='/patient-signup'>
-                    <button className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seablue to-seablue2 text-white hover:font-bold rounded-full my-6 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-100 duration-300 ease-in-out">
+                    <button className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seablue to-seablue-200 text-white hover:font-bold rounded-full my-6 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-100 duration-300 ease-in-out">
                       Patient
                     </button>
                   </Link>
                   <Link to='/doctor-signup'>
-                    <button className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seablue2 to-seablue text-white hover:font-bold rounded-full my-6 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-100 duration-300 ease-in-out">
+                    <button className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seablue-200 to-seablue text-white hover:font-bold rounded-full my-6 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-100 duration-300 ease-in-out">
                       Doctor
                     </button>
                   </Link>
