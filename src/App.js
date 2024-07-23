@@ -1,8 +1,10 @@
 // App.js
 
-import React, { useState } from 'react';
+import React from 'react';
 import Footer from './components/footer';
 import LandingPage from './components/landingpage';
+
+
 
 function App() {
 
@@ -12,6 +14,7 @@ function App() {
       <LandingPage/>
 
       <Footer />
+      
 
     </div>
   );

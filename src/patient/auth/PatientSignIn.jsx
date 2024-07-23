@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase"; // Adjust the path as needed
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import assets from '../../assets/images';
+
 
 function PatientSignInForm() {
   const [email, setEmail] = useState("");
@@ -34,104 +36,76 @@ function PatientSignInForm() {
     }
   };
 
-  return (
-    <section>
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 md:px-12 lg:px-24 lg:py-24">
-        <div className="mx-auto transform justify-center rounded-lg bg-white text-left align-bottom transition-all sm:w-full sm:max-w-2xl sm:align-middle">
-          <div className="mx-auto grid grid-cols-1 flex-wrap items-center justify-center rounded-xl shadow-xl lg:grid-cols-2">
-            <div className="w-full px-6 py-3">
-              <div>
-                <div className="mt-3 text-left sm:mt-5">
-                  <div className="inline-flex w-full items-center">
-                    <h3 className="leading-6 text-lg font-bold text-neutral-600 lg:text-5xl">Sign In</h3>
-                  </div>
-                  <div className="mt-4 text-base text-gray-500">
-                    <p>Sign In and get our newest news.</p>
-                  </div>
-                </div>
-              </div>
 
-              <div className="mt-6 space-y-2">
-                <div>
-                  <label htmlFor="email" className="sr-only">Email</label>
-                  <input
-                    type="text"
-                    name="email"
-                    id="email"
-                    className="block w-full transform rounded-lg border border-transparent bg-gray-50 px-5 py-3 text-base text-neutral-600 placeholder-gray-300 transition duration-500 ease-in-out focus:border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="password" className="sr-only">Password</label>
-                  <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    className="block w-full transform rounded-lg border border-transparent bg-gray-50 px-5 py-3 text-base text-neutral-600 placeholder-gray-300 transition duration-500 ease-in-out focus:border-transparent focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
-                    placeholder="Enter your password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </div>
-                <div className="mt-4 flex flex-col lg:space-y-2">
-                  <button
-                    type="button"
-                    className="flex w-full transform items-center justify-center rounded-xl bg-blue-600 px-10 py-4 text-center text-base font-medium text-white transition duration-500 ease-in-out hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                    onClick={handleLogin}
-                  >
-                    Sign In
-                  </button>
-                  <a
-                    href="#"
-                    className="inline-flex justify-center py-4 text-base font-medium text-gray-500 hover:text-neutral-600 focus:text-blue-600 focus:outline-none sm:text-sm"
-                  >
-                    Forgot your Password?
-                  </a>
-                  <div className="relative my-4">
-                    <div className="absolute inset-0 flex items-center">
-                      <div className="w-full border-t border-gray-300"></div>
-                    </div>
-                    <div className="relative flex justify-center text-sm">
-                      <span className="bg-white px-2 text-neutral-600"> Or continue with </span>
-                    </div>
-                  </div>
-                  <div>
-                    <button
-                      type="submit"
-                      className="block w-full transform items-center rounded-xl border-2 border-white px-10 py-3.5 text-center text-base font-medium text-blue-600 shadow-md transition duration-500 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
-                    >
-                      <div className="flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" className="h-6 w-6" viewBox="0 0 48 48">
-                          <defs>
-                            <path id="a" d="M44.5 20H24v8.5h11.8C34.7 33.9 30.1 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.6 4.1 29.6 2 24 2 11.8 2 2 11.8 2 24s9.8 22 22 22c11 0 21-8 21-22 0-1.3-.2-2.7-.5-4z"></path>
-                          </defs>
-                          <clipPath id="b">
-                            <use xlinkHref="#a" overflow="visible"></use>
-                          </clipPath>
-                          <path clipPath="url(#b)" fill="#FBBC05" d="M0 37V11l17 13z"></path>
-                          <path clipPath="url(#b)" fill="#EA4335" d="M0 11l17 13 7-6.1L48 14V0H0z"></path>
-                          <path clipPath="url(#b)" fill="#34A853" d="M0 37l30-23 7.9 1L48 0v48H0z"></path>
-                          <path clipPath="url(#b)" fill="#4285F4" d="M48 48L17 24l-4-3 35-10z"></path>
-                        </svg>
-                        <span className="ml-4"> Log in with Google</span>
-                      </div>
-                    </button>
-                  </div>
-                </div>
-              </div>
+  return (
+    <div className="h-[100vh] items-center bg-gray flex justify-center px-5 lg:px-0">
+      <div className="max-w-screen-xl bg-gradient-to-tr from-gray to-seagreen-200 border-2 shadow shadow-darkgray sm:rounded-lg flex justify-center flex-1">
+        <div className="flex-1 bg-seagreen text-center hidden md:flex">
+          <div
+            className="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat"
+            style={{
+              backgroundImage: `url(${assets.Patient})`,
+            }}
+          ></div>
+        </div>
+        <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
+          <div className=" flex flex-col items-center">
+            <div className="text-center">
+              <h1 className="text-2xl xl:text-4xl font-extrabold text-blue-900">
+                Sign In as Patient
+              </h1>
+              <br />
+              <p className="text-[12px] text-gray-500">
+                Hey! Please enter your details to Sign In
+              </p>
             </div>
-            <div className="order-first hidden w-full lg:block">
-              <img className="h-full rounded-l-lg bg-cover object-cover" src="https://images.unsplash.com/photo-1491933382434-500287f9b54b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1000&amp;q=80" alt="" />
+            <div className="w-full flex-1 mt-8">
+              <div className="mx-auto max-w-xs flex flex-col gap-4">
+                <input
+                  className="w-full px-5 py-3 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+                <input
+                  className="w-full px-5 py-3 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+                <div className="text-right"><p className="hover:underline">forget password?</p></div>
+                <button 
+                onClick={handleLogin}
+                className="mt-5 tracking-wide  font-semibold bg-gradient-to-r from-seagreen to-seagreen-200 text-gray hover:underline hover:font-bold w-full py-4 rounded-lg tarnsform transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
+                  <svg
+                    className="w-6 h-6 -ml-2"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    strokeLinecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                    <circle cx="8.5" cy="7" r="4" />
+                    <path d="M20 8v6M23 11h-6" />
+                  </svg>
+                  <span className="ml-3">Sign In</span>
+                </button>
+                <p className="mt-6 text-xs text-gray-600 text-center">
+                  Don't have an account?
+                  <Link to='/patient-signup'>
+                    <span className="text-seagreen hover:underline font-semibold">Sign up</span>
+                    </Link>
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <ToastContainer />
-    </section>
+    </div>
   );
-}
-
+};
 export default PatientSignInForm;

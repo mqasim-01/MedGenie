@@ -1,7 +1,7 @@
 import React from 'react';
 import assets from '../assets/images';
 
-const MyComponent = () => {
+const Services = () => {
   return (
     <section className="bg-white py-8">
       <div className="container max-w-5xl mx-auto m-8">
@@ -46,4 +46,4 @@ const MyComponent = () => {
   );
 };
 
-export default MyComponent;
+export default Services;

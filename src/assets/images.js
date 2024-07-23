@@ -8,7 +8,9 @@ const assets = {
     Ivy: require('./Ivy Smith.jpg'),
     Daisy: require('./Daisy Wilson.jpg'),
     Sarah: require('./Sarah Thompson.jpg'),
-    ChatBot: require('./chatbot.png')
+    ChatBot: require('./chatbot.png'),
+    Doctor: require('./doctor.png'),
+    Patient: require('./patient.png')
 }
 
 export default assets;
