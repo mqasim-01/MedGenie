@@ -119,7 +119,7 @@ function SignupForm() {
                 <div className="text-center my-6 flex flex-col">
                     <div className="text-sm font-bold text-zinc-300 ">
                         Already have an account? 
-                        <Link className='hover:text-cyan-400 m-1' to='/login'>
+                        <Link className='hover:text-cyan-400 m-1' to='/patient-signin'>
                             login
                         </Link>
                     </div>
