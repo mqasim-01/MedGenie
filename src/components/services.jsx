@@ -9,7 +9,7 @@ const Services = () => {
           Our Services
         </h2>
         <div className="w-full mb-4">
-          <div className="h-1 mx-auto bg-seablue2 w-1/4 opacity-25 my-0 py-0 rounded-t"></div>
+          <div className="h-1 mx-auto bg-seablue-200 w-1/4 opacity-25 my-0 py-0 rounded-t"></div>
         </div>
     <div className="flex flex-wrap items-center">
       <div className="w-5/6 sm:w-1/2 p-6">
