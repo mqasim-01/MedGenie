@@ -197,12 +197,12 @@ const DoctorInformation = () => {
                   htmlFor="street"
                   className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
                 >
-                  Street
+                  Address
                 </label>
                 <input
-                  id="street"
+                  id="address"
                   type="text"
-                  placeholder="Street"
+                  placeholder="Address"
                   className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 />
               </div>
@@ -255,46 +255,47 @@ const DoctorInformation = () => {
                 </label>
                 <input
                   id="phone"
-                  type="text"
+                  type="tel"
                   placeholder="Phone"
                   required
                   className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 />
               </div>
 
-              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-                <label className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2">
-                  Gender*
-                </label>
-                <div className="flex">
-                  <input
-                    id="male"
-                    type="radio"
-                    name="gender"
-                    value="male"
-                    required
-                    className="appearance-none bg-gray text-darkgray border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
-                  />
-                  <label htmlFor="male" className="ml-2">
-                    Male
-                  </label>
-                  <input
-                    id="female"
-                    type="radio"
-                    name="gender"
-                    value="female"
-                    required
-                    className="appearance-none bg-gray text-darkgray border rounded py-3 px-4 ml-4 leading-tight focus:outline-none focus:bg-white"
-                  />
-                  <label htmlFor="female" className="ml-2">
-                    Female
-                  </label>
-                </div>
-              </div>
+              <div class="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+  <label class="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2">
+    Gender*
+  </label>
+  <div class="flex">
+    <input
+      id="male"
+      type="radio"
+      name="gender"
+      value="male"
+      required
+      class="appearance-auto border rounded py-3 px-4 leading-tight"
+    />
+    <label for="male" class="ml-2">
+      Male
+    </label>
+    <input
+      id="female"
+      type="radio"
+      name="gender"
+      value="female"
+      required
+      class="appearance-auto border rounded py-3 px-4 ml-4 leading-tight"
+    />
+    <label for="female" class="ml-2">
+      Female
+    </label>
+  </div>
+</div>
+
 
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2">
-                  Birthdate*
+                  Birth date*
                 </label>
                 <div className="flex items-center">
                   <select
