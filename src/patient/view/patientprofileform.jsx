@@ -136,10 +136,10 @@ const PatientInformation = () => {
                   htmlFor="street"
                   className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
                 >
-                  Street
+                  Address
                 </label>
                 <input
-                  id="street"
+                  id="address"
                   type="text"
                   placeholder="Street"
                   className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
@@ -151,10 +151,10 @@ const PatientInformation = () => {
                   htmlFor="city"
                   className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
                 >
-                  City*
+                  Blood Group*
                 </label>
                 <input
-                  id="city"
+                  id="blood"
                   type="text"
                   placeholder="City"
                   required
@@ -212,7 +212,7 @@ const PatientInformation = () => {
                     name="gender"
                     value="male"
                     required
-                    className="appearance-none bg-gray text-darkgray border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+                    className="appearance-auto bg-gray text-darkgray border rounded py-3 px-4 leading-tight focus:outline-none "
                   />
                   <label htmlFor="male" className="ml-2">
                     Male
@@ -223,7 +223,7 @@ const PatientInformation = () => {
                     name="gender"
                     value="female"
                     required
-                    className="appearance-none bg-gray text-darkgray border rounded py-3 px-4 ml-4 leading-tight focus:outline-none focus:bg-white"
+                    className="appearance-auto bg-gray text-darkgray border rounded py-3 px-4 ml-4 leading-tight focus:outline-none"
                   />
                   <label htmlFor="female" className="ml-2">
                     Female
@@ -233,7 +233,7 @@ const PatientInformation = () => {
 
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2">
-                  Birthdate*
+                  Birth date*
                 </label>
                 <div className="flex items-center">
                   <select

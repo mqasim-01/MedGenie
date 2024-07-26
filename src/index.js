@@ -12,6 +12,7 @@ import DoctorInformation from './doctor/view/doctorprofileform';
 import PatientInformation from './patient/view/patientprofileform';
 import DoctorDashboard from './doctor/dashboard';
 import PatientDashboard from './patient/dashboard';
+import AdminLogin from './admin/adminlogin';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -52,6 +53,10 @@ let allroutes = createBrowserRouter(
     {
       path:'/patientdashboard',
       element:<PatientDashboard/>
+    },
+    {
+      path:'/admin-login',
+      element:<AdminLogin/>
     },
   ]
 )
