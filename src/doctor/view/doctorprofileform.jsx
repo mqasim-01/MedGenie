@@ -2,13 +2,11 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const DoctorInformation = () => {
-
   const navigate = useNavigate();
 
   const handleCancel = () => {
     navigate("/doctordashboard"); // Navigate to the dashboard
   };
-
 
   return (
     <div className="bg-gradient-to-r from-seablue to-seablue-200 font-sans">
@@ -55,19 +53,23 @@ const DoctorInformation = () => {
         </g>
       </svg>
 
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen bg-white flex items-center justify-center">
         <form
-          action="/"
-          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full sm:w-auto"
+          action=""
+          className="bg-white rounded px-8 pt-6 pb-8 mb-4 w-full sm:w-auto"
         >
+          
+
           <fieldset className="border-t-2 border-seablue-200 mt-6">
             <legend>
-              <h3 className="text-seablue-200 mb-2">Account Details</h3>
+              <h3 className="text-seablue-200 mb-2">Personal Details</h3>
             </legend>
+            
+            
 
             <div className="flex flex-wrap -mx-3 mb-6">
             <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-              <label
+                <label
                   htmlFor="name"
                   className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
                 >
@@ -77,94 +79,6 @@ const DoctorInformation = () => {
                   id="name"
                   type="text"
                   placeholder="Name"
-                  required
-                  className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                />
-              </div>
-              
-
-              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-                <label
-                  htmlFor="password"
-                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
-                >
-                  Password*
-                </label>
-                <input
-                  id="password"
-                  type="password"
-                  placeholder="Password"
-                  required
-                  className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                />
-              </div>
-
-              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-                <label
-                  htmlFor="email"
-                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
-                >
-                  Email*
-                </label>
-                <input
-                  id="email"
-                  type="text"
-                  placeholder="Email"
-                  required
-                  className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                />
-              </div>
-
-              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-              <label
-                  htmlFor="Specialization"
-                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
-                >
-                  Specialization*
-                </label>
-                <input
-                  id="specs"
-                  type="text"
-                  placeholder="Specialization"
-                  required
-                  className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                />
-              </div>
-            </div>
-          </fieldset>
-
-          <fieldset className="border-t-2 border-seablue-200 mt-6">
-            <legend>
-              <h3 className="text-seablue-200 mb-2">Personal Details</h3>
-            </legend>
-
-            <div className="flex flex-wrap -mx-3 mb-6">
-            <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-                <label
-                  htmlFor="Checkup hours"
-                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
-                >
-                  Checkup hours*
-                </label>
-                <input
-                  id="checkup"
-                  type="text"
-                  placeholder="Checkup hours"
-                  required
-                  className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                />
-              </div>
-              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-                <label
-                  htmlFor="checkup Days"
-                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
-                >
-                  checkup Days*
-                </label>
-                <input
-                  id="checkup_Days"
-                  type="text"
-                  placeholder="checkup Days"
                   required
                   className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 />
@@ -200,6 +114,21 @@ const DoctorInformation = () => {
                   className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 />
               </div>
+              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+                <label
+                  htmlFor="Specialization"
+                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
+                >
+                  Specialization*
+                </label>
+                <input
+                  id="specs"
+                  type="text"
+                  placeholder="Specialization"
+                  required
+                  className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                />
+              </div>
 
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
@@ -218,15 +147,15 @@ const DoctorInformation = () => {
 
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
-                  htmlFor="city"
+                  htmlFor="phone"
                   className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
                 >
-                  City*
+                  Phone*
                 </label>
                 <input
-                  id="city"
-                  type="text"
-                  placeholder="City"
+                  id="phone"
+                  type="tel"
+                  placeholder="Phone"
                   required
                   className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 />
@@ -256,51 +185,53 @@ const DoctorInformation = () => {
               </div>
 
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-              <label
-                  htmlFor="phone"
-                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
-                >
-                  Phone*
+                <label className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2">
+                  Nationality*
                 </label>
-                <input
-                  id="phone"
-                  type="tel"
-                  placeholder="Phone"
+                <select
                   required
                   className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                />
+                >
+                  <option value="">Select Nationality</option>
+                  <option value="Pakistani">Pakistani</option>
+                  <option value="Turkish">Turkish</option>
+                  <option value="Russian">Russian</option>
+                  <option value="German">German</option>
+                  <option value="French">French</option>
+                  <option value="American">American</option>
+                  <option value="English">English</option>
+                </select>
               </div>
 
               <div class="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-  <label class="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2">
-    Gender*
-  </label>
-  <div class="flex">
-    <input
-      id="male"
-      type="radio"
-      name="gender"
-      value="male"
-      required
-      class="appearance-auto border rounded py-3 px-4 leading-tight"
-    />
-    <label for="male" class="ml-2">
-      Male
-    </label>
-    <input
-      id="female"
-      type="radio"
-      name="gender"
-      value="female"
-      required
-      class="appearance-auto border rounded py-3 px-4 ml-4 leading-tight"
-    />
-    <label for="female" class="ml-2">
-      Female
-    </label>
-  </div>
-</div>
-
+                <label class="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2">
+                  Gender*
+                </label>
+                <div class="flex">
+                  <input
+                    id="male"
+                    type="radio"
+                    name="gender"
+                    value="male"
+                    required
+                    class="appearance-auto border rounded py-3 px-4 leading-tight"
+                  />
+                  <label for="male" class="ml-2">
+                    Male
+                  </label>
+                  <input
+                    id="female"
+                    type="radio"
+                    name="gender"
+                    value="female"
+                    required
+                    class="appearance-auto border rounded py-3 px-4 ml-4 leading-tight"
+                  />
+                  <label for="female" class="ml-2">
+                    Female
+                  </label>
+                </div>
+              </div>
 
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2">
@@ -375,6 +306,22 @@ const DoctorInformation = () => {
               </div>
 
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+                <label
+                  htmlFor="name"
+                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
+                >
+                  Description*
+                </label>
+                <input
+                  id="description"
+                  type="text"
+                  placeholder="Enter Description"
+                  required
+                  className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                />
+              </div>
+
+              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2">
                   Nationality*
                 </label>
@@ -392,9 +339,103 @@ const DoctorInformation = () => {
                   <option value="English">English</option>
                 </select>
               </div>
+              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+                <label
+                  htmlFor="Checkup hours"
+                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
+                >
+                  Checkup hours*
+                </label>
+
+                <form className="max-w-[16rem] mx-auto grid grid-cols-2 gap-4">
+                  <div>
+                    <label
+                      for="start-time"
+                      className="block mb-2 text-sm font-medium dark:text-white"
+                    >
+                      Start time:
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 end-0 top-0 flex items-center pe-3.5 pointer-events-none">
+                        <svg
+                          className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l3 3a1 1 0 0 0 1.414-1.414L13 11.586V8Z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
+                      </div>
+                      <input
+                        type="time"
+                        id="start-time"
+                        className="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        min="09:00"
+                        max="18:00"
+                        value="00:00"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label
+                      for="end-time"
+                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      End time:
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 end-0 top-0 flex items-center pe-3.5 pointer-events-none">
+                        <svg
+                          className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l3 3a1 1 0 0 0 1.414-1.414L13 11.586V8Z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
+                      </div>
+                      <input
+                        type="time"
+                        id="end-time"
+                        className="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        min="09:00"
+                        max="18:00"
+                        value="00:00"
+                        required
+                      />
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+                <label
+                  htmlFor="checkup Days"
+                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
+                >
+                  checkup Days*
+                </label>
+                <input
+                  id="checkup_Days"
+                  type="text"
+                  placeholder="Monday,tuesday..."
+                  required
+                  className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                />
+              </div>
             </div>
           </fieldset>
-          
+
           <div className="flex gap-10 justify-center mt-2">
             <button
               type="button"

@@ -53,18 +53,21 @@ const PatientInformation = () => {
         </g>
       </svg>
 
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen bg-white flex items-center justify-center">
         <form
           action="/"
-          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full sm:w-auto"
+          className="bg-white  rounded px-8 pt-6 pb-8 mb-4 w-full sm:w-auto"
         >
+      
+
           <fieldset className="border-t-2 border-seagreen mt-6">
             <legend>
-              <h3 className="text-seagreen mb-2">Account Details</h3>
+              <h3 className="text-seagreen mb-2">Personal Details</h3>
             </legend>
 
             <div className="flex flex-wrap -mx-3 mb-6">
-              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+
+            <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
                   htmlFor="name"
                   className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
@@ -79,39 +82,6 @@ const PatientInformation = () => {
                   className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 />
               </div>
-
-              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-                <label
-                  htmlFor="password"
-                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
-                >
-                  Password*
-                </label>
-                <input
-                  id="password"
-                  type="password"
-                  placeholder="Password"
-                  required
-                  className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                />
-              </div>
-
-              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-                <label
-                  htmlFor="email"
-                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
-                >
-                  Email*
-                </label>
-                <input
-                  id="email"
-                  type="text"
-                  placeholder="Email"
-                  required
-                  className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                />
-              </div>
-
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
                   htmlFor="Specialization"
@@ -127,26 +97,18 @@ const PatientInformation = () => {
                   className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 />
               </div>
-            </div>
-          </fieldset>
 
-          <fieldset className="border-t-2 border-seagreen mt-6">
-            <legend>
-              <h3 className="text-seagreen mb-2">Personal Details</h3>
-            </legend>
-
-            <div className="flex flex-wrap -mx-3 mb-6">
               <div className="w-full px-3 mb-6">
                 <label
                   htmlFor="address"
                   className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
                 >
-                  Street
+                  Adress
                 </label>
                 <input
                   id="address"
                   type="text"
-                  placeholder="Street, City"
+                  placeholder="Address"
                   required
                   className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 />
@@ -211,7 +173,7 @@ const PatientInformation = () => {
                     name="gender"
                     value="male"
                     required
-                    className="appearance-none bg-gray text-darkgray border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+                    className="appearance-auto bg-gray text-darkgray border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
                   />
                   <label htmlFor="male" className="ml-2">
                     Male
@@ -222,7 +184,7 @@ const PatientInformation = () => {
                     name="gender"
                     value="female"
                     required
-                    className="appearance-none bg-gray text-darkgray border rounded py-3 px-4 ml-4 leading-tight focus:outline-none focus:bg-white"
+                    className="appearance-auto bg-gray text-darkgray border rounded py-3 px-4 ml-4 leading-tight focus:outline-none focus:bg-white"
                   />
                   <label htmlFor="female" className="ml-2">
                     Female
@@ -297,7 +259,7 @@ const PatientInformation = () => {
                     type="text"
                     placeholder="Year"
                     required
-                    className="appearance-none block w-1/4 bg-gray text-darkgray border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
+                    className="appearance-auto block w-1/4 bg-gray text-darkgray border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
                   />
                 </div>
               </div>
@@ -308,7 +270,7 @@ const PatientInformation = () => {
                 </label>
                 <select
                   required
-                  className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-auto block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 >
                   <option value="">Select Nationality</option>
                   <option value="Pakistani">Pakistani</option>
@@ -326,14 +288,14 @@ const PatientInformation = () => {
           <div className="flex gap-10 justify-center mt-2">
             <button
               type="button"
-              className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seablue to-seablue-200 text-white hover:font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+              className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seagreen to-seagreen-200 text-white hover:font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
               onClick={handleCancel}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seablue to-seablue-200 text-white hover:font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+              className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seagreen to-seagreen-200 text-white hover:font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
             >
               Submit
             </button>

@@ -46,6 +46,12 @@ const DoctorDropdown = () => {
         style={{ minWidth: "12rem" }}
       >
         <button className="px-4">
+          View profile
+        </button>
+        <button className="px-4">
+          setting
+        </button>
+        <button className="px-4">
           Logout
         </button>
       </div>
