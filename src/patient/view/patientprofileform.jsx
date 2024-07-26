@@ -1,6 +1,13 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const PatientInformation = () => {
+  const navigate = useNavigate();
+
+  const handleCancel = () => {
+    navigate("/patientdashboard"); // Navigate to the dashboard
+  };
+
   return (
     <div className="bg-gradient-to-r from-seagreen to-seagreen-200 font-sans">
       <h3 className="w-full my-1 pt-10 text-5xl font-bold leading-tight text-center text-white">
@@ -57,8 +64,8 @@ const PatientInformation = () => {
             </legend>
 
             <div className="flex flex-wrap -mx-3 mb-6">
-            <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-              <label
+              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+                <label
                   htmlFor="name"
                   className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
                 >
@@ -72,7 +79,6 @@ const PatientInformation = () => {
                   className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 />
               </div>
-              
 
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
@@ -107,7 +113,7 @@ const PatientInformation = () => {
               </div>
 
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-              <label
+                <label
                   htmlFor="Specialization"
                   className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
                 >
@@ -130,33 +136,33 @@ const PatientInformation = () => {
             </legend>
 
             <div className="flex flex-wrap -mx-3 mb-6">
-           
-              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+              <div className="w-full px-3 mb-6">
                 <label
-                  htmlFor="street"
+                  htmlFor="address"
                   className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
                 >
-                  Street
+                  Address*
                 </label>
                 <input
-                  id="street"
+                  id="address"
                   type="text"
-                  placeholder="Street"
+                  placeholder="Street, City"
+                  required
                   className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 />
               </div>
 
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
-                  htmlFor="city"
+                  htmlFor="state"
                   className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
                 >
-                  City*
+                  State*
                 </label>
                 <input
-                  id="city"
+                  id="state"
                   type="text"
-                  placeholder="City"
+                  placeholder="State"
                   required
                   className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 />
@@ -169,24 +175,17 @@ const PatientInformation = () => {
                 >
                   Country*
                 </label>
-                <select
+                <input
                   id="country"
+                  type="text"
+                  placeholder="Country"
                   required
                   className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                >
-                  <option value="">Select Country</option>
-                  <option value="Pakistan">Pakistan</option>
-                  <option value="Turkey">Türkiye</option>
-                  <option value="Russia">Russia</option>
-                  <option value="Germany">Germany</option>
-                  <option value="France">France</option>
-                  <option value="USA">USA</option>
-                  <option value="UK">UK</option>
-                </select>
+                />
               </div>
 
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-              <label
+                <label
                   htmlFor="phone"
                   className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
                 >
@@ -194,151 +193,29 @@ const PatientInformation = () => {
                 </label>
                 <input
                   id="phone"
-                  type="text"
+                  type="tel"
                   placeholder="Phone"
                   required
                   className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 />
               </div>
-
-              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-                <label className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2">
-                  Gender*
-                </label>
-                <div className="flex">
-                  <input
-                    id="male"
-                    type="radio"
-                    name="gender"
-                    value="male"
-                    required
-                    className="appearance-none bg-gray text-darkgray border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
-                  />
-                  <label htmlFor="male" className="ml-2">
-                    Male
-                  </label>
-                  <input
-                    id="female"
-                    type="radio"
-                    name="gender"
-                    value="female"
-                    required
-                    className="appearance-none bg-gray text-darkgray border rounded py-3 px-4 ml-4 leading-tight focus:outline-none focus:bg-white"
-                  />
-                  <label htmlFor="female" className="ml-2">
-                    Female
-                  </label>
-                </div>
-              </div>
-
-              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-                <label className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2">
-                  Birthdate*
-                </label>
-                <div className="flex items-center">
-                  <select
-                    id="day"
-                    required
-                    className="appearance-none block w-1/4 bg-gray text-darkgray border rounded py-3 px-4 mr-2 leading-tight focus:outline-none focus:bg-white"
-                  >
-                    <option value="">Select Day</option>
-                    <option value="01">01</option>
-                    <option value="02">02</option>
-                    <option value="03">03</option>
-                    <option value="04">04</option>
-                    <option value="05">05</option>
-                    <option value="06">06</option>
-                    <option value="07">07</option>
-                    <option value="08">08</option>
-                    <option value="09">09</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                    <option value="13">13</option>
-                    <option value="14">14</option>
-                    <option value="15">15</option>
-                    <option value="16">16</option>
-                    <option value="17">17</option>
-                    <option value="18">18</option>
-                    <option value="19">19</option>
-                    <option value="20">20</option>
-                    <option value="21">21</option>
-                    <option value="22">22</option>
-                    <option value="23">23</option>
-                    <option value="24">24</option>
-                    <option value="25">25</option>
-                    <option value="26">26</option>
-                    <option value="27">27</option>
-                    <option value="28">28</option>
-                    <option value="29">29</option>
-                    <option value="30">30</option>
-                    <option value="31">31</option>
-                  </select>
-                  <select
-                    id="month"
-                    required
-                    className="appearance-none block w-2/4 bg-gray text-darkgray border rounded py-3 px-4 mr-2 leading-tight focus:outline-none focus:bg-white"
-                  >
-                    <option value="">Select Month</option>
-                    <option value="January">January</option>
-                    <option value="February">February</option>
-                    <option value="March">March</option>
-                    <option value="April">April</option>
-                    <option value="May">May</option>
-                    <option value="June">June</option>
-                    <option value="July">July</option>
-                    <option value="August">August</option>
-                    <option value="September">September</option>
-                    <option value="October">October</option>
-                    <option value="November">November</option>
-                    <option value="December">December</option>
-                  </select>
-                  <input
-                    id="year"
-                    type="text"
-                    placeholder="Year"
-                    required
-                    className="appearance-none block w-1/4 bg-gray text-darkgray border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
-                  />
-                </div>
-              </div>
-
-              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-                <label className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2">
-                  Nationality*
-                </label>
-                <select
-                  required
-                  className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                >
-                  <option value="">Select Nationality</option>
-                  <option value="Pakistani">Pakistani</option>
-                  <option value="Turkish">Turkish</option>
-                  <option value="Russian">Russian</option>
-                  <option value="German">German</option>
-                  <option value="French">French</option>
-                  <option value="American">American</option>
-                  <option value="English">English</option>
-                </select>
-              </div>
             </div>
           </fieldset>
-          
-          <div className="flex gap-10 justify-center mt-2">
-          <button
-            type="submit"
-            className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seagreen to-seagreen-200 text-white hover:font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
-            
-          >
-            Submit
-          </button>
 
-          <button
-            type="submit"
-            className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seagreen-200 to-seagreen text-white hover:font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
-          >
-            Cancel
-          </button>
+          <div className="flex gap-10 justify-center mt-2">
+            <button
+              type="button"
+              className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seablue to-seablue-200 text-white hover:font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+              onClick={handleCancel}
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seablue to-seablue-200 text-white hover:font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+            >
+              Submit
+            </button>
           </div>
         </form>
       </div>

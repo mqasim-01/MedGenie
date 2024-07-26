@@ -22,11 +22,9 @@ function PatientSignInForm() {
         toast.success("Login Successful!", {
           position: "top-center",
         });
-<<<<<<< HEAD
-        navigate("/patient-profile"); // redirect to the homepage or another protected route
-=======
+
         navigate("/patientdashboard"); // redirect to the homepage or another protected route
->>>>>>> 72dd6dc32ff69d70bacfad1743522a7c874a1cd8
+
       } else {
         toast.error("Please verify your email before logging in.", {
           position: "top-center",
