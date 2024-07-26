@@ -1,6 +1,13 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const PatientInformation = () => {
+  const navigate = useNavigate();
+
+  const handleCancel = () => {
+    navigate("/patientdashboard"); // Navigate to the dashboard
+  };
+
   return (
     <div className="bg-gradient-to-r from-seagreen to-seagreen-200 font-sans">
       <h3 className="w-full my-1 pt-10 text-5xl font-bold leading-tight text-center text-white">
@@ -57,8 +64,8 @@ const PatientInformation = () => {
             </legend>
 
             <div className="flex flex-wrap -mx-3 mb-6">
-            <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-              <label
+              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+                <label
                   htmlFor="name"
                   className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
                 >
@@ -72,7 +79,6 @@ const PatientInformation = () => {
                   className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 />
               </div>
-              
 
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
@@ -107,7 +113,7 @@ const PatientInformation = () => {
               </div>
 
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-              <label
+                <label
                   htmlFor="Specialization"
                   className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
                 >
@@ -130,33 +136,33 @@ const PatientInformation = () => {
             </legend>
 
             <div className="flex flex-wrap -mx-3 mb-6">
-           
-              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+              <div className="w-full px-3 mb-6">
                 <label
-                  htmlFor="street"
+                  htmlFor="address"
                   className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
                 >
-                  Address
+                  Street
                 </label>
                 <input
                   id="address"
                   type="text"
-                  placeholder="Street"
+                  placeholder="Street, City"
+                  required
                   className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 />
               </div>
 
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
-                  htmlFor="city"
+                  htmlFor="state"
                   className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
                 >
-                  Blood Group*
+                  City*
                 </label>
                 <input
-                  id="blood"
+                  id="city"
                   type="text"
-                  placeholder="City"
+                  placeholder="State"
                   required
                   className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 />
@@ -169,24 +175,17 @@ const PatientInformation = () => {
                 >
                   Country*
                 </label>
-                <select
+                <input
                   id="country"
+                  type="text"
+                  placeholder="Country"
                   required
                   className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                >
-                  <option value="">Select Country</option>
-                  <option value="Pakistan">Pakistan</option>
-                  <option value="Turkey">Türkiye</option>
-                  <option value="Russia">Russia</option>
-                  <option value="Germany">Germany</option>
-                  <option value="France">France</option>
-                  <option value="USA">USA</option>
-                  <option value="UK">UK</option>
-                </select>
+                />
               </div>
 
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-              <label
+                <label
                   htmlFor="phone"
                   className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
                 >
@@ -194,7 +193,7 @@ const PatientInformation = () => {
                 </label>
                 <input
                   id="phone"
-                  type="text"
+                  type="tel"
                   placeholder="Phone"
                   required
                   className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
@@ -212,7 +211,7 @@ const PatientInformation = () => {
                     name="gender"
                     value="male"
                     required
-                    className="appearance-auto bg-gray text-darkgray border rounded py-3 px-4 leading-tight focus:outline-none "
+                    className="appearance-none bg-gray text-darkgray border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
                   />
                   <label htmlFor="male" className="ml-2">
                     Male
@@ -223,7 +222,7 @@ const PatientInformation = () => {
                     name="gender"
                     value="female"
                     required
-                    className="appearance-auto bg-gray text-darkgray border rounded py-3 px-4 ml-4 leading-tight focus:outline-none"
+                    className="appearance-none bg-gray text-darkgray border rounded py-3 px-4 ml-4 leading-tight focus:outline-none focus:bg-white"
                   />
                   <label htmlFor="female" className="ml-2">
                     Female
@@ -233,7 +232,7 @@ const PatientInformation = () => {
 
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2">
-                  Birth date*
+                  Birthdate*
                 </label>
                 <div className="flex items-center">
                   <select
@@ -323,22 +322,21 @@ const PatientInformation = () => {
               </div>
             </div>
           </fieldset>
-          
-          <div className="flex gap-10 justify-center mt-2">
-          <button
-            type="submit"
-            className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seagreen to-seagreen-200 text-white hover:font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
-            
-          >
-            Submit
-          </button>
 
-          <button
-            type="submit"
-            className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seagreen-200 to-seagreen text-white hover:font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
-          >
-            Cancel
-          </button>
+          <div className="flex gap-10 justify-center mt-2">
+            <button
+              type="button"
+              className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seablue to-seablue-200 text-white hover:font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+              onClick={handleCancel}
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seablue to-seablue-200 text-white hover:font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+            >
+              Submit
+            </button>
           </div>
         </form>
       </div>

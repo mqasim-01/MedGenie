@@ -1,6 +1,15 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const DoctorInformation = () => {
+
+  const navigate = useNavigate();
+
+  const handleCancel = () => {
+    navigate("/doctordashboard"); // Navigate to the dashboard
+  };
+
+
   return (
     <div className="bg-gradient-to-r from-seablue to-seablue-200 font-sans">
       <h3 className="w-full my-1 pt-10 text-5xl font-bold leading-tight text-center text-white">
@@ -387,20 +396,19 @@ const DoctorInformation = () => {
           </fieldset>
           
           <div className="flex gap-10 justify-center mt-2">
-          <button
-            type="submit"
-            className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seablue to-seablue-200 text-white hover:font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
-            
-          >
-            Submit
-          </button>
-
-          <button
-            type="submit"
-            className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seablue-200 to-seablue text-white hover:font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
-          >
-            Cancel
-          </button>
+            <button
+              type="button"
+              className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seablue to-seablue-200 text-white hover:font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+              onClick={handleCancel}
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seablue to-seablue-200 text-white hover:font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+            >
+              Submit
+            </button>
           </div>
         </form>
       </div>

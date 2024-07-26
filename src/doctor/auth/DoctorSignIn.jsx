@@ -24,7 +24,9 @@ const DoctorSignInForm = () => {
         toast.success("Login Successful!", {
           position: "top-center",
         });
+
         navigate("/doctordashboard"); // redirect to the homepage or another protected route
+
       } else {
         toast.error("Please verify your email before logging in.", {
           position: "top-center",
