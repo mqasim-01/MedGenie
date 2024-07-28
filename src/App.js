@@ -1,12 +1,7 @@
 // App.js
-
 import React from 'react';
 import Footer from './components/footer';
 import LandingPage from './components/landingpage';
-import DoctorProfile from './doctor/view/doctorprofile';
-
-
-
 
 
 function App() {

@@ -8,13 +8,15 @@ import PatientSignUpForm from './patient/auth/PatientSignUp';
 import PatientSignInForm from './patient/auth/PatientSignIn';
 import DoctorSignInForm from './doctor/auth/DoctorSignIn';
 import DoctorSignUpForm from './doctor/auth/DoctorSignUp';
-import DoctorInformation from './doctor/view/doctorprofileform';
-import PatientInformation from './patient/view/patientprofileform';
+import DoctorInformation from './doctor/view/editdoctorprofileform';
+import PatientInformation from './patient/view/editpatientprofileform';
 import DoctorDashboard from './doctor/dashboard';
 import PatientDashboard from './patient/dashboard';
 import AdminLogin from './admin/adminlogin';
 import DoctorProfile from './doctor/view/doctorprofile';
 import PatientProfile from './patient/view/patientprofile';
+import AddDoctorInformation from './doctor/view/adddoctorinformation';
+import AddPatientInformation from './patient/view/addpatientinformation';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -67,6 +69,14 @@ let allroutes = createBrowserRouter(
     {
       path:'/patient-profile',
       element:<PatientProfile/>
+    },
+    {
+      path:'/doctor-addinformation',
+      element:<AddDoctorInformation/>
+    },
+    {
+      path:'/patient-addinformation',
+      element:<AddPatientInformation/>
     },
   ]
 )
