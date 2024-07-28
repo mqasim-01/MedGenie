@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase"; // Adjust the path as needed
+import { auth, db } from "../../firebase"; // Adjust the path as needed
+import { doc, getDoc } from "firebase/firestore";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import assets from '../../assets/images';
 
-
-
 const DoctorSignInForm = () => {
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -20,15 +18,31 @@ const DoctorSignInForm = () => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      if (user.emailVerified) {
-        toast.success("Login Successful!", {
-          position: "top-center",
-        });
 
-        navigate("/doctordashboard"); // redirect to the homepage or another protected route
-
+      // Fetch user role from Firestore
+      const userDoc = await getDoc(doc(db, "Doctors", user.uid));
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        if (userData.role === "Doctor") {
+          if (user.emailVerified) {
+            toast.success("Login Successful!", {
+              position: "top-center",
+            });
+            navigate("/doctordashboard"); // Redirect to the doctor dashboard
+          } else {
+            toast.error("Please verify your email before logging in.", {
+              position: "top-center",
+            });
+            auth.signOut();
+          }
+        } else {
+          toast.error("This email is not registered as a Doctor.", {
+            position: "top-center",
+          });
+          auth.signOut();
+        }
       } else {
-        toast.error("Please verify your email before logging in.", {
+        toast.error("This email is not registered as a Doctor.", {
           position: "top-center",
         });
         auth.signOut();
@@ -40,9 +54,7 @@ const DoctorSignInForm = () => {
     }
   };
 
-
   return (
-
     <div className="h-[100vh] items-center bg-gray flex justify-center px-5 lg:px-0">
       <div className="max-w-screen-xl bg-gradient-to-tr from-gray to-seablue-200 border-2 shadow shadow-darkgray sm:rounded-lg flex justify-center flex-1">
         <div className="flex-1 bg-seablue-200 text-center hidden md:flex">
@@ -71,26 +83,29 @@ const DoctorSignInForm = () => {
                   type="email"
                   placeholder="Enter your email"
                   value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
                 <input
                   className="w-full px-5 py-3 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                   type="password"
                   placeholder="Password"
                   value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
-                <div className="text-right"><p className="hover:underline">forget password?</p></div>
-                <button 
-                onClick={handleLogin}
-                className="mt-5 tracking-wide  font-semibold bg-gradient-to-r from-seablue to-seablue-200 text-gray hover:underline hover:font-bold w-full py-4 rounded-lg tarnsform transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
+                <div className="text-right">
+                  <p className="hover:underline">Forget password?</p>
+                </div>
+                <button
+                  onClick={handleLogin}
+                  className="mt-5 tracking-wide font-semibold bg-gradient-to-r from-seablue to-seablue-200 text-gray hover:underline hover:font-bold w-full py-4 rounded-lg tarnsform transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
+                >
                   <svg
                     className="w-6 h-6 -ml-2"
                     fill="none"
                     stroke="currentColor"
-                    stroke-width="2"
+                    strokeWidth="2"
                     strokeLinecap="round"
-                    stroke-linejoin="round"
+                    strokeLinejoin="round"
                   >
                     <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
                     <circle cx="8.5" cy="7" r="4" />
@@ -102,7 +117,7 @@ const DoctorSignInForm = () => {
                   Don't have an account?
                   <Link to='/doctor-signup'>
                     <span className="text-seablue hover:underline font-semibold">Sign up</span>
-                    </Link>
+                  </Link>
                 </p>
               </div>
             </div>
@@ -114,4 +129,3 @@ const DoctorSignInForm = () => {
   );
 };
 export default DoctorSignInForm;
-

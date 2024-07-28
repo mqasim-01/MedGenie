@@ -14,11 +14,11 @@ function App() {
   return (
     <div className="App">
 
-      {/* <LandingPage/>
+      <LandingPage/>
 
-      <Footer /> */}
+      <Footer />
 
-      <DoctorProfile/>
+      
 
     </div>
   );

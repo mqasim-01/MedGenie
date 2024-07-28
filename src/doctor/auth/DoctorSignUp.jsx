@@ -54,6 +54,7 @@ const DoctorSignUpForm = () => {
           email: user.email,
           name: name,
           photo: "",
+          role: "Doctor"  // Add role field here
         });
         toast.success("User Registered Successfully!!", {
           position: "top-center",
@@ -69,15 +70,15 @@ const DoctorSignUpForm = () => {
           });
           auth.signOut();
           navigate("/doctor-signin");
-        }
-      }
-      
-    } catch (error) {
-      toast.error(error.message, {
-        position: "top-center",
-      });
-    }
-  };
+       
+}
+}
+} catch (error) {
+toast.error(error.message, {
+position: "top-center",
+});
+}
+};
 
   return (
     <div className="h-[100vh] items-center bg-gray flex justify-center px-5 lg:px-0">

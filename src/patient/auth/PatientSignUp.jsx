@@ -54,6 +54,7 @@ function PatientSignUpForm() {
           email: user.email,
           name: name,
           photo: "",
+          role: "Patient"  // Add role field here
         });
         toast.success("User Registered Successfully!!", {
           position: "top-center",
