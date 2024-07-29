@@ -1,9 +1,45 @@
-import React, { useState } from "react";
+import React from "react";
 import PatientDropdown from "./patientdropdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 export default function DoctorNavbar() {
+  const [userDetails, setUserDetails] = useState(null);
+
+  const fetchUserData = async (patients) => {
+    const docRef = doc(db, 'Patients', patients.uid);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      setUserDetails(docSnap.data());
+    } else {
+      console.log('User document not found');
+    }
+  };
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        fetchUserData(user);
+      } else {
+        setUserDetails(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  async function handleLogout() {
+    try {
+      await auth.signOut();
+      window.location.href = '/';
+      toast.success("LogOut Successfully", {
+        position: "top-center",
+      });
+    } catch (error) {
+      console.error('Error logging out:', error.message);
+    }
+  }
+
   return (
     <>
       {/* Navbar */}
@@ -35,11 +71,12 @@ export default function DoctorNavbar() {
           </form>
           {/* User */}
           <ul className="flex-col md:flex-row list-none items-center hidden md:flex">
-            <PatientDropdown />
+            <PatientDropdown/>
           </ul>
         </div>
       </nav>
       {/* End Navbar */}
+      <ToastContainer />
     </>
   );
 }
