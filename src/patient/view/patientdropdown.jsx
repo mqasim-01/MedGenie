@@ -1,39 +1,37 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { createPopper } from "@popperjs/core";
 import assets from "../../assets/images";
 
-const PatientDropdown = () => {
-  // dropdown props
-  const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
-  const btnDropdownRef = React.createRef();
-  const popoverDropdownRef = React.createRef();
+const PatientDropdown = ({ userDetails, handleLogout }) => {
+  const [dropdownPopoverShow, setDropdownPopoverShow] = useState(false);
+  const btnDropdownRef = useRef();
+  const popoverDropdownRef = useRef();
+
   const openDropdownPopover = () => {
     createPopper(btnDropdownRef.current, popoverDropdownRef.current, {
-      placement: "bottom-end"
+      placement: "bottom-end",
     });
     setDropdownPopoverShow(true);
   };
+
   const closeDropdownPopover = () => {
     setDropdownPopoverShow(false);
   };
+
   return (
     <>
       <a
         className="text-blueGray-500 block"
         href="#"
         ref={btnDropdownRef}
-        onClick={e => {
+        onClick={(e) => {
           e.preventDefault();
           dropdownPopoverShow ? closeDropdownPopover() : openDropdownPopover();
         }}
       >
         <div className="items-center flex">
-          <span className="w-12 h-12 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full">
-            <img
-              alt="user"
-              className="w-full rounded-full align-middle border-none shadow-lg"
-              src={assets.Emily}
-            />
+          <span className="w-auto h-12 px-4 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-lg">
+            {userDetails ? userDetails.name : "Loading..."}
           </span>
         </div>
       </a>
@@ -41,11 +39,20 @@ const PatientDropdown = () => {
         ref={popoverDropdownRef}
         className={
           (dropdownPopoverShow ? "block " : "hidden ") +
-          "bg-gray text-base z-50 float-left py-2 list-none text-left rounded border shadow-lg mt-1"
+          "bg-white text-base z-50 float-left py-2 list-none text-left rounded-lg shadow-lg mt-1"
         }
         style={{ minWidth: "12rem" }}
       >
-        <button className="px-4">
+        {userDetails && (
+          <>
+            <div className="px-4 py-2 text-sm text-gray-700">{userDetails.email}</div>
+            <div className="border-t border-gray-300"></div>
+          </>
+        )}
+        <button
+          onClick={handleLogout}
+          className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-cyan-400"
+        >
           Logout
         </button>
       </div>
