@@ -1,11 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function PatientSidebar() {
-  const [collapseShow, setCollapseShow] = React.useState("hidden");
-  return (
+export default function Sidebar() {
+
+    const [collapseShow, setCollapseShow] = React.useState("hidden");
+
+    return (
     <>
-      <nav className="md:left-0 border md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl shadow-darkgray bg-gradient-to-tl from-seagreen to-gray flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6">
+      <nav className="md:left-0 border md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl shadow-darkgray bg-darkgray flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6">
         <div className="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto">
           {/* Toggler */}
           <button
@@ -17,7 +19,7 @@ export default function PatientSidebar() {
           </button>
           {/* Brand */}
           <Link
-            className="md:block md:pb-2 text-darkgray mr-0 inline-block whitespace-nowrap text-center uppercase font-semibold text-xl p-4 px-0"
+            className="md:block md:pb-2 text-gray mr-0 inline-block whitespace-nowrap text-center uppercase font-semibold text-xl p-4 px-0"
             to="/patientdashboard"
           >
             MedGenie
@@ -44,7 +46,7 @@ export default function PatientSidebar() {
                 <div className="w-6/12">
                   <Link
                     className="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
-                    to="/patientdashboard"
+                    to="/admindashboard"
                   >
                     MedGenie
                   </Link>
@@ -72,15 +74,32 @@ export default function PatientSidebar() {
               </div>
             </form>
             {/* Navigation */}
-            <hr className="my-4 md:min-w-full" />
+            <hr className="mt-2 mb-4 border-white md:min-w-full" />
+
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
               <li className="items-center">
-                <Link
-                  className="text-darkgray hover:text-black text-xs uppercase py-3 font-semibold hover:font-bold block"
-                  to="/patient-profile"
+                <div
+                  className="text-gray hover:text-white text-xs uppercase py-3 font-semibold hover:font-bold block"
+                  
                 >
-                  <i className="fas fa-tv opacity-75 mr-2 text-sm"></i> Profile
-                </Link>
+                  <i className="fas fa-tv opacity-75 mr-2 text-sm"></i> Regsitered Doctors
+                </div>
+              </li>
+              <li className="items-center">
+                <div
+                  className="text-gray hover:text-white text-xs uppercase py-3 font-semibold hover:font-bold block"
+                  
+                >
+                  <i className="fas fa-tv opacity-75 mr-2 text-sm"></i>Regsitered Patients
+                </div>
+              </li>
+              <li className="items-center">
+                <div
+                  className="text-gray hover:text-white text-xs uppercase py-3 font-semibold hover:font-bold block"
+                  
+                >
+                  <i className="fas fa-tv opacity-75 mr-2 text-sm"></i> Appointment Applications
+                </div>
               </li>
             </ul>
 
@@ -88,5 +107,5 @@ export default function PatientSidebar() {
         </div>
       </nav>
     </>
-  );
+  )
 }

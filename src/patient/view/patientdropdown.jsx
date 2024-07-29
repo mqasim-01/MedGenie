@@ -1,6 +1,9 @@
 import React from "react";
 import { createPopper } from "@popperjs/core";
 import assets from "../../assets/images";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faCog, faSignOutAlt, faBell } from '@fortawesome/free-solid-svg-icons';
+import { Link } from "react-router-dom";
 
 const PatientDropdown = () => {
   // dropdown props
@@ -19,7 +22,7 @@ const PatientDropdown = () => {
   return (
     <>
       <a
-        className="text-blueGray-500 block"
+        className="text-blueGray-500 block relative"
         href="#"
         ref={btnDropdownRef}
         onClick={e => {
@@ -35,6 +38,9 @@ const PatientDropdown = () => {
               src={assets.Emily}
             />
           </span>
+          <span className="absolute top-0 right-0 flex items-center justify-center w-4 h-4 text-xs text-white bg-red-500 rounded-full border-2 border-white">
+            5
+          </span>
         </div>
       </a>
       <div
@@ -45,9 +51,29 @@ const PatientDropdown = () => {
         }
         style={{ minWidth: "12rem" }}
       >
-        <button className="px-4">
-          Logout
-        </button>
+        <div className="flex flex-col">
+          
+          <Link to='/patient-profile'><button className="flex items-center px-4 py-2 text-left hover:bg-gray-200">
+            <FontAwesomeIcon icon={faUser} className="mr-2" />
+            View Profile
+          </button></Link>
+          <button className="flex items-center px-4 py-2 text-left hover:bg-gray-200 rounded-t">
+            <FontAwesomeIcon icon={faBell} className="mr-2" />
+            Notifications
+            <span className="ml-auto flex items-center justify-center w-4 h-4 text-xs text-darkgray bg-red-500 rounded-full border-2 border-darkgray">
+              5
+            </span>
+          </button>
+          <button className="flex items-center px-4 py-2 text-left hover:bg-gray-200">
+            <FontAwesomeIcon icon={faCog} className="mr-2" />
+            Settings
+          </button>
+          <hr className="my-2 md:min-w-full" />
+          <button className="flex items-center px-4 py-2 text-left hover:bg-gray-200 rounded-b">
+            <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />
+            Logout
+          </button>
+        </div>
       </div>
     </>
   );

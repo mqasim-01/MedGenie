@@ -54,7 +54,7 @@ const DoctorSignUpForm = () => {
           email: user.email,
           name: name,
           photo: "",
-          role: "Doctor"  // Add role field here
+          role: "Doctor", // Add role field here
         });
         toast.success("User Registered Successfully!!", {
           position: "top-center",
@@ -63,22 +63,15 @@ const DoctorSignUpForm = () => {
           toast.success("Login Successful!", {
             position: "top-center",
           });
-          navigate("/doctordashboard"); // redirect to the homepage or another protected route
-        } else {
-          toast.error("Please verify your email before logging in.", {
-            position: "top-center",
-          });
-          auth.signOut();
-          navigate("/doctor-signin");
-       
-}
-}
-} catch (error) {
-toast.error(error.message, {
-position: "top-center",
-});
-}
-};
+          navigate("/doctor-signin"); // redirect to the homepage or another protected route
+        } 
+      }
+    } catch (error) {
+      toast.error(error.message, {
+        position: "top-center",
+      });
+    }
+  };
 
   return (
     <div className="h-[100vh] items-center bg-gray flex justify-center px-5 lg:px-0">
