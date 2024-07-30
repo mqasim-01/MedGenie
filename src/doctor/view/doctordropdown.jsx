@@ -1,19 +1,17 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { createPopper } from "@popperjs/core";
-import assets from "../../assets/images";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faCog, faSignOutAlt, faBell } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
 
-const DoctorDropdown = () => {
-  // dropdown props
-  const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
-  const btnDropdownRef = React.createRef();
-  const popoverDropdownRef = React.createRef();
+const DoctorDropdown = ({ userDetails, handleLogout }) => {
+  const [dropdownPopoverShow, setDropdownPopoverShow] = useState(false);
+  const btnDropdownRef = useRef();
+  const popoverDropdownRef = useRef();
 
   const openDropdownPopover = () => {
     createPopper(btnDropdownRef.current, popoverDropdownRef.current, {
-      placement: "bottom-end"
+      placement: "bottom-end",
     });
     setDropdownPopoverShow(true);
   };
@@ -22,24 +20,25 @@ const DoctorDropdown = () => {
     setDropdownPopoverShow(false);
   };
 
+  const handleLogoutClick = () => {
+    closeDropdownPopover(); // Close the dropdown menu
+    handleLogout(); // Perform the logout action
+  };
+
   return (
     <>
       <a
         className="text-blueGray-500 block relative"
         href="#"
         ref={btnDropdownRef}
-        onClick={e => {
+        onClick={(e) => {
           e.preventDefault();
           dropdownPopoverShow ? closeDropdownPopover() : openDropdownPopover();
         }}
       >
         <div className="items-center flex">
-          <span className="w-12 h-12 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full">
-            <img
-              alt="user"
-              className="w-full rounded-full align-middle border-none shadow-lg"
-              src={assets.Emily}
-            />
+          <span className="w-auto h-12 px-4 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-lg">
+            {userDetails ? userDetails.name : "Loading..."}
           </span>
           <span className="absolute top-0 right-0 flex items-center justify-center w-4 h-4 text-xs text-white bg-red-500 rounded-full border-2 border-white">
             5
@@ -50,16 +49,24 @@ const DoctorDropdown = () => {
         ref={popoverDropdownRef}
         className={
           (dropdownPopoverShow ? "block " : "hidden ") +
-          "bg-gray text-base z-50 float-left py-2 list-none text-left rounded border shadow-lg mt-1"
+          "bg-white text-base z-50 float-left py-2 list-none text-left rounded-lg shadow-lg mt-1"
         }
         style={{ minWidth: "12rem" }}
       >
         <div className="flex flex-col">
+          {userDetails && (
+            <>
+              <div className="px-4 py-2 text-sm text-gray-700">{userDetails.email}</div>
+              <div className="border-t border-gray-300"></div>
+            </>
+          )}
           
-          <Link to='/doctor-profile'><button className="flex items-center px-4 py-2 text-left hover:bg-gray-200">
-            <FontAwesomeIcon icon={faUser} className="mr-2" />
-            View Profile
-          </button></Link>
+          <Link to='/doctor-profile'>
+            <button className="flex items-center px-4 py-2 text-left hover:bg-gray-200">
+              <FontAwesomeIcon icon={faUser} className="mr-2" />
+              View Profile
+            </button>
+          </Link>
           <button className="flex items-center px-4 py-2 text-left hover:bg-gray-200 rounded-t">
             <FontAwesomeIcon icon={faBell} className="mr-2" />
             Notifications
@@ -72,7 +79,7 @@ const DoctorDropdown = () => {
             Settings
           </button>
           <hr className="my-2 md:min-w-full" />
-          <button className="flex items-center px-4 py-2 text-left hover:bg-gray-200 rounded-b">
+          <button className="flex items-center px-4 py-2 text-left hover:bg-gray-200 rounded-b" onClick={handleLogoutClick}>
             <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />
             Logout
           </button>

@@ -1,9 +1,13 @@
-import React from "react";
 import PatientDropdown from "./patientdropdown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import React, { useState, useEffect } from "react";
+import { auth, db } from '../../firebase'; // Adjust the path to your firebase.js
+import { getDoc, doc } from 'firebase/firestore';
+import { ToastContainer, toast } from 'react-toastify';
 
-export default function DoctorNavbar() {
+
+export default function PatientNavbar() {
   const [userDetails, setUserDetails] = useState(null);
 
   const fetchUserData = async (patients) => {
@@ -71,7 +75,7 @@ export default function DoctorNavbar() {
           </form>
           {/* User */}
           <ul className="flex-col md:flex-row list-none items-center hidden md:flex">
-            <PatientDropdown/>
+            <PatientDropdown userDetails={userDetails} handleLogout={handleLogout} />
           </ul>
         </div>
       </nav>

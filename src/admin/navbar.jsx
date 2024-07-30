@@ -12,7 +12,7 @@ export default function Adminnavbar() {
           {/* Brand */}
           <a
             className="text-white text-lg shadow-sm uppercase hidden lg:inline-block font-semibold"
-            href="#"
+            href=""
             onClick={e => e.preventDefault()}
           >
             Dashboard

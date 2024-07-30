@@ -1,12 +1,16 @@
-import React from 'react'
+import React, { useState } from "react";
+import assets from "../../assets/images";
 import { useNavigate } from "react-router-dom";
 
 export default function AddPatientInformation() {
-  
-    const navigate = useNavigate();
+  const [image] = useState(null);
+  const navigate = useNavigate();
 
   const handleCancel = () => {
-    navigate("/patientdashboard"); // Navigate to the dashboard
+    navigate("/patient-profile"); // Navigate to the dashboard
+  };
+  const handleImageUploadClick = () => {
+    document.getElementById("file-upload").click();
   };
 
   return (
@@ -59,15 +63,48 @@ export default function AddPatientInformation() {
           action="/"
           className="bg-white  rounded px-8 pt-6 pb-8 mb-4 w-full sm:w-auto"
         >
-      
-
           <fieldset className="border-t-2 border-seagreen mt-6">
             <legend>
               <h3 className="text-seagreen mb-2">Personal Details</h3>
             </legend>
 
-            <div className="flex flex-wrap -mx-3 mb-6">
+            <div className="relative flex flex-col items-center mb-10">
+              <input
+                type="file"
+                id="file-upload"
+                className="hidden"
+                accept="image/*"
+                onChange={(e) => {
+                  // Handle image upload here
+                  const file = e.target.files[0];
+                  if (file) {
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                      document.getElementById("profile-image").src =
+                        reader.result;
+                    };
+                    reader.readAsDataURL(file);
+                  }
+                }}
+              />
+              <img
+                id="profile-image"
+                src={assets.Profile}
+                alt="Profile"
+                className="w-32 h-32 rounded-full object-cover"
+              />
+              <button
+                type="button"
+                className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300"
+                onClick={handleImageUploadClick}
+              >
+                <span className="text-white bg-black bg-opacity-50 p-2 rounded-full">
+                  Upload Image
+                </span>
+              </button>
+            </div>
 
+            <div className="flex flex-wrap -mx-3 mb-6">
               <div className="w-full px-3 mb-6">
                 <label
                   htmlFor="address"
@@ -289,6 +326,5 @@ export default function AddPatientInformation() {
         </form>
       </div>
     </div>
-
-  )
+  );
 }
