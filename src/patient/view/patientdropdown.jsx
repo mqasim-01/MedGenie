@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faCog, faSignOutAlt, faBell } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
 
-
 const PatientDropdown = ({ userDetails, handleLogout }) => {
   const [dropdownPopoverShow, setDropdownPopoverShow] = useState(false);
   const btnDropdownRef = useRef();
