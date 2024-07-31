@@ -306,9 +306,9 @@ export default function AddPatientInformation() {
                     placeholder="YYYY"
                   />
                 </div>
-                {errors.day && <p className="text-red-500 text-xs italic">{errors.day}</p>}
-                {errors.month && <p className="text-red-500 text-xs italic">{errors.month}</p>}
-                {errors.year && <p className="text-red-500 text-xs italic">{errors.year}</p>}
+                {errors.day && <p className="text-red text-xs italic">{errors.day}</p>}
+                {errors.month && <p className="text-red text-xs italic">{errors.month}</p>}
+                {errors.year && <p className="text-red text-xs italic">{errors.year}</p>}
               </div>
               <div className="w-full px-3 mb-6">
                 <label
