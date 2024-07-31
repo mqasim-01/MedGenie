@@ -6,10 +6,11 @@ import { doc, updateDoc } from "firebase/firestore";
 
 export default function AddPatientInformation() {
   const [image, setImage] = useState(null);
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   const handleCancel = () => {
-    navigate("/patient-profile"); // Navigate to the dashboard
+    navigate("/patient-profile"); // Navigate to the patient profile
   };
 
   const handleImageUploadClick = () => {
@@ -30,13 +31,32 @@ export default function AddPatientInformation() {
     const city = document.getElementById("city").value;
     const country = document.getElementById("country").value;
     const phone = document.getElementById("phone").value;
-    const gender = document.querySelector('input[name="gender"]:checked').value;
+    const gender = document.querySelector('input[name="gender"]:checked')?.value;
     const day = document.getElementById("day").value;
     const month = document.getElementById("month").value;
     const year = document.getElementById("year").value;
     const nationality = document.querySelector('select').value;
 
     const birthdate = `${year}-${month}-${day}`;
+
+    const newErrors = {};
+
+    if (!address) newErrors.address = "Address is required";
+    if (!bloodGroup) newErrors.bloodGroup = "Blood Group is required";
+    if (!city) newErrors.city = "City is required";
+    if (!country) newErrors.country = "Country is required";
+    if (!phone) newErrors.phone = "Phone Number is required";
+    if (!gender) newErrors.gender = "Gender is required";
+    if (!day) newErrors.day = "Day is required";
+    if (!month) newErrors.month = "Month is required";
+    if (!year) newErrors.year = "Year is required";
+    if (!nationality) newErrors.nationality = "Nationality is required";
+    if (!image) newErrors.image = "Profile image is required";
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
 
     try {
       await updateDoc(doc(db, "Patients", user.uid), {
@@ -59,7 +79,7 @@ export default function AddPatientInformation() {
   return (
     <div className="bg-gradient-to-r from-seagreen to-seagreen-200 font-sans">
       <h3 className="w-full my-1 pt-10 text-5xl font-bold leading-tight text-center text-white">
-        Add Profile Information
+        Add Personal Information
       </h3>
       <div className="w-full mb-4">
         <div className="h-1 mx-auto bg-white w-1/3 opacity-25 my-0 py-0 rounded-t"></div>
@@ -104,7 +124,7 @@ export default function AddPatientInformation() {
       <div className="min-h-screen bg-white flex items-center justify-center">
         <form
           onSubmit={handleSubmit}
-          className="bg-white  rounded px-8 pt-6 pb-8 mb-4 w-full sm:w-auto"
+          className="bg-white rounded px-8 pt-6 pb-8 mb-4 w-full sm:w-auto"
         >
           <fieldset className="border-t-2 border-seagreen mt-6">
             <legend>
@@ -145,6 +165,7 @@ export default function AddPatientInformation() {
                   Upload Image
                 </span>
               </button>
+              {errors.image && <p className="text-red-500 text-xs italic">{errors.image}</p>}
             </div>
 
             <div className="flex flex-wrap -mx-3 mb-6">
@@ -156,26 +177,13 @@ export default function AddPatientInformation() {
                   Address
                 </label>
                 <input
-                  id="address"
                   type="text"
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  id="address"
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  placeholder="Address"
                 />
+                {errors.address && <p className="text-red-500 text-xs italic">{errors.address}</p>}
               </div>
-
-              <div className="w-full px-3 mb-6">
-                <label
-                  htmlFor="phone"
-                  className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                >
-                  Phone Number
-                </label>
-                <input
-                  id="phone"
-                  type="tel"
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                />
-              </div>
-
               <div className="w-full px-3 mb-6">
                 <label
                   htmlFor="blood"
@@ -184,85 +192,13 @@ export default function AddPatientInformation() {
                   Blood Group
                 </label>
                 <input
-                  id="blood"
                   type="text"
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  id="blood"
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  placeholder="Blood Group"
                 />
+                {errors.bloodGroup && <p className="text-red-500 text-xs italic">{errors.bloodGroup}</p>}
               </div>
-
-              <div className="w-full px-3 mb-6">
-                <label
-                  htmlFor="gender"
-                  className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                >
-                  Gender
-                </label>
-                <div className="flex">
-                  <label className="mr-4">
-                    <input
-                      type="radio"
-                      name="gender"
-                      value="Male"
-                      className="mr-2"
-                    />
-                    Male
-                  </label>
-                  <label className="mr-4">
-                    <input
-                      type="radio"
-                      name="gender"
-                      value="Female"
-                      className="mr-2"
-                    />
-                    Female
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      name="gender"
-                      value="Other"
-                      className="mr-2"
-                    />
-                    Other
-                  </label>
-                </div>
-              </div>
-
-              <div className="w-full px-3 mb-6">
-                <label
-                  htmlFor="day"
-                  className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                >
-                  Date of Birth
-                </label>
-                <div className="flex">
-                  <input
-                    id="day"
-                    type="number"
-                    min="1"
-                    max="31"
-                    className="appearance-none block w-1/3 bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    placeholder="Day"
-                  />
-                  <input
-                    id="month"
-                    type="number"
-                    min="1"
-                    max="12"
-                    className="appearance-none block w-1/3 bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    placeholder="Month"
-                  />
-                  <input
-                    id="year"
-                    type="number"
-                    min="1900"
-                    max={new Date().getFullYear()}
-                    className="appearance-none block w-1/3 bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    placeholder="Year"
-                  />
-                </div>
-              </div>
-
               <div className="w-full px-3 mb-6">
                 <label
                   htmlFor="city"
@@ -271,12 +207,13 @@ export default function AddPatientInformation() {
                   City
                 </label>
                 <input
-                  id="city"
                   type="text"
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  id="city"
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  placeholder="City"
                 />
+                {errors.city && <p className="text-red-500 text-xs italic">{errors.city}</p>}
               </div>
-
               <div className="w-full px-3 mb-6">
                 <label
                   htmlFor="country"
@@ -285,12 +222,94 @@ export default function AddPatientInformation() {
                   Country
                 </label>
                 <input
-                  id="country"
                   type="text"
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  id="country"
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  placeholder="Country"
                 />
+                {errors.country && <p className="text-red-500 text-xs italic">{errors.country}</p>}
+              </div>
+              <div className="w-full px-3 mb-6">
+                <label
+                  htmlFor="phone"
+                  className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                >
+                  Phone
+                </label>
+                <input
+                  type="text"
+                  id="phone"
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  placeholder="Phone"
+                />
+                {errors.phone && <p className="text-red-500 text-xs italic">{errors.phone}</p>}
               </div>
 
+              <div className="w-full px-3 mb-6">
+                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                  Gender
+                </label>
+                <div className="flex">
+                  <label className="mr-4">
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="Male"
+                      className="mr-1"
+                    />
+                    Male
+                  </label>
+                  <label className="mr-4">
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="Female"
+                      className="mr-1"
+                    />
+                    Female
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="Other"
+                      className="mr-1"
+                    />
+                    Other
+                  </label>
+                </div>
+                {errors.gender && <p className="text-red-500 text-xs italic">{errors.gender}</p>}
+              </div>
+            </div>
+            <div className="flex flex-wrap -mx-3 mb-6">
+              <div className="w-full px-3 mb-6">
+                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                  Birthdate
+                </label>
+                <div className="flex space-x-3">
+                  <input
+                    type="text"
+                    id="day"
+                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    placeholder="DD"
+                  />
+                  <input
+                    type="text"
+                    id="month"
+                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    placeholder="MM"
+                  />
+                  <input
+                    type="text"
+                    id="year"
+                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    placeholder="YYYY"
+                  />
+                </div>
+                {errors.day && <p className="text-red-500 text-xs italic">{errors.day}</p>}
+                {errors.month && <p className="text-red-500 text-xs italic">{errors.month}</p>}
+                {errors.year && <p className="text-red-500 text-xs italic">{errors.year}</p>}
+              </div>
               <div className="w-full px-3 mb-6">
                 <label
                   htmlFor="nationality"
@@ -298,34 +317,34 @@ export default function AddPatientInformation() {
                 >
                   Nationality
                 </label>
-                <select className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                <select
+                  id="nationality"
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                >
+                  <option value="">Select Nationality</option>
                   <option value="American">American</option>
-                  <option value="British">British</option>
                   <option value="Canadian">Canadian</option>
-                  <option value="French">French</option>
-                  <option value="German">German</option>
-                  <option value="Pakistani">Pakistani</option>
-                  <option value="Japanese">Japanese</option>
-                  <option value="Russian">Russian</option>
-                  <option value="Chinese">Chinese</option>
+                  <option value="British">British</option>
+                  {/* Add more nationalities as needed */}
                 </select>
+                {errors.nationality && <p className="text-red-500 text-xs italic">{errors.nationality}</p>}
               </div>
             </div>
           </fieldset>
 
-          <div className="flex items-center justify-between">
+          <div className="flex gap-10 justify-center mt-2">
             <button
               type="button"
-              className="bg-gray-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seagreen to-seagreen-200 text-white hover:font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
               onClick={handleCancel}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="bg-seagreen text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seagreen to-seagreen-200 text-white hover:font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
             >
-              Save
+              Submit
             </button>
           </div>
         </form>
