@@ -165,7 +165,7 @@ export default function AddPatientInformation() {
                   Upload Image
                 </span>
               </button>
-              {errors.image && <p className="text-red-500 text-xs italic">{errors.image}</p>}
+              {errors.image && <p className="text-red text-xs italic">{errors.image}</p>}
             </div>
 
             <div className="flex flex-wrap -mx-3 mb-6">
@@ -182,7 +182,7 @@ export default function AddPatientInformation() {
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                   placeholder="Address"
                 />
-                {errors.address && <p className="text-red-500 text-xs italic">{errors.address}</p>}
+                {errors.address && <p className="text-red text-xs italic">{errors.address}</p>}
               </div>
               <div className="w-full px-3 mb-6">
                 <label
@@ -197,7 +197,7 @@ export default function AddPatientInformation() {
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                   placeholder="Blood Group"
                 />
-                {errors.bloodGroup && <p className="text-red-500 text-xs italic">{errors.bloodGroup}</p>}
+                {errors.bloodGroup && <p className="text-red text-xs italic">{errors.bloodGroup}</p>}
               </div>
               <div className="w-full px-3 mb-6">
                 <label
@@ -212,7 +212,7 @@ export default function AddPatientInformation() {
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                   placeholder="City"
                 />
-                {errors.city && <p className="text-red-500 text-xs italic">{errors.city}</p>}
+                {errors.city && <p className="text-red text-xs italic">{errors.city}</p>}
               </div>
               <div className="w-full px-3 mb-6">
                 <label
@@ -227,7 +227,7 @@ export default function AddPatientInformation() {
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                   placeholder="Country"
                 />
-                {errors.country && <p className="text-red-500 text-xs italic">{errors.country}</p>}
+                {errors.country && <p className="text-red text-xs italic">{errors.country}</p>}
               </div>
               <div className="w-full px-3 mb-6">
                 <label
@@ -242,7 +242,7 @@ export default function AddPatientInformation() {
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                   placeholder="Phone"
                 />
-                {errors.phone && <p className="text-red-500 text-xs italic">{errors.phone}</p>}
+                {errors.phone && <p className="text-red text-xs italic">{errors.phone}</p>}
               </div>
 
               <div className="w-full px-3 mb-6">
@@ -278,7 +278,7 @@ export default function AddPatientInformation() {
                     Other
                   </label>
                 </div>
-                {errors.gender && <p className="text-red-500 text-xs italic">{errors.gender}</p>}
+                {errors.gender && <p className="text-red text-xs italic">{errors.gender}</p>}
               </div>
             </div>
             <div className="flex flex-wrap -mx-3 mb-6">
@@ -327,7 +327,7 @@ export default function AddPatientInformation() {
                   <option value="British">British</option>
                   {/* Add more nationalities as needed */}
                 </select>
-                {errors.nationality && <p className="text-red-500 text-xs italic">{errors.nationality}</p>}
+                {errors.nationality && <p className="text-red text-xs italic">{errors.nationality}</p>}
               </div>
             </div>
           </fieldset>
