@@ -48,6 +48,7 @@ export default function AddDoctorInformation() {
         description,
         checkupStartTime,
         checkupEndTime,
+        photo: image || "",
       });
 
       navigate("/doctor-profile");

@@ -3,6 +3,7 @@ import { createPopper } from "@popperjs/core";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faCog, faSignOutAlt, faBell } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
+import assets from "../../assets/images";
 
 const DoctorDropdown = ({ userDetails, handleLogout }) => {
   const [dropdownPopoverShow, setDropdownPopoverShow] = useState(false);
@@ -37,10 +38,14 @@ const DoctorDropdown = ({ userDetails, handleLogout }) => {
         }}
       >
         <div className="items-center flex">
-          <span className="w-auto h-12 px-4 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-lg">
-            {userDetails ? userDetails.name : "Loading..."}
+        <span className="w-12 h-12 inline-flex items-center justify-center rounded-full overflow-hidden bg-blueGray-200">
+            <img
+              alt="..."
+              className="w-full h-full object-cover"
+              src={userDetails?.photo || assets.Profile}
+            />
           </span>
-          <span className="absolute top-0 right-0 flex items-center justify-center w-4 h-4 text-xs text-white bg-red-500 rounded-full border-2 border-white">
+          <span className="absolute top-0 right-0 flex items-center justify-center w-4 h-4 text-xs text-black bg-red-500 rounded-full border-2 bg-white">
             5
           </span>
         </div>

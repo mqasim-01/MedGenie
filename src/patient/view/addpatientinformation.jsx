@@ -322,10 +322,15 @@ export default function AddPatientInformation() {
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 >
                   <option value="">Select Nationality</option>
+                  <option value="Pakistani">Pakistani</option>
+                  <option value="Turkish">Turkish</option>
+                  <option value="Russian">Russian</option>
+                  <option value="German">German</option>
+                  <option value="French">French</option>
                   <option value="American">American</option>
                   <option value="Canadian">Canadian</option>
                   <option value="British">British</option>
-                  {/* Add more nationalities as needed */}
+                  
                 </select>
                 {errors.nationality && <p className="text-red text-xs italic">{errors.nationality}</p>}
               </div>

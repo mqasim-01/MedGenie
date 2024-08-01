@@ -1,8 +1,47 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import assets from "../../assets/images";
 import { Link } from "react-router-dom";
+import { db, auth } from "../../firebase"; 
+import { doc, getDoc } from "firebase/firestore";
 
 export default function PatientProfile() {
+  const [patientData, setPatientData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchPatientData = async () => {
+      try {
+        const user = auth.currentUser;
+        if (!user) {
+          throw new Error("User not authenticated");
+        }
+        const docRef = doc(db, "Patients", user.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          setPatientData(docSnap.data());
+        } else {
+          console.log("No such document!");
+        }
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPatientData();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-red">Error: {error}</div>;
+  }
+
   return (
     <>
       <main className="profile-page">
@@ -48,37 +87,36 @@ export default function PatientProfile() {
                     <div className="relative">
                       <img
                         alt="profile"
-                        src={assets.Emily}
-                        className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16"
-                        style={{ maxWidth: "150px" }}
+                        src={patientData?.photo || assets.Profile}
+                        className="shadow-xl rounded-full h-32 w-32 object-cover border-none absolute -m-16 -ml-20 lg:-ml-16"
+                        style={{ maxWidth: "150px", borderRadius: "50%" }}
                       />
                     </div>
                   </div>
-                  
                 </div>
                 <div className="text-center mt-20">
                   <h3 className="text-4xl font-semibold leading-normal text-gray-800 mb-2">
-                    Name
+                    {patientData?.name || "Name"}
                   </h3>
                   <div className="text-sm leading-normal mt-0 mb-2 text-gray-500 font-bold uppercase">
                     <i className="fas fa-map-marker-alt mr-2 text-lg text-gray-500"></i>{" "}
-                    Address
+                    {patientData?.address || "Address"}
                   </div>
                   <div className="text-sm leading-normal mt-0 mb-2 text-gray-500 font-bold uppercase">
-                    <i className="fas fa-map-marker-alt mr-2 text-lg text-gray-500"></i>{" "}
-                    Phone Number
+                    <i className="fas fa-phone-alt mr-2 text-lg text-gray-500"></i>{" "}
+                    {patientData?.phone || "Phone Number"}
                   </div>
                   <div className="text-sm leading-normal mt-0 mb-2 text-gray-500 font-bold uppercase">
-                    <i className="fas fa-map-marker-alt mr-2 text-lg text-gray-500"></i>{" "}
-                    Nationality
+                    <i className="fas fa-flag mr-2 text-lg text-gray-500"></i>{" "}
+                    {patientData?.nationality || "Nationality"}
                   </div>
                   <div className="mb-2 text-gray-700 mt-10">
-                    <i className="fas fa-briefcase mr-2 text-lg text-gray-500"></i>
-                    Blood Gropp
+                    <i className="fas fa-tint mr-2 text-lg text-gray-500"></i>
+                    {patientData?.bloodGroup || "Blood Group"}
                   </div>
                   <div className="mb-2 text-gray-700">
-                    <i className="fas fa-university mr-2 text-lg text-gray-500"></i>
-                    Gender
+                    <i className="fas fa-genderless mr-2 text-lg text-gray-500"></i>
+                    {patientData?.gender || "Gender"}
                   </div>
                 </div>
                 <div className="mt-10 py-10 border-t border-gray-300 text-center flex justify-center">

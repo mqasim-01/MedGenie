@@ -1,9 +1,47 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import assets from "../../assets/images";
 import { Link } from "react-router-dom";
+import { db, auth } from "../../firebase"; 
+import { doc, getDoc } from "firebase/firestore";
 
 
 export default function DoctorProfile() {
+  const [doctorData, setDoctorData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchPatientData = async () => {
+      try {
+        const user = auth.currentUser;
+        if (!user) {
+          throw new Error("User not authenticated");
+        }
+        const docRef = doc(db, "Doctors", user.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          setDoctorData(docSnap.data());
+        } else {
+          console.log("No such document!");
+        }
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPatientData();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-red">Error: {error}</div>;
+  }
   return (
     <>
       
@@ -48,11 +86,11 @@ export default function DoctorProfile() {
                 <div className="flex flex-wrap justify-center">
                   <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
                     <div className="relative">
-                      <img
+                    <img
                         alt="profile"
-                        src={assets.Emily}
-                        className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16"
-                        style={{ maxWidth: "150px" }}
+                        src={doctorData?.photo || assets.Profile}
+                        className="shadow-xl rounded-full h-32 w-32 object-cover border-none absolute -m-16 -ml-20 lg:-ml-16"
+                        style={{ maxWidth: "150px", borderRadius: "50%" }}
                       />
                     </div>
                   </div>
@@ -61,42 +99,42 @@ export default function DoctorProfile() {
                 </div>
                 <div className="text-center mt-20">
                   <h3 className="text-4xl font-semibold leading-normal text-gray-800 mb-2">
-                    Name
+                    {doctorData?.name || "Name"}
                   </h3>
                   <div className="text-sm leading-normal mt-0 mb-2 text-gray-500 font-bold uppercase">
                     <i className="fas fa-map-marker-alt mr-2 text-lg text-gray-500"></i>{" "}
-                    Address
+                    {doctorData?.address || "Address"}
                   </div>
                   <div className="text-sm leading-normal mt-0 mb-2 text-gray-500 font-bold uppercase">
                     <i className="fas fa-map-marker-alt mr-2 text-lg text-gray-500"></i>{" "}
-                    Phone Number
+                    {doctorData?.phone || "Phone Number"}
                   </div>
                   <div className="text-sm leading-normal mt-0 mb-2 text-gray-500 font-bold uppercase">
                     <i className="fas fa-map-marker-alt mr-2 text-lg text-gray-500"></i>{" "}
-                    Nationality
+                    {doctorData?.nationality || "Nationality"}
                   </div>
                   
                   <div className="mb-2 text-gray-700 mt-10">
                     <i className="fas fa-briefcase mr-2 text-lg text-gray-500"></i>
-                    Gender
+                    {doctorData?.gender || "Gender"}
                   </div>
                   <div className="mb-2 text-gray-700">
                     <i className="fas fa-university mr-2 text-lg text-gray-500"></i>
-                    Specialization
+                    {doctorData?.specialization || "Specialization"}
                   </div>
                   <div className="mb-2 text-gray-700">
                     <i className="fas fa-university mr-2 text-lg text-gray-500"></i>
-                  University
+                    {doctorData?.institute || "University"}
                   </div>
                 </div>
                 <div className="mt-10 py-10 border-t border-gray-300 text-center">
                   <div className="flex flex-wrap justify-center">
                     <div className="w-full lg:w-9/12 px-4">
                       <p className="mb-4 text-lg leading-relaxed text-gray-800">
-                        Description
+                      {doctorData?.description || "Description"}
                       </p>
                       <p>
-                        timing
+                      {doctorData?.checkupStartTime || "starttime"}{doctorData?.checkupEndTime || "endtime"}
                       </p>
                       <p>
                         days

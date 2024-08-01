@@ -320,7 +320,8 @@ const PatientInformation = () => {
                   <option value="German">German</option>
                   <option value="French">French</option>
                   <option value="American">American</option>
-                  <option value="English">English</option>
+                  <option value="Canadian">Canadian</option>
+                  <option value="British">British</option>
                 </select>
               </div>
             </div>

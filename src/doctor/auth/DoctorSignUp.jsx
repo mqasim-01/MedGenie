@@ -59,12 +59,7 @@ const DoctorSignUpForm = () => {
         toast.success("User Registered Successfully!!", {
           position: "top-center",
         });
-        if (user.emailVerified) {
-          toast.success("Login Successful!", {
-            position: "top-center",
-          });
-          navigate("/doctor-signin"); // redirect to the homepage or another protected route
-        } 
+        navigate("/doctor-signin"); 
       }
     } catch (error) {
       toast.error(error.message, {
