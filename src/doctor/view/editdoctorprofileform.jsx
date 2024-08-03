@@ -1,14 +1,49 @@
-import React,{useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import assets from "../../assets/images";
-import { db, auth } from "../../firebase"; 
-import { doc, getDoc } from "firebase/firestore";
-
+import { db, auth } from "../../firebase";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 const DoctorInformation = () => {
-  const [image] = useState(null);
+  const [image, setImage] = useState(null);
   const navigate = useNavigate();
-  
+  const [doctorData, setDoctorData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchDoctorData = async () => {
+      try {
+        const user = auth.currentUser;
+        if (!user) {
+          throw new Error("User not authenticated");
+        }
+        const docRef = doc(db, "Doctors", user.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          setDoctorData(docSnap.data());
+          setImage(docSnap.data().profileImage || assets.Profile); // Assuming profileImage is the URL of the image
+        } else {
+          console.log("No such document!");
+        }
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDoctorData();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-red">Error: {error}</div>;
+  }
 
   const handleCancel = () => {
     navigate("/doctor-profile"); // Navigate to the dashboard
@@ -18,6 +53,36 @@ const DoctorInformation = () => {
     document.getElementById('file-upload').click();
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setDoctorData({ ...doctorData, [id]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const user = auth.currentUser;
+      if (!user) {
+        throw new Error("User not authenticated");
+      }
+      const docRef = doc(db, "Doctors", user.uid);
+      await setDoc(docRef, doctorData, { merge: true });
+      alert("Profile updated successfully");
+    } catch (err) {
+      setError(err.message);
+    }
+  };
 
   return (
     <div className="bg-gradient-to-r from-seablue to-seablue-200 font-sans">
@@ -66,52 +131,39 @@ const DoctorInformation = () => {
 
       <div className="min-h-screen bg-white flex items-center justify-center">
         <form
-          action=""
+          onSubmit={handleSubmit}
           className="bg-white rounded px-8 pt-6 pb-8 mb-4 w-full sm:w-auto"
         >
-          
-
           <fieldset className="border-t-2 border-seablue-200 mt-6">
             <legend>
               <h3 className="text-seablue-200 mb-2">Personal Details</h3>
             </legend>
-            
+
             <div className="relative flex flex-col items-center mb-10">
-            <input
-              type="file"
-              id="file-upload"
-              className="hidden"
-              accept="image/*"
-              onChange={(e) => {
-                // Handle image upload here
-                const file = e.target.files[0];
-                if (file) {
-                  const reader = new FileReader();
-                  reader.onloadend = () => {
-                    document.getElementById('profile-image').src = reader.result;
-                  };
-                  reader.readAsDataURL(file);
-                }
-              }}
-            />
-            <img
-              id="profile-image"
-              src={assets.Profile}
-              alt="Profile"
-              className="w-32 h-32 rounded-full object-cover"
-            />
-            <button
-              type="button"
-              className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300"
-              onClick={handleImageUploadClick}
-            >
-              <span className="text-white bg-black bg-opacity-50 p-2 rounded-full">Upload Image</span>
-            </button>
-          </div>
+              <input
+                type="file"
+                id="file-upload"
+                className="hidden"
+                accept="image/*"
+                onChange={handleImageChange}
+              />
+              <img
+                id="profile-image"
+                src={image}
+                alt="Profile"
+                className="w-32 h-32 rounded-full object-cover"
+              />
+              <button
+                type="button"
+                className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300"
+                onClick={handleImageUploadClick}
+              >
+                <span className="text-white bg-black bg-opacity-50 p-2 rounded-full">Upload Image</span>
+              </button>
+            </div>
 
             <div className="flex flex-wrap -mx-3 mb-6">
-            
-            <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
                   htmlFor="name"
                   className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
@@ -122,60 +174,105 @@ const DoctorInformation = () => {
                   id="name"
                   type="text"
                   placeholder="Name"
+                  value={doctorData?.name || ""}
+                  onChange={handleChange}
                   required
-                  className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
                 />
               </div>
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
-                  htmlFor="Institute"
+                  htmlFor="country"
                   className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
                 >
-                  Institute*
+                  Country
+                </label>
+                <input
+                  id="country"
+                  type="text"
+                  placeholder="Country"
+                  value={doctorData?.country || ""}
+                  onChange={handleChange}
+                  className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
+                />
+              </div>
+              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+                <label
+                  htmlFor="nationality"
+                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
+                >
+                  Nationality
+                </label>
+                <input
+                  id="nationality"
+                  type="text"
+                  placeholder="Nationality"
+                  value={doctorData?.nationality || ""}
+                  onChange={handleChange}
+                  className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
+                />
+              </div>
+            </div>
+            <div className="flex flex-wrap -mx-3 mb-6">
+              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+                <label
+                  htmlFor="gender"
+                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
+                >
+                  Gender
+                </label>
+                <input
+                  id="gender"
+                  type="text"
+                  placeholder="gender"
+                  value={doctorData?.gender || ""}
+                  onChange={handleChange}
+                  className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
+                />
+              </div>
+            </div>
+            <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+                <label
+                  htmlFor="institute"
+                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
+                >
+                  Institute
                 </label>
                 <input
                   id="institute"
                   type="text"
-                  placeholder="Institution where degree was obtained"
-                  required
-                  className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                  placeholder="institute"
+                  value={doctorData?.institute || ""}
+                  onChange={handleChange}
+                  className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
                 />
               </div>
-
+          </fieldset>
+          <fieldset className="border-t-2 border-seablue-200 mt-6">
+            <legend>
+              <h3 className="text-seablue-200 mb-2">Contact Details</h3>
+            </legend>
+            <div className="flex flex-wrap -mx-3 mb-6">
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
                   htmlFor="phone"
                   className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
                 >
-                  Degree*
+                  Phone Number*
                 </label>
                 <input
-                  id="Degree"
+                  id="phone"
                   type="text"
-                  placeholder="Degree"
+                  placeholder="Phone Number"
+                  value={doctorData?.phone || ""}
+                  onChange={handleChange}
                   required
-                  className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
                 />
               </div>
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
-                  htmlFor="Specialization"
-                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
-                >
-                  Specialization*
-                </label>
-                <input
-                  id="specs"
-                  type="text"
-                  placeholder="Specialization"
-                  required
-                  className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                />
-              </div>
-
-              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-                <label
-                  htmlFor="street"
+                  htmlFor="address"
                   className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
                 >
                   Address
@@ -184,314 +281,45 @@ const DoctorInformation = () => {
                   id="address"
                   type="text"
                   placeholder="Address"
-                  className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                />
-              </div>
-
-              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-                <label
-                  htmlFor="phone"
-                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
-                >
-                  Phone*
-                </label>
-                <input
-                  id="phone"
-                  type="tel"
-                  placeholder="Phone"
-                  required
-                  className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                />
-              </div>
-
-              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-                <label
-                  htmlFor="country"
-                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
-                >
-                  Country*
-                </label>
-                <select
-                  id="country"
-                  required
-                  className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                >
-                  <option value="">Select Country</option>
-                  <option value="Pakistan">Pakistan</option>
-                  <option value="Turkey">Türkiye</option>
-                  <option value="Russia">Russia</option>
-                  <option value="Germany">Germany</option>
-                  <option value="France">France</option>
-                  <option value="USA">USA</option>
-                  <option value="UK">UK</option>
-                </select>
-              </div>
-
-              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-                <label className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2">
-                  Nationality*
-                </label>
-                <select
-                  required
-                  className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                >
-                  <option value="">Select Nationality</option>
-                  <option value="Pakistani">Pakistani</option>
-                  <option value="Turkish">Turkish</option>
-                  <option value="Russian">Russian</option>
-                  <option value="German">German</option>
-                  <option value="French">French</option>
-                  <option value="American">American</option>
-                  <option value="English">English</option>
-                </select>
-              </div>
-
-              <div class="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-                <label class="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2">
-                  Gender*
-                </label>
-                <div class="flex">
-                  <input
-                    id="male"
-                    type="radio"
-                    name="gender"
-                    value="male"
-                    required
-                    class="appearance-auto border rounded py-3 px-4 leading-tight"
-                  />
-                  <label for="male" class="ml-2">
-                    Male
-                  </label>
-                  <input
-                    id="female"
-                    type="radio"
-                    name="gender"
-                    value="female"
-                    required
-                    class="appearance-auto border rounded py-3 px-4 ml-4 leading-tight"
-                  />
-                  <label for="female" class="ml-2">
-                    Female
-                  </label>
-                </div>
-              </div>
-
-              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-                <label className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2">
-                  Birth date*
-                </label>
-                <div className="flex items-center">
-                  <select
-                    id="day"
-                    required
-                    className="appearance-none block w-1/4 bg-gray text-darkgray border rounded py-3 px-4 mr-2 leading-tight focus:outline-none focus:bg-white"
-                  >
-                    <option value="">Select Day</option>
-                    <option value="01">01</option>
-                    <option value="02">02</option>
-                    <option value="03">03</option>
-                    <option value="04">04</option>
-                    <option value="05">05</option>
-                    <option value="06">06</option>
-                    <option value="07">07</option>
-                    <option value="08">08</option>
-                    <option value="09">09</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                    <option value="13">13</option>
-                    <option value="14">14</option>
-                    <option value="15">15</option>
-                    <option value="16">16</option>
-                    <option value="17">17</option>
-                    <option value="18">18</option>
-                    <option value="19">19</option>
-                    <option value="20">20</option>
-                    <option value="21">21</option>
-                    <option value="22">22</option>
-                    <option value="23">23</option>
-                    <option value="24">24</option>
-                    <option value="25">25</option>
-                    <option value="26">26</option>
-                    <option value="27">27</option>
-                    <option value="28">28</option>
-                    <option value="29">29</option>
-                    <option value="30">30</option>
-                    <option value="31">31</option>
-                  </select>
-                  <select
-                    id="month"
-                    required
-                    className="appearance-none block w-2/4 bg-gray text-darkgray border rounded py-3 px-4 mr-2 leading-tight focus:outline-none focus:bg-white"
-                  >
-                    <option value="">Select Month</option>
-                    <option value="January">January</option>
-                    <option value="February">February</option>
-                    <option value="March">March</option>
-                    <option value="April">April</option>
-                    <option value="May">May</option>
-                    <option value="June">June</option>
-                    <option value="July">July</option>
-                    <option value="August">August</option>
-                    <option value="September">September</option>
-                    <option value="October">October</option>
-                    <option value="November">November</option>
-                    <option value="December">December</option>
-                  </select>
-                  <input
-                    id="year"
-                    type="text"
-                    placeholder="Year"
-                    required
-                    className="appearance-none block w-1/4 bg-gray text-darkgray border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
-                  />
-                </div>
-              </div>
-
-              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-                <label
-                  htmlFor="name"
-                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
-                >
-                  Description*
-                </label>
-                <input
-                  id="description"
-                  type="text"
-                  placeholder="Enter Description"
-                  required
-                  className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                />
-              </div>
-
-              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-                <label className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2">
-                  Nationality*
-                </label>
-                <select
-                  required
-                  className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                >
-                  <option value="">Select Nationality</option>
-                  <option value="Pakistani">Pakistani</option>
-                  <option value="Turkish">Turkish</option>
-                  <option value="Russian">Russian</option>
-                  <option value="German">German</option>
-                  <option value="French">French</option>
-                  <option value="American">American</option>
-                  <option value="English">English</option>
-                </select>
-              </div>
-              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-                <label
-                  htmlFor="Checkup hours"
-                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
-                >
-                  Checkup hours*
-                </label>
-
-                <form className="max-w-[16rem] mx-auto grid grid-cols-2 gap-4">
-                  <div>
-                    <label
-                      for="start-time"
-                      className="block mb-2 text-sm font-medium dark:text-white"
-                    >
-                      Start time:
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 end-0 top-0 flex items-center pe-3.5 pointer-events-none">
-                        <svg
-                          className="w-4 h-4 text-gray-500 dark:text-gray-400"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            fill-rule="evenodd"
-                            d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l3 3a1 1 0 0 0 1.414-1.414L13 11.586V8Z"
-                            clip-rule="evenodd"
-                          />
-                        </svg>
-                      </div>
-                      <input
-                        type="time"
-                        id="start-time"
-                        className="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        min="09:00"
-                        max="18:00"
-                        value="00:00"
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label
-                      for="end-time"
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >
-                      End time:
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 end-0 top-0 flex items-center pe-3.5 pointer-events-none">
-                        <svg
-                          className="w-4 h-4 text-gray-500 dark:text-gray-400"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            fill-rule="evenodd"
-                            d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l3 3a1 1 0 0 0 1.414-1.414L13 11.586V8Z"
-                            clip-rule="evenodd"
-                          />
-                        </svg>
-                      </div>
-                      <input
-                        type="time"
-                        id="end-time"
-                        className="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        min="09:00"
-                        max="18:00"
-                        value="00:00"
-                        required
-                      />
-                    </div>
-                  </div>
-                </form>
-              </div>
-              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-                <label
-                  htmlFor="checkup Days"
-                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
-                >
-                  checkup Days*
-                </label>
-                <input
-                  id="checkup_Days"
-                  type="text"
-                  placeholder="Monday,tuesday..."
-                  required
-                  className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                  value={doctorData?.address || ""}
+                  onChange={handleChange}
+                  className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
                 />
               </div>
             </div>
+            <div className="flex flex-wrap -mx-3 mb-6">
+              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+                <label
+                  htmlFor="birthDate"
+                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
+                >
+                  birthDate
+                </label>
+                <input
+                  id="birthDate"
+                  type="text"
+                  placeholder="Birthdate"
+                  value={doctorData?.birthDate || ""}
+                  onChange={handleChange}
+                  className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
+                />
+              </div>
+             
+            </div>
           </fieldset>
-
-          <div className="flex gap-10 justify-center mt-2">
+          <div className="flex items-center justify-center">
             <button
+              className="bg-seablue-200 hover:bg-seablue text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              type="submit"
+            >
+              Submit
+            </button>
+            <button
+              className="ml-4 bg-darkgray-500 hover:bg-darkgray text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="button"
-              className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seablue to-seablue-200 text-white hover:font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
               onClick={handleCancel}
             >
               Cancel
-            </button>
-            <button
-              type="submit"
-              className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seablue to-seablue-200 text-white hover:font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
-            >
-              Submit
             </button>
           </div>
         </form>
