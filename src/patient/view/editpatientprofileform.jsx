@@ -1,17 +1,74 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import assets from "../../assets/images";
+import { db, auth } from "../../firebase"; 
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 
 const PatientInformation = () => {
-  const [image] = useState(null);
+  const [image, setImage] = useState(null);
   const navigate = useNavigate();
+  const [patientData, setPatientData] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchPatientData = async () => {
+      try {
+        const user = auth.currentUser;
+        if (!user) {
+          throw new Error("User not authenticated");
+        }
+        const docRef = doc(db, "Patients", user.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          setPatientData(data);
+          setImage(data.imageURL);  // Assuming imageURL is the field in the database that stores the image URL
+          console.log("Fetched patient data:", data);
+        } else {
+          console.log("No such document!");
+        }
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPatientData();
+  }, []);
 
   const handleCancel = () => {
     navigate("/patient-profile"); // Navigate to the dashboard
   };
+
   const handleImageUploadClick = () => {
     document.getElementById("file-upload").click();
   };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const user = auth.currentUser;
+      if (!user) {
+        throw new Error("User not authenticated");
+      }
+      const docRef = doc(db, "Patients", user.uid);
+      await updateDoc(docRef, patientData);
+      alert("Profile updated successfully!");
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-red">Error: {error}</div>;
+  }
 
   return (
     <div className="bg-gradient-to-r from-seagreen to-seagreen-200 font-sans">
@@ -60,11 +117,9 @@ const PatientInformation = () => {
 
       <div className="min-h-screen bg-white flex items-center justify-center">
         <form
-          action="/"
-          className="bg-white  rounded px-8 pt-6 pb-8 mb-4 w-full sm:w-auto"
+          onSubmit={handleSubmit}
+          className="bg-white rounded px-8 pt-6 pb-8 mb-4 w-full sm:w-auto"
         >
-      
-
           <fieldset className="border-t-2 border-seagreen mt-6">
             <legend>
               <h3 className="text-seagreen mb-2">Personal Details</h3>
@@ -91,7 +146,7 @@ const PatientInformation = () => {
               />
               <img
                 id="profile-image"
-                src={assets.Profile}
+                src={image || assets.Profile} // Use the fetched image URL or the default profile image
                 alt="Profile"
                 className="w-32 h-32 rounded-full object-cover"
               />
@@ -107,8 +162,7 @@ const PatientInformation = () => {
             </div>
 
             <div className="flex flex-wrap -mx-3 mb-6">
-
-            <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
                   htmlFor="name"
                   className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
@@ -118,46 +172,125 @@ const PatientInformation = () => {
                 <input
                   id="name"
                   type="text"
+                  value={patientData.name || ""}
+                  onChange={(e) =>
+                    setPatientData({ ...patientData, name: e.target.value })
+                  }
                   placeholder="Name"
                   required
-                  className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-full bg-gray text-darkgray border border-seagreen rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 />
               </div>
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
-                  htmlFor="Specialization"
+                  htmlFor="bloodGroup"
                   className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
                 >
                   Blood Group*
                 </label>
                 <input
-                  id="blood"
+                  id="bloodGroup"
                   type="text"
+                  value={patientData.bloodGroup || ""}
+                  onChange={(e) =>
+                    setPatientData({ ...patientData, bloodGroup: e.target.value })
+                  }
                   placeholder="Blood Group"
                   required
-                  className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-full bg-gray text-darkgray border border-seagreen rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 />
               </div>
+              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+                <label
+                  htmlFor="birthdate"
+                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
+                >
+                  Date of Birth*
+                </label>
+                <input
+                  id="birthdate"
+                  type="text"
+                  value={patientData.birthdate || ""}
+                  onChange={(e) =>
+                    setPatientData({ ...patientData, birthdate: e.target.value })
+                  }
+                  placeholder="YYYY-MM-DD"
+                  required
+                  className="appearance-none block w-full bg-gray text-darkgray border border-seagreen rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                />
+              </div>
+              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+                <label
+                  htmlFor="gender"
+                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
+                >
+                  Gender*
+                </label>
+                <input
+                  id="gender"
+                  type="text"
+                  value={patientData.gender || ""}
+                  onChange={(e) =>
+                    setPatientData({ ...patientData, gender: e.target.value })
+                  }
+                  placeholder="Gender"
+                  required
+                  className="appearance-none block w-full bg-gray text-darkgray border border-seagreen rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                />
+              </div>
+              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+                <label
+                  htmlFor="nationality"
+                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
+                >
+                  Nationality*
+                </label>
+                <input
+                  id="nationality"
+                  type="text"
+                  value={patientData.nationality || ""}
+                  onChange={(e) =>
+                    setPatientData({
+                      ...patientData,
+                      nationality: e.target.value,
+                    })
+                  }
+                  placeholder="Nationality"
+                  required
+                  className="appearance-none block w-full bg-gray text-darkgray border border-seagreen rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                />
+              </div>
+            </div>
+          </fieldset>
 
-              <div className="w-full px-3 mb-6">
+          <fieldset className="border-t-2 border-seagreen mt-6">
+            <legend>
+              <h3 className="text-seagreen mb-2">Address</h3>
+            </legend>
+
+            <div className="flex flex-wrap -mx-3 mb-6">
+              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
                   htmlFor="address"
                   className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
                 >
-                  Adress
+                  Address*
                 </label>
                 <input
                   id="address"
                   type="text"
+                  value={patientData.address || ""}
+                  onChange={(e) =>
+                    setPatientData({ ...patientData, address: e.target.value })
+                  }
                   placeholder="Address"
                   required
                   className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 />
               </div>
-
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
-                  htmlFor="state"
+                  htmlFor="city"
                   className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
                 >
                   City*
@@ -165,12 +298,15 @@ const PatientInformation = () => {
                 <input
                   id="city"
                   type="text"
-                  placeholder="State"
+                  value={patientData.city || ""}
+                  onChange={(e) =>
+                    setPatientData({ ...patientData, city: e.target.value })
+                  }
+                  placeholder="City"
                   required
-                  className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-full bg-gray text-darkgray border border-seagreen rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 />
               </div>
-
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
                   htmlFor="country"
@@ -181,165 +317,50 @@ const PatientInformation = () => {
                 <input
                   id="country"
                   type="text"
+                  value={patientData.country || ""}
+                  onChange={(e) =>
+                    setPatientData({ ...patientData, country: e.target.value })
+                  }
                   placeholder="Country"
                   required
-                  className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-full bg-gray text-darkgray border border-seagreen rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 />
               </div>
-
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
                   htmlFor="phone"
                   className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
                 >
-                  Phone*
+                  Phone Number*
                 </label>
                 <input
                   id="phone"
-                  type="tel"
-                  placeholder="Phone"
+                  type="text"
+                  value={patientData.phone || ""}
+                  onChange={(e) =>
+                    setPatientData({ ...patientData, phone: e.target.value })
+                  }
+                  placeholder="Phone Number"
                   required
-                  className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                  className="appearance-none block w-full bg-gray text-darkgray border border-seagreen rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 />
-              </div>
-
-              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-                <label className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2">
-                  Gender*
-                </label>
-                <div className="flex">
-                  <input
-                    id="male"
-                    type="radio"
-                    name="gender"
-                    value="male"
-                    required
-                    className="appearance-auto bg-gray text-darkgray border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
-                  />
-                  <label htmlFor="male" className="ml-2">
-                    Male
-                  </label>
-                  <input
-                    id="female"
-                    type="radio"
-                    name="gender"
-                    value="female"
-                    required
-                    className="appearance-auto bg-gray text-darkgray border rounded py-3 px-4 ml-4 leading-tight focus:outline-none focus:bg-white"
-                  />
-                  <label htmlFor="female" className="ml-2">
-                    Female
-                  </label>
-                </div>
-              </div>
-
-              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-                <label className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2">
-                  Birthdate*
-                </label>
-                <div className="flex items-center">
-                  <select
-                    id="day"
-                    required
-                    className="appearance-none block w-1/4 bg-gray text-darkgray border rounded py-3 px-4 mr-2 leading-tight focus:outline-none focus:bg-white"
-                  >
-                    <option value="">Select Day</option>
-                    <option value="01">01</option>
-                    <option value="02">02</option>
-                    <option value="03">03</option>
-                    <option value="04">04</option>
-                    <option value="05">05</option>
-                    <option value="06">06</option>
-                    <option value="07">07</option>
-                    <option value="08">08</option>
-                    <option value="09">09</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                    <option value="13">13</option>
-                    <option value="14">14</option>
-                    <option value="15">15</option>
-                    <option value="16">16</option>
-                    <option value="17">17</option>
-                    <option value="18">18</option>
-                    <option value="19">19</option>
-                    <option value="20">20</option>
-                    <option value="21">21</option>
-                    <option value="22">22</option>
-                    <option value="23">23</option>
-                    <option value="24">24</option>
-                    <option value="25">25</option>
-                    <option value="26">26</option>
-                    <option value="27">27</option>
-                    <option value="28">28</option>
-                    <option value="29">29</option>
-                    <option value="30">30</option>
-                    <option value="31">31</option>
-                  </select>
-                  <select
-                    id="month"
-                    required
-                    className="appearance-none block w-2/4 bg-gray text-darkgray border rounded py-3 px-4 mr-2 leading-tight focus:outline-none focus:bg-white"
-                  >
-                    <option value="">Select Month</option>
-                    <option value="January">January</option>
-                    <option value="February">February</option>
-                    <option value="March">March</option>
-                    <option value="April">April</option>
-                    <option value="May">May</option>
-                    <option value="June">June</option>
-                    <option value="July">July</option>
-                    <option value="August">August</option>
-                    <option value="September">September</option>
-                    <option value="October">October</option>
-                    <option value="November">November</option>
-                    <option value="December">December</option>
-                  </select>
-                  <input
-                    id="year"
-                    type="text"
-                    placeholder="Year"
-                    required
-                    className="appearance-auto block w-1/4 bg-gray text-darkgray border rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white"
-                  />
-                </div>
-              </div>
-
-              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-                <label className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2">
-                  Nationality*
-                </label>
-                <select
-                  required
-                  className="appearance-auto block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                >
-                  <option value="">Select Nationality</option>
-                  <option value="Pakistani">Pakistani</option>
-                  <option value="Turkish">Turkish</option>
-                  <option value="Russian">Russian</option>
-                  <option value="German">German</option>
-                  <option value="French">French</option>
-                  <option value="American">American</option>
-                  <option value="Canadian">Canadian</option>
-                  <option value="British">British</option>
-                </select>
               </div>
             </div>
           </fieldset>
 
-          <div className="flex gap-10 justify-center mt-2">
+          <div className="flex items-center justify-between">
             <button
+              className="bg-seagreen hover:bg-seagreen-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              type="submit"
+            >
+              Save
+            </button>
+            <button
+              className="bg-white text-seagreen font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="button"
-              className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seagreen to-seagreen-200 text-white hover:font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
               onClick={handleCancel}
             >
               Cancel
-            </button>
-            <button
-              type="submit"
-              className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seagreen to-seagreen-200 text-white hover:font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
-            >
-              Submit
             </button>
           </div>
         </form>

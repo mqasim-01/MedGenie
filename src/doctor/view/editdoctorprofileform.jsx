@@ -1,10 +1,14 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import assets from "../../assets/images";
+import { db, auth } from "../../firebase"; 
+import { doc, getDoc } from "firebase/firestore";
+
 
 const DoctorInformation = () => {
   const [image] = useState(null);
   const navigate = useNavigate();
+  
 
   const handleCancel = () => {
     navigate("/doctor-profile"); // Navigate to the dashboard
