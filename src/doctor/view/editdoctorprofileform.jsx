@@ -182,17 +182,36 @@ const DoctorInformation = () => {
               </div>
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
-                  htmlFor="country"
+                  htmlFor="gender"
                   className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
                 >
-                  Country
+                  Gender
                 </label>
                 <input
-                  id="country"
+                  id="gender"
                   type="text"
-                  placeholder="Country"
-                  value={doctorData?.country || ""}
+                  placeholder="Gender"
+                  value={doctorData?.gender || ""}
                   onChange={handleChange}
+                  className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-wrap -mx-3 mb-6">
+              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+                <label
+                  htmlFor="birthDate"
+                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
+                >
+                  Birth Date*
+                </label>
+                <input
+                  id="birthDate"
+                  type="date"
+                  value={doctorData?.birthDate || ""}
+                  onChange={handleChange}
+                  required
                   className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
                 />
               </div>
@@ -213,63 +232,51 @@ const DoctorInformation = () => {
                 />
               </div>
             </div>
-            <div className="flex flex-wrap -mx-3 mb-6">
-              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-                <label
-                  htmlFor="gender"
-                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
-                >
-                  Gender
-                </label>
-                <input
-                  id="gender"
-                  type="text"
-                  placeholder="gender"
-                  value={doctorData?.gender || ""}
-                  onChange={handleChange}
-                  className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
-                />
-              </div>
-            </div>
-            <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-                <label
-                  htmlFor="institute"
-                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
-                >
-                  Institute
-                </label>
-                <input
-                  id="institute"
-                  type="text"
-                  placeholder="institute"
-                  value={doctorData?.institute || ""}
-                  onChange={handleChange}
-                  className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
-                />
-              </div>
           </fieldset>
+
           <fieldset className="border-t-2 border-seablue-200 mt-6">
             <legend>
               <h3 className="text-seablue-200 mb-2">Contact Details</h3>
             </legend>
+
             <div className="flex flex-wrap -mx-3 mb-6">
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
                   htmlFor="phone"
                   className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
                 >
-                  Phone Number*
+                  Phone*
                 </label>
                 <input
                   id="phone"
-                  type="text"
-                  placeholder="Phone Number"
+                  type="tel"
+                  placeholder="Phone"
                   value={doctorData?.phone || ""}
                   onChange={handleChange}
                   required
                   className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
                 />
               </div>
+              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+                <label
+                  htmlFor="country"
+                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
+                >
+                  Country
+                </label>
+                <input
+                  id="country"
+                  type="text"
+                  placeholder="Country"
+                  value={doctorData?.country || ""}
+                  onChange={handleChange}
+                  className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-wrap -mx-3 mb-6">
+              
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
                   htmlFor="address"
@@ -287,41 +294,137 @@ const DoctorInformation = () => {
                 />
               </div>
             </div>
+          </fieldset>
+
+          <fieldset className="border-t-2 border-seablue-200 mt-6">
+            <legend>
+              <h3 className="text-seablue-200 mb-2">Professional Details</h3>
+            </legend>
+
             <div className="flex flex-wrap -mx-3 mb-6">
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
-                  htmlFor="birthDate"
+                  htmlFor="degree"
                   className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
                 >
-                  birthDate
+                  Degree
                 </label>
                 <input
-                  id="birthDate"
+                  id="degree"
                   type="text"
-                  placeholder="Birthdate"
-                  value={doctorData?.birthDate || ""}
+                  placeholder="Degree"
+                  value={doctorData?.degree || ""}
                   onChange={handleChange}
                   className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
                 />
               </div>
-             
+              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+                <label
+                  htmlFor="specialization"
+                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
+                >
+                  Specialization
+                </label>
+                <input
+                  id="specialization"
+                  type="text"
+                  placeholder="Specialization"
+                  value={doctorData?.specialization || ""}
+                  onChange={handleChange}
+                  className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-wrap -mx-3 mb-6">
+              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+                <label
+                  htmlFor="institute"
+                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
+                >
+                  Institute
+                </label>
+                <input
+                  id="institute"
+                  type="text"
+                  placeholder="Institute"
+                  value={doctorData?.institute || ""}
+                  onChange={handleChange}
+                  className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
+                />
+              </div>
+              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+                <label
+                  htmlFor="description"
+                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
+                >
+                  Description
+                </label>
+                <input
+                  id="description"
+                  type="text"
+                  placeholder="Description"
+                  value={doctorData?.description || ""}
+                  onChange={handleChange}
+                  className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
+                />
+              </div>
             </div>
           </fieldset>
-          <div className="flex items-center justify-center">
+
+          <fieldset className="border-t-2 border-seablue-200 mt-6">
+            <legend>
+              <h3 className="text-seablue-200 mb-2">Checkup Timing</h3>
+            </legend>
+
+            <div className="flex flex-wrap -mx-3 mb-6">
+              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+                <label
+                  htmlFor="checkupStartTime"
+                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
+                >
+                  Checkup Start Time
+                </label>
+                <input
+                  id="checkupStartTime"
+                  type="time"
+                  value={doctorData?.checkupStartTime || ""}
+                  onChange={handleChange}
+                  className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
+                />
+              </div>
+              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+                <label
+                  htmlFor="checkupEndTime"
+                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
+                >
+                  Checkup End Time
+                </label>
+                <input
+                  id="checkupEndTime"
+                  type="time"
+                  value={doctorData?.checkupEndTime || ""}
+                  onChange={handleChange}
+                  className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
+                />
+              </div>
+            </div>
+            <div className="flex gap-10 justify-center mt-2">
             <button
-              className="bg-seablue-200 hover:bg-seablue text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="submit"
-            >
-              Submit
-            </button>
-            <button
-              className="ml-4 bg-darkgray-500 hover:bg-darkgray text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="button"
+              className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seablue to-seablue-200 text-white hover:font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
               onClick={handleCancel}
             >
               Cancel
             </button>
+            <button
+              type="submit"
+              className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seablue to-seablue-200 text-white hover:font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+            >
+              Submit
+            </button>
           </div>
+          </fieldset>
         </form>
       </div>
     </div>
