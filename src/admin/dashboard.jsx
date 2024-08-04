@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import DoctorList from '../components/doctorsdata';
 import PatientList from '../components/patientdata';
-
+import AppointmentList from '../components/AppointmentList'; // Correct import
 
 function AdminDashboard() {
   const [activeSection, setActiveSection] = useState(null);
@@ -95,7 +95,7 @@ function AdminDashboard() {
             <div className="flex-1 py-10">
               {activeSection === 'doctors' && <DoctorList key="doctors" />}
               {activeSection === 'patients' && <PatientList key="patients" />}
-              {/* {activeSection === 'appointments' && < key="appointments" />} */}
+              {activeSection === 'appointments' && <AppointmentList key="appointments" />}
             </div>
           </div>
         )}

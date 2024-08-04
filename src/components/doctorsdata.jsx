@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { db } from "../firebase"; 
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, addDoc, getDoc, doc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 import assets from "../assets/images";
 
 const DoctorList = () => {
@@ -43,6 +44,43 @@ const DoctorList = () => {
     }
   };
 
+  const bookAppointment = async (doctor) => {
+    try {
+      const auth = getAuth();
+      const currentUser = auth.currentUser;
+      if (!currentUser) {
+        alert("You need to be logged in to book an appointment.");
+        return;
+      }
+
+      // Fetch patient data
+      const patientDocRef = doc(db, "Patients", currentUser.uid);
+      const patientDocSnap = await getDoc(patientDocRef);
+      if (!patientDocSnap.exists()) {
+        alert("Patient data not found.");
+        return;
+      }
+      const patientData = patientDocSnap.data();
+
+      // Prepare appointment data
+      const appointmentData = {
+        patientId: currentUser.uid,
+        patientName: patientData.name,
+        doctorId: doctor.id,
+        doctorName: doctor.name,
+        status: "Pending",
+      };
+
+      // Add appointment to Firestore
+      await addDoc(collection(db, "appointments"), appointmentData);
+      closeModal();
+      alert("Appointment request sent to the admin.");
+    } catch (error) {
+      console.error("Error booking appointment: ", error);
+      alert("Failed to book appointment. Please try again.");
+    }
+  };
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
@@ -72,9 +110,7 @@ const DoctorList = () => {
                 <span className="text-sm text-gray-500 dark:text-gray-400">
                   <span className="font-semibold">Gender: </span> {doctor.gender}
                 </span>
-                <span className="text-sm text-gray-500 dark:text-gray-400">
-                  <span className="font-semibold">Phone Number: </span> {doctor.phone}
-                </span>
+
                 <span className="text-sm text-gray-500 dark:text-gray-400">
                   <span className="font-semibold">Specialization: </span>{doctor.specialization}
                 </span>
@@ -110,8 +146,6 @@ const DoctorList = () => {
               alt="profile"
             />
             <p className="text-base mb-2"><span className="font-semibold">Gender:</span> {selectedDoctor.gender}</p>
-            <p className="text-base mb-2"><span className="font-semibold">Email:</span> {selectedDoctor.email}</p>
-            <p className="text-base mb-2"><span className="font-semibold">Phone Number:</span> {selectedDoctor.phone}</p>
             <p className="text-base mb-2"><span className="font-semibold">Study:</span> {selectedDoctor.degree} - {selectedDoctor.specialization}</p>
             <p className="text-base mb-2"><span className="font-semibold">Institution:</span> {selectedDoctor.institute}</p>
             <p className="text-base mb-2"><span className="font-semibold">Country:</span> {selectedDoctor.country}</p>
@@ -128,10 +162,7 @@ const DoctorList = () => {
               </button>
               <button
                 className="px-4 py-2 bg-gradient-to-r from-seagreen to-seagreen-200 text-white rounded-lg"
-                onClick={() => {
-                  // Add any additional functionality for the new button here
-                  console.log("Additional action");
-                }}
+                onClick={() => bookAppointment(selectedDoctor)}
               >
                 Book Appointment
               </button>
