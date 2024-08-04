@@ -33,7 +33,7 @@ function PatientDashboard() {
         {activeSection && (
           <div className="flex flex-col md:flex-row items-center w-full px-4">
             <button
-              className="bg-blue-500 text-black p-4 mb-6 border rounded-lg shadow-lg transition-transform duration-300 ease-out transform hover:scale-105 md:mr-4"
+              className="text-black p-4 mb-6 border rounded-lg shadow-sm hover:shadow-darkgray transition-transform duration-300 ease-out transform hover:scale-105 md:mr-4"
               onClick={handleBackClick}
             >
               Back

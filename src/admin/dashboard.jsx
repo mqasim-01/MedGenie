@@ -78,7 +78,7 @@ function AdminDashboard() {
             className="bg-white p-8 m-4 text-center border-4 border-r-seablue border-l-seagreen border-t-seablue-200 border-b-seagreen-200 shadow-lg rounded-lg w-full max-w-5xl transition-transform duration-300 ease-out transform hover:scale-105"
             onClick={() => setActiveSection('appointments')}
           >
-            <h2 className="text-xl font-semibold mb-4">Appointment Applications</h2>
+            <h2 className="text-xl font-semibold mb-4">Appointment Requests</h2>
           </button>
         )}
 
