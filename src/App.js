@@ -4,6 +4,7 @@ import Footer from './components/footer';
 import LandingPage from './components/landingpage';
 
 
+
 function App() {
 
   return (
@@ -12,7 +13,6 @@ function App() {
       <LandingPage/>
 
       <Footer />
-
       
 
     </div>

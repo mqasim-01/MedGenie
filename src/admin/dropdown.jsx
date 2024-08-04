@@ -35,7 +35,7 @@ const AdminDropdown = () => {
             <img
               alt="user"
               className="w-full rounded-full align-middle border-none shadow-lg"
-              src={assets.Emily}
+              src={assets.Profile}
             />
           </span>
           
