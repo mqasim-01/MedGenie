@@ -374,7 +374,7 @@ export default function AddDoctorInformation() {
                   id="days"
                   type="text"
                   value={days}
-                  onChange={(e) => setGender(e.target.value)}
+                  onChange={(e) => setDays(e.target.value)}
                   placeholder="monday, tuesday..."
                   required
                   className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
