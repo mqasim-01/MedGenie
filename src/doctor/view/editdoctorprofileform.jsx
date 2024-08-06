@@ -23,7 +23,7 @@ const DoctorInformation = () => {
 
         if (docSnap.exists()) {
           setDoctorData(docSnap.data());
-          setImage(docSnap.data().profileImage || assets.Profile); // Assuming profileImage is the URL of the image
+          setImage(docSnap.data().photo || assets.Profile); // Assuming profileImage is the URL of the image
         } else {
           console.log("No such document!");
         }
@@ -174,7 +174,7 @@ const DoctorInformation = () => {
                   id="name"
                   type="text"
                   placeholder="Name"
-                  value={doctorData?.name || ""}
+                  value={doctorData?.name || "not added yet"}
                   onChange={handleChange}
                   required
                   className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
@@ -191,7 +191,7 @@ const DoctorInformation = () => {
                   id="gender"
                   type="text"
                   placeholder="Gender"
-                  value={doctorData?.gender || ""}
+                  value={doctorData?.gender || "not added yet"}
                   onChange={handleChange}
                   className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
                 />
@@ -209,7 +209,7 @@ const DoctorInformation = () => {
                 <input
                   id="birthDate"
                   type="date"
-                  value={doctorData?.birthDate || ""}
+                  value={doctorData?.birthDate || "not added yet"}
                   onChange={handleChange}
                   required
                   className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
@@ -226,7 +226,7 @@ const DoctorInformation = () => {
                   id="nationality"
                   type="text"
                   placeholder="Nationality"
-                  value={doctorData?.nationality || ""}
+                  value={doctorData?.nationality || "not added yet"}
                   onChange={handleChange}
                   className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
                 />
@@ -251,7 +251,7 @@ const DoctorInformation = () => {
                   id="phone"
                   type="tel"
                   placeholder="Phone"
-                  value={doctorData?.phone || ""}
+                  value={doctorData?.phone || "not added yet"}
                   onChange={handleChange}
                   required
                   className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
@@ -268,7 +268,7 @@ const DoctorInformation = () => {
                   id="country"
                   type="text"
                   placeholder="Country"
-                  value={doctorData?.country || ""}
+                  value={doctorData?.country || "not added yet"}
                   onChange={handleChange}
                   className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
                 />
@@ -288,7 +288,7 @@ const DoctorInformation = () => {
                   id="address"
                   type="text"
                   placeholder="Address"
-                  value={doctorData?.address || ""}
+                  value={doctorData?.address || "not added yet"}
                   onChange={handleChange}
                   className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
                 />
@@ -313,7 +313,7 @@ const DoctorInformation = () => {
                   id="degree"
                   type="text"
                   placeholder="Degree"
-                  value={doctorData?.degree || ""}
+                  value={doctorData?.degree || "not added yet"}
                   onChange={handleChange}
                   className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
                 />
@@ -329,7 +329,7 @@ const DoctorInformation = () => {
                   id="specialization"
                   type="text"
                   placeholder="Specialization"
-                  value={doctorData?.specialization || ""}
+                  value={doctorData?.specialization || "not added yet"}
                   onChange={handleChange}
                   className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
                 />
@@ -348,7 +348,7 @@ const DoctorInformation = () => {
                   id="institute"
                   type="text"
                   placeholder="Institute"
-                  value={doctorData?.institute || ""}
+                  value={doctorData?.institute || "not added yet"}
                   onChange={handleChange}
                   className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
                 />
@@ -364,7 +364,7 @@ const DoctorInformation = () => {
                   id="description"
                   type="text"
                   placeholder="Description"
-                  value={doctorData?.description || ""}
+                  value={doctorData?.description || "not added yet"}
                   onChange={handleChange}
                   className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
                 />
@@ -374,7 +374,7 @@ const DoctorInformation = () => {
 
           <fieldset className="border-t-2 border-seablue-200 mt-6">
             <legend>
-              <h3 className="text-seablue-200 mb-2">Checkup Timing</h3>
+              <h3 className="text-seablue-200 mb-2">Checkup Details</h3>
             </legend>
 
             <div className="flex flex-wrap -mx-3 mb-6">
@@ -388,7 +388,7 @@ const DoctorInformation = () => {
                 <input
                   id="checkupStartTime"
                   type="time"
-                  value={doctorData?.checkupStartTime || ""}
+                  value={doctorData?.checkupStartTime || "not added yet"}
                   onChange={handleChange}
                   className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
                 />
@@ -403,7 +403,22 @@ const DoctorInformation = () => {
                 <input
                   id="checkupEndTime"
                   type="time"
-                  value={doctorData?.checkupEndTime || ""}
+                  value={doctorData?.checkupEndTime || "not added yet"}
+                  onChange={handleChange}
+                  className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
+                />
+              </div>
+              <div className="w-full px-3 mb-6 md:w-full md:mb-0">
+                <label
+                  htmlFor="checkupDays"
+                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
+                >
+                  Checkup Days
+                </label>
+                <input
+                  id="checkupDays"
+                  type="text"
+                  value={doctorData?.days || "not added yet"}
                   onChange={handleChange}
                   className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
                 />

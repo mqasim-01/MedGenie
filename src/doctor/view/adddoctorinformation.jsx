@@ -18,6 +18,7 @@ export default function AddDoctorInformation() {
   const [description, setDescription] = useState("");
   const [checkupStartTime, setCheckupStartTime] = useState("");
   const [checkupEndTime, setCheckupEndTime] = useState("");
+  const [days, setDays] = useState("");
   const navigate = useNavigate();
 
   const handleCancel = () => {
@@ -48,6 +49,7 @@ export default function AddDoctorInformation() {
         description,
         checkupStartTime,
         checkupEndTime,
+        days,
         photo: image || "",
       });
 
@@ -356,6 +358,24 @@ export default function AddDoctorInformation() {
                   type="time"
                   value={checkupEndTime}
                   onChange={(e) => setCheckupEndTime(e.target.value)}
+                  required
+                  className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                />
+              </div>
+
+              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+                <label
+                  htmlFor="gender"
+                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
+                >
+                  Checkup Days*
+                </label>
+                <input
+                  id="days"
+                  type="text"
+                  value={days}
+                  onChange={(e) => setGender(e.target.value)}
+                  placeholder="monday, tuesday..."
                   required
                   className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 />
