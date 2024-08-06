@@ -9,6 +9,8 @@ const DoctorList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isPatient, setIsPatient] = useState(false);
   const modalRef = useRef(null);
 
   useEffect(() => {
@@ -28,6 +30,35 @@ const DoctorList = () => {
     };
 
     fetchDoctors();
+  }, []);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const auth = getAuth();
+      const user = auth.currentUser;
+      if (user) {
+        setIsAuthenticated(true);
+
+        // Fetch patient data to check if the logged-in user is a patient
+        const patientDocRef = doc(db, "Patients", user.uid);
+        const patientDocSnap = await getDoc(patientDocRef);
+        if (patientDocSnap.exists()) {
+          const patientData = patientDocSnap.data();
+          if (patientData.role === "Patient") {
+            setIsPatient(true);
+          } else {
+            setIsPatient(false);
+          }
+        } else {
+          setIsPatient(false);
+        }
+      } else {
+        setIsAuthenticated(false);
+        setIsPatient(false);
+      }
+    };
+
+    checkAuth();
   }, []);
 
   const handleDoctorClick = (doctor) => {
@@ -160,12 +191,14 @@ const DoctorList = () => {
               >
                 Close
               </button>
-              <button
-                className="px-4 py-2 bg-gradient-to-r from-seagreen to-seagreen-200 text-white rounded-lg"
-                onClick={() => bookAppointment(selectedDoctor)}
-              >
-                Book Appointment
-              </button>
+              {isPatient && (
+                <button
+                  className="px-4 py-2 bg-gradient-to-r from-seagreen to-seagreen-200 text-white rounded-lg"
+                  onClick={() => bookAppointment(selectedDoctor)}
+                >
+                  Book Appointment
+                </button>
+              )}
             </div>
           </div>
         </div>
