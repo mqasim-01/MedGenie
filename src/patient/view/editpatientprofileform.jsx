@@ -13,6 +13,7 @@ const PatientInformation = () => {
 
   useEffect(() => {
     const fetchPatientData = async () => {
+      
       try {
         const user = auth.currentUser;
         if (!user) {
@@ -22,10 +23,8 @@ const PatientInformation = () => {
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
-          const data = docSnap.data();
-          setPatientData(data);
-          setImage(data.imageURL);  // Assuming imageURL is the field in the database that stores the image URL
-          console.log("Fetched patient data:", data);
+          setPatientData(docSnap.data());
+          setImage(docSnap.data().photo || assets.Profile); // Assuming profileImage is the URL of the image
         } else {
           console.log("No such document!");
         }
@@ -39,6 +38,14 @@ const PatientInformation = () => {
     fetchPatientData();
   }, []);
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-red">Error: {error}</div>;
+  }
+
   const handleCancel = () => {
     navigate("/patient-profile"); // Navigate to the dashboard
   };
@@ -47,28 +54,35 @@ const PatientInformation = () => {
     document.getElementById("file-upload").click();
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
       const user = auth.currentUser;
       if (!user) {
         throw new Error("User not authenticated");
       }
       const docRef = doc(db, "Patients", user.uid);
-      await updateDoc(docRef, patientData);
-      alert("Profile updated successfully!");
+      await updateDoc(docRef, patientData, { merge: true });
+      alert("Profile updated successfully");
     } catch (err) {
       setError(err.message);
     }
   };
+  
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div className="text-red">Error: {error}</div>;
-  }
 
   return (
     <div className="bg-gradient-to-r from-seagreen to-seagreen-200 font-sans">
@@ -131,22 +145,11 @@ const PatientInformation = () => {
                 id="file-upload"
                 className="hidden"
                 accept="image/*"
-                onChange={(e) => {
-                  // Handle image upload here
-                  const file = e.target.files[0];
-                  if (file) {
-                    const reader = new FileReader();
-                    reader.onloadend = () => {
-                      document.getElementById("profile-image").src =
-                        reader.result;
-                    };
-                    reader.readAsDataURL(file);
-                  }
-                }}
+                onChange={handleImageChange}
               />
               <img
                 id="profile-image"
-                src={image || assets.Profile} // Use the fetched image URL or the default profile image
+                src={image} // Use the fetched image URL or the default profile image
                 alt="Profile"
                 className="w-32 h-32 rounded-full object-cover"
               />
