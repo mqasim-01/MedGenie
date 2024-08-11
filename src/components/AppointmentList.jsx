@@ -32,6 +32,7 @@ const Popup = ({ onClose, doctorId, appointmentId, updateAppointmentStatus }) =>
   const [timeSlots, setTimeSlots] = useState([]);
   const [selectedDay, setSelectedDay] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
 
   useEffect(() => {
     const fetchDoctorData = async () => {
@@ -57,8 +58,8 @@ const Popup = ({ onClose, doctorId, appointmentId, updateAppointmentStatus }) =>
   }, [doctorId]);
 
   const confirmAppointment = async () => {
-    if (!selectedDay || !selectedTime) {
-      alert("Please select a day and time.");
+    if (!selectedDay || !selectedTime ||!selectedDate) {
+      alert("Please select a day, date and time.");
       return;
     }
 
@@ -69,6 +70,7 @@ const Popup = ({ onClose, doctorId, appointmentId, updateAppointmentStatus }) =>
         confirmedAt: serverTimestamp(),
         selectedDay,
         selectedTime,
+        selectedDate
       });
       alert("Appointment confirmed.");
       updateAppointmentStatus(appointmentId, "Confirmed"); // Update parent state
@@ -102,6 +104,24 @@ const Popup = ({ onClose, doctorId, appointmentId, updateAppointmentStatus }) =>
             ))}
           </select>
         </div>
+
+        <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+                <label
+                  htmlFor="Date"
+                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
+                >
+                  Select Date*
+                </label>
+                <input
+                  id="Select_Date"
+                  type="date"
+                  value={selectedDate}
+                  onChange={(e) => setSelectedDate(e.target.value)}
+                  required
+                  className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                />
+              </div>
+
 
         <div className="mb-4">
           <label htmlFor="time" className="block text-sm font-medium mb-2">

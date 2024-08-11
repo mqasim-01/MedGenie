@@ -18,6 +18,7 @@ import PatientProfile from './patient/view/patientprofile';
 import AddDoctorInformation from './doctor/view/adddoctorinformation';
 import AddPatientInformation from './patient/view/addpatientinformation';
 import AdminDashboard from './admin/dashboard';
+import ChatScreen from './components/ChatComponent';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -83,6 +84,10 @@ let allroutes = createBrowserRouter(
       path:'/patient-addinformation',
       element:<AddPatientInformation/>
     },
+    {
+      path:'/chat/:appointmentId' ,
+      element:<ChatScreen/>
+    }
   ]
 )
 root.render(
