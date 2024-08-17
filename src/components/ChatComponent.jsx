@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { db, auth } from '../firebase';
+import { db, auth, storage } from '../firebase';
 import { doc, getDoc, setDoc, updateDoc, arrayUnion, onSnapshot } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { useParams } from 'react-router-dom';
+import { FaPaperclip } from 'react-icons/fa'; // FontAwesome for the upload icon
 
 function ChatScreen() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
-  const { chatId } = useParams(); // Ensure chatId is fetched from the URL parameters
+  const [file, setFile] = useState(null);
+  const { chatId } = useParams();
 
   useEffect(() => {
     if (!chatId) {
@@ -24,19 +27,34 @@ function ChatScreen() {
       }
     });
 
-    return () => unsubscribe(); // Cleanup on unmount
+    return () => unsubscribe(); 
   }, [chatId]);
 
   const handleSendMessage = async () => {
-    if (newMessage.trim() === '' || !chatId) return;
+    if (newMessage.trim() === '' && !file) return;
 
     const chatDocRef = doc(db, 'chats', chatId);
     const now = new Date();
+    let fileURL = null;
+
+    if (file) {
+      const storageRef = ref(storage, `chat_files/${chatId}/${file.name}`);
+      try {
+        const snapshot = await uploadBytes(storageRef, file);
+        fileURL = await getDownloadURL(snapshot.ref);
+        setFile(null); 
+      } catch (error) {
+        console.error('Error uploading file: ', error);
+        return;
+      }
+    }
+
     const messageObject = {
-      text: newMessage,
+      text: newMessage || (file ? file.name : ''),
       senderId: auth.currentUser.uid,
       timestamp: now,
       formattedTime: `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`,
+      fileURL: fileURL || null,
     };
 
     try {
@@ -50,15 +68,21 @@ function ChatScreen() {
           messages: [messageObject]
         });
       }
-      setNewMessage(''); // Clear input field
+      setNewMessage(''); 
     } catch (error) {
       console.error('Error sending message: ', error);
     }
   };
 
+  const handleFileChange = (e) => {
+    if (e.target.files[0]) {
+      setFile(e.target.files[0]);
+    }
+  };
+
   return (
-    <div className="chat-screen bg-gray p-4 rounded shadow">
-      <div className="messages-list overflow-y-auto h-80">
+    <div className="chat-screen flex flex-col h-screen bg-gray-100">
+      <div className="messages-list flex-grow overflow-y-auto p-4">
         {messages.length === 0 ? (
           <p>No messages yet.</p>
         ) : (
@@ -72,21 +96,37 @@ function ChatScreen() {
                 textAlign: msg.senderId === auth.currentUser.uid ? 'right' : 'left',
               }}
             >
-              <span>{msg.text}</span>
+              {msg.fileURL ? (
+                <a href={msg.fileURL} target="_blank" rel="noopener noreferrer" className="text-blue-700">
+                  {msg.text || 'Download File'}
+                </a>
+              ) : (
+                <span>{msg.text}</span>
+              )}
               <br />
               <small className="text-gray-500">{msg.formattedTime}</small>
             </div>
           ))
         )}
       </div>
-      <div className="chat-input mt-4 flex">
-        <input
-          type="text"
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          placeholder="Type a message..."
-          className="flex-grow p-2 border rounded-l-md"
-        />
+      <div className="chat-input mt-4 flex p-4">
+        <div className="relative flex-grow">
+          <input
+            type="text"
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            placeholder="Type a message..."
+            className="w-full p-2 border rounded-l-md pr-10"
+          />
+          <label className="absolute right-2 top-2 cursor-pointer">
+            <FaPaperclip className="text-gray-500" />
+            <input
+              type="file"
+              onChange={handleFileChange}
+              className="hidden"
+            />
+          </label>
+        </div>
         <button
           onClick={handleSendMessage}
           className="bg-blue-500 text-black p-2 rounded-r-md"
