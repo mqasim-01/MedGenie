@@ -5,6 +5,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import DoctorList from '../components/doctorsdata';
 import PatientList from '../components/patientdata';
 import AppointmentList from '../components/AppointmentList'; // Correct import
+import assets from '../assets/images';
 
 function AdminDashboard() {
   const [activeSection, setActiveSection] = useState(null);
@@ -21,7 +22,7 @@ function AdminDashboard() {
           {/* Brand */}
           <a
             className="text-white text-lg shadow-sm uppercase hidden lg:inline-block font-semibold"
-            href=""
+            
             onClick={(e) => e.preventDefault()}
           >
             Dashboard
@@ -50,37 +51,54 @@ function AdminDashboard() {
       </nav>
 
       {/* Main Content */}
-      <main className="flex flex-col items-center justify-center min-h-screen bg-gray-100 py-10">
+      <main className="flex flex-col items-center justify-center min-h-screen bg-gray py-10">
         {/* Conditional Rendering of Buttons */}
         {activeSection === null && (
-          <div className="flex flex-col md:flex-row w-full max-w-5xl px-4">
+          <div className="flex flex-col md:flex-row w-full max-w-6xl px-4">
             {/* Section 1 */}
             <button 
-              className="bg-white text-center p-8 m-4 border-4 border-seablue shadow-lg rounded-lg flex-1 transition-transform duration-300 ease-out transform hover:scale-105"
+              className="bg-white p-8 m-4 border-2 border-darkgray shadow-2xl hover:border-4 hover:shadow-2xl hover:shadow-darkgray rounded-lg flex-1 transition-transform duration-300 ease-out transform hover:scale-105 flex flex-col items-center justify-center"
               onClick={() => setActiveSection('doctors')}
             >
+              <img
+                src={assets.Doctor}
+                alt="doctors"
+                className="w-80 p-6 mt-6"
+              />
               <h2 className="text-xl font-semibold mb-4">Registered Doctors</h2>
             </button>
 
             {/* Section 2 */}
             <button 
-              className="bg-white text-center p-8 m-4 border-4 border-seagreen shadow-lg rounded-lg flex-1 transition-transform duration-300 ease-out transform hover:scale-105"
+              className="bg-white p-8 m-4 border-2 border-darkgray shadow-2xl hover:border-4 hover:shadow-2xl hover:shadow-darkgray rounded-lg flex-1 transition-transform duration-300 ease-out transform hover:scale-105 flex flex-col items-center justify-center"
               onClick={() => setActiveSection('patients')}
             >
+              <img
+                src={assets.Patient}
+                alt="doctors"
+                className="w-80 p-6 mt-6"
+              />
               <h2 className="text-xl font-semibold mb-4">Registered Patients</h2>
             </button>
+
+            {/* Section 3 */}
+        
+          <button 
+            className="bg-white p-8 m-4 border-2 border-darkgray shadow-2xl hover:border-4 hover:shadow-2xl hover:shadow-darkgray rounded-lg flex-1 transition-transform duration-300 ease-out transform hover:scale-105 flex flex-col items-center justify-center"
+            onClick={() => setActiveSection('appointments')}
+          >
+            <img
+                src={assets.Appointment}
+                alt="doctors"
+                className="w-80 p-6 mt-6"
+              />
+            <h2 className="text-xl font-semibold mb-4">Appointment Requests</h2>
+          </button>
           </div>
         )}
 
-        {/* Section 3 */}
-        {activeSection === null && (
-          <button 
-            className="bg-white p-8 m-4 text-center border-4 border-r-seablue border-l-seagreen border-t-seablue-200 border-b-seagreen-200 shadow-lg rounded-lg w-full max-w-5xl transition-transform duration-300 ease-out transform hover:scale-105"
-            onClick={() => setActiveSection('appointments')}
-          >
-            <h2 className="text-xl font-semibold mb-4">Appointment Requests</h2>
-          </button>
-        )}
+        
+       
 
         {/* Conditional Rendering of Components */}
         {activeSection && (

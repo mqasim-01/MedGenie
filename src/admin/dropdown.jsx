@@ -1,8 +1,7 @@
 import React from "react";
 import { createPopper } from "@popperjs/core";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faCog, faSignOutAlt, faBell } from '@fortawesome/free-solid-svg-icons';
-import { Link } from "react-router-dom";
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import assets from "../assets/images";
 
 const AdminDropdown = () => {

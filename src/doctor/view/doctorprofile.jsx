@@ -137,7 +137,7 @@ export default function DoctorProfile() {
                       {doctorData?.checkupStartTime || "starttime"}{doctorData?.checkupEndTime || "endtime"}
                       </p>
                       <p>
-                        days
+                      {doctorData?.days || "CheckUp Days"}
                       </p>
                     </div>
                   </div>

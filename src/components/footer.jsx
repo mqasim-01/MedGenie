@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="w-full flex flex-col md:flex-row py-6">
           <div className="flex-1 mb-6 text-center md:text-left">
             <a
-              href="#"
+              
               className="flex items-center justify-center md:justify-start text-pink-600 no-underline hover:no-underline font-bold text-2xl lg:text-4xl"
             >
               <img src={assets.Logo} alt="logo" className="h-8 mr-2" />
@@ -20,7 +20,7 @@ const Footer = () => {
             <ul className="list-reset mb-6">
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
                 <a
-                  href="#"
+                  
                   className="no-underline hover:underline text-gray-800 hover:text-pink-500"
                 >
                   FAQ
@@ -28,7 +28,7 @@ const Footer = () => {
               </li>
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
                 <a
-                  href="#"
+                  
                   className="no-underline hover:underline text-gray-800 hover:text-pink-500"
                 >
                   Help
@@ -36,7 +36,7 @@ const Footer = () => {
               </li>
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
                 <a
-                  href="#"
+                  
                   className="no-underline hover:underline text-gray-800 hover:text-pink-500"
                 >
                   Support
@@ -49,7 +49,7 @@ const Footer = () => {
             <ul className="list-reset mb-6">
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
                 <a
-                  href="#"
+                  
                   className="no-underline hover:underline text-gray-800 hover:text-pink-500"
                 >
                   Terms
@@ -57,7 +57,7 @@ const Footer = () => {
               </li>
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
                 <a
-                  href="#"
+                  
                   className="no-underline hover:underline text-gray-800 hover:text-pink-500"
                 >
                   Privacy
@@ -70,7 +70,7 @@ const Footer = () => {
             <ul className="list-reset mb-6">
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
                 <a
-                  href="#"
+                  
                   className="no-underline hover:underline text-gray-800 hover:text-pink-500"
                 >
                   Facebook
@@ -78,7 +78,7 @@ const Footer = () => {
               </li>
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
                 <a
-                  href="#"
+                  
                   className="no-underline hover:underline text-gray-800 hover:text-pink-500"
                 >
                   Linkedin
@@ -86,7 +86,7 @@ const Footer = () => {
               </li>
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
                 <a
-                  href="#"
+                  
                   className="no-underline hover:underline text-gray-800 hover:text-pink-500"
                 >
                   Twitter
@@ -99,7 +99,7 @@ const Footer = () => {
             <ul className="list-reset mb-6">
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
                 <a
-                  href="#"
+                  
                   className="no-underline hover:underline text-gray-800 hover:text-pink-500"
                 >
                   Official Blog
@@ -107,7 +107,7 @@ const Footer = () => {
               </li>
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
                 <a
-                  href="#"
+                  
                   className="no-underline hover:underline text-gray-800 hover:text-pink-500"
                 >
                   About Us
@@ -115,7 +115,7 @@ const Footer = () => {
               </li>
               <li className="mt-2 inline-block mr-2 md:block md:mr-0">
                 <a
-                  href="#"
+                  
                   className="no-underline hover:underline text-gray-800 hover:text-pink-500"
                 >
                   Contact

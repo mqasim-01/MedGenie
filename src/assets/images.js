@@ -11,7 +11,8 @@ const assets = {
     ChatBot: require('./chatbot.png'),
     Doctor: require('./doctor.png'),
     Patient: require('./patient.png'),
-    Profile: require('./profile.png')
+    Profile: require('./profile.png'),
+    
 }
 
 export default assets;

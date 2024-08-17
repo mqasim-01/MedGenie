@@ -53,7 +53,7 @@ const LandingPage = () => {
             <Link to='/'>
               <div className="flex items-center">
                 <img src={assets.Logo} alt="logo" className="h-8 mr-2" />
-                <a className={`text-${scrollNav ? 'black' : 'white'} no-underline hover:no-underline font-bold text-2xl lg:text-4xl`} href="#">
+                <a className={`text-${scrollNav ? 'black' : 'white'} no-underline hover:no-underline font-bold text-2xl lg:text-4xl`} >
                   MedGinie
                 </a>
               </div>
@@ -66,13 +66,13 @@ const LandingPage = () => {
             <div className={`w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 ${scrollNav ? 'bg-white' : 'bg-transparent'} text-${scrollNav ? 'black' : 'white'} p-4 lg:p-0 z-20`} id="nav-content">
               <ul className="list-reset lg:flex justify-end flex-1 items-center">
                 <li className="mr-4">
-                  <a className={`inline-block py-2 px-4 text-${scrollNav ? 'black' : 'white'} font-bold no-underline`} href="#">Home</a>
+                  <a className={`inline-block py-2 px-4 text-${scrollNav ? 'black' : 'white'} font-bold no-underline`} >Home</a>
                 </li>
                 <li className="mr-4">
-                  <a className={`inline-block text-${scrollNav ? 'black' : 'white'} no-underline hover:text-gray-800 hover:text-underline py-2 px-4`} href="#">Services</a>
+                  <a className={`inline-block text-${scrollNav ? 'black' : 'white'} no-underline hover:text-gray-800 hover:text-underline py-2 px-4`} >Services</a>
                 </li>
                 <li className="mr-4">
-                  <a className={`inline-block text-${scrollNav ? 'black' : 'white'} no-underline hover:text-gray-800 hover:text-underline py-2 px-4`} href="#">Contact Us</a>
+                  <a className={`inline-block text-${scrollNav ? 'black' : 'white'} no-underline hover:text-gray-800 hover:text-underline py-2 px-4`} >Contact Us</a>
                 </li>
               </ul>
               <button

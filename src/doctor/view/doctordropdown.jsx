@@ -30,7 +30,7 @@ const DoctorDropdown = ({ userDetails, handleLogout }) => {
     <>
       <a
         className="text-blueGray-500 block relative"
-        href="#"
+        
         ref={btnDropdownRef}
         onClick={(e) => {
           e.preventDefault();
