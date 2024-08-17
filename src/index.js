@@ -85,7 +85,7 @@ let allroutes = createBrowserRouter(
       element:<AddPatientInformation/>
     },
     {
-      path:'/chat/:appointmentId' ,
+      path:'/chat/:chatId' ,
       element:<ChatScreen/>
     }
   ]

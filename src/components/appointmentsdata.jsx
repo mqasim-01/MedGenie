@@ -58,7 +58,7 @@ function AppointmentsData() {
   const handleStartChat = async (appointment) => {
     const chatId = `${appointment.patientId}_${appointment.doctorId}`;
     const chatRef = doc(db, 'chats', chatId);
-
+  
     // Check if the chat already exists
     const chatDoc = await getDoc(chatRef);
     if (!chatDoc.exists()) {
@@ -67,11 +67,10 @@ function AppointmentsData() {
         messages: []
       });
     }
-
+  
     // Navigate to the chat page with the chat ID
     navigate(`/chat/${chatId}`);
   };
-
   return (
     <div className="appointments-list">
       {appointments.length === 0 ? (

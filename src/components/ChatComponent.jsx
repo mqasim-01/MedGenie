@@ -1,49 +1,56 @@
 import React, { useEffect, useState } from 'react';
-import { db, auth } from '../firebase'; // Import your Firebase setup
+import { db, auth } from '../firebase';
 import { doc, getDoc, setDoc, updateDoc, arrayUnion, onSnapshot } from 'firebase/firestore';
+import { useParams } from 'react-router-dom';
 
-function ChatScreen({ appointmentId, doctorId, patientId, userRole }) {
+function ChatScreen() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
-  const chatId = `${doctorId}_${patientId}`;
+  const { chatId } = useParams(); // Ensure chatId is fetched from the URL parameters
 
   useEffect(() => {
-    // Fetch and listen to messages in real-time
+    if (!chatId) {
+      console.error('Chat ID is undefined');
+      return;
+    }
+
     const chatDocRef = doc(db, 'chats', chatId);
-    
+
     const unsubscribe = onSnapshot(chatDocRef, (doc) => {
       if (doc.exists()) {
         setMessages(doc.data().messages || []);
+      } else {
+        console.error('Chat document does not exist');
       }
     });
 
-    return () => unsubscribe(); // Cleanup subscription on unmount
+    return () => unsubscribe(); // Cleanup on unmount
   }, [chatId]);
 
   const handleSendMessage = async () => {
-    if (newMessage.trim() === '') return;
+    if (newMessage.trim() === '' || !chatId) return;
 
     const chatDocRef = doc(db, 'chats', chatId);
+    const now = new Date();
     const messageObject = {
       text: newMessage,
-      senderId: auth.currentUser.uid, // The current user's ID
-      timestamp: new Date(), // Use the server timestamp
+      senderId: auth.currentUser.uid,
+      timestamp: now,
+      formattedTime: `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`,
     };
 
     try {
       const chatDoc = await getDoc(chatDocRef);
       if (chatDoc.exists()) {
-        // If chat document exists, update the messages array
         await updateDoc(chatDocRef, {
           messages: arrayUnion(messageObject)
         });
       } else {
-        // If chat document doesn't exist, create it with the first message
         await setDoc(chatDocRef, {
           messages: [messageObject]
         });
       }
-      setNewMessage(''); // Clear the input field
+      setNewMessage(''); // Clear input field
     } catch (error) {
       console.error('Error sending message: ', error);
     }
@@ -65,7 +72,9 @@ function ChatScreen({ appointmentId, doctorId, patientId, userRole }) {
                 textAlign: msg.senderId === auth.currentUser.uid ? 'right' : 'left',
               }}
             >
-              {msg.text}
+              <span>{msg.text}</span>
+              <br />
+              <small className="text-gray-500">{msg.formattedTime}</small>
             </div>
           ))
         )}
