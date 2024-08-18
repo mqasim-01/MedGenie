@@ -126,7 +126,7 @@ const DoctorList = () => {
           {doctors.map((doctor) => (
             <div
               key={doctor.id}
-              className="w-[300px] h-[300px] max-w-sm rounded-lg border border-gray-200 bg-white shadow-sm hover:shadow-darkgray transition-transform duration-300 ease-out transform hover:scale-105 cursor-pointer"
+              className="w-[300px] h-[300px] max-w-sm rounded-lg border bg-white shadow-sm hover:shadow-darkgray transition-transform duration-300 ease-out transform hover:scale-105 cursor-pointer"
               onClick={() => handleDoctorClick(doctor)}
             >
               <div className="flex flex-col items-center p-4">

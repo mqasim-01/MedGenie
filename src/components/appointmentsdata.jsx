@@ -72,22 +72,26 @@ function AppointmentsData() {
     navigate(`/chat/${chatId}`);
   };
   return (
-    <div className="appointments-list">
+    <div className='py-6'>
+      <h1 className="text-3xl text-center font-bold mb-4">Appoinmtments List</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {appointments.length === 0 ? (
         <p>No appointments found.</p>
       ) : (
         appointments.map(appointment => (
-          <div key={appointment.id} className="appointment-item bg-white p-4 rounded shadow mb-4">
-            <h3 className="text-lg font-semibold">
-              Appointment with {role === 'Doctor' ? `Patient: ${appointment.patientName}` : `Doctor: ${appointment.doctorName}`}
+          <div key={appointment.id} className="bg-white p-6 rounded shadow-lg border-seablue border-2 hover:shadow-xl transition-transform duration-300 ease-out hover:scale-105">
+            <h3 className="text-lg text-center font-semibold mb-2">
+              {role === 'Doctor' ? `Patient Name: ${appointment.patientName}` : `Doctor Name: ${appointment.doctorName}`}
             </h3>
-            <p>Time: {appointment.selectedTime}</p>
-            <p>Day: {appointment.selectedDay}</p>
-            <p>Date: {appointment.selectedDate}</p>
-            <p>Status: {appointment.status}</p>
+            <p><span className='font-semibold'>Time:</span> {appointment.selectedTime}</p>
+            <p><span className='font-semibold'>Day:</span> {appointment.selectedDay}</p>
+            <p><span className='font-semibold'>Date:</span> {appointment.selectedDate}</p>
+            <p><span className='font-semibold'>Status:</span> {appointment.status}</p>
             <button 
               onClick={() => handleStartChat(appointment)} 
-              className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seablue to-seablue-200 text-white hover:font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+              className={`mt-4 rounded-full py-2 px-6 shadow-lg focus:outline-none focus:shadow-outline transform transition duration-300 ease-in-out 
+              ${role === 'Doctor' ? 'bg-gradient-to-r from-seablue to-seablue-200 text-white hover:underline' : 'bg-gradient-to-r from-seagreen to-seagreen-200 text-white hover:underline'}
+              hover:scale-105`}
             >
               Start Chat
             </button>
@@ -95,7 +99,9 @@ function AppointmentsData() {
         ))
       )}
     </div>
+    </div>
   );
+  
 }
 
 export default AppointmentsData;
