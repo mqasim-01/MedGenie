@@ -144,13 +144,13 @@ const Popup = ({ onClose, doctorId, appointmentId, updateAppointmentStatus }) =>
 
         <div className="flex gap-4">
           <button
-            className="px-4 py-2 bg-darkgray text-white rounded-lg"
+            className="px-4 py-2 bg-gradient-to-r from-seagreen to-seagreen-200 text-white rounded-lg"
             onClick={onClose}
           >
             Close
           </button>
           <button
-            className="px-4 py-2 bg-darkgray text-white rounded-lg"
+            className="px-4 py-2 bg-gradient-to-r from-seagreen to-seagreen-200 text-white rounded-lg"
             onClick={confirmAppointment}
             disabled={!selectedDay || !selectedTime}
           >
@@ -226,7 +226,7 @@ const AppointmentList = () => {
           {appointments.map((appointment) => (
             <div
               key={appointment.id}
-              className="border p-4 rounded-lg shadow-md bg-white transition-transform duration-300 ease-out hover:scale-105"
+              className="border p-4 rounded-lg shadow-md"
             >
               <p>
                 <span className="font-semibold">Patient Name:</span>{" "}
