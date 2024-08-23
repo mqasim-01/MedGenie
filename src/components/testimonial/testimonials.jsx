@@ -38,12 +38,12 @@ const testimonialsData = [
 const Testimonials = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  // Function to handle next slide
+  
   const nextSlide = () => {
       setCurrentSlide((currentSlide + 1) % testimonialsData.length);
   };
 
-  // Function to handle previous slide
+  
   const prevSlide = () => {
       setCurrentSlide((currentSlide - 1 + testimonialsData.length) % testimonialsData.length);
   };
@@ -51,7 +51,7 @@ const Testimonials = () => {
   useEffect(() => {
       const interval = setInterval(() => {
           setCurrentSlide((currentSlide + 1) % testimonialsData.length);
-      }, 2500); // Change slide every 2.5 seconds
+      }, 2500); 
 
       return () => clearInterval(interval);
   }, [currentSlide]);
@@ -73,17 +73,17 @@ const Testimonials = () => {
                   </div>
                   {/* Left arrow button */}
                   <button
-                      className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
+                      className="absolute left-0 top-1/2 transform -translate-y-1/2 font-bold py-2 px-4 rounded-l"
                       onClick={prevSlide}
-                      style={{ left: 0, transform: 'translateY(-50%)' }}
+                     
                   >
                       &#8249;
                   </button>
                   {/* Right arrow button */}
                   <button
-                      className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r"
+                      className="absolute right-0 top-1/2 transform -translate-y-1/2 font-bold py-2 px-4 rounded-r"
                       onClick={nextSlide}
-                      style={{ right: 0, transform: 'translateY(-50%)' }}
+                      
                   >
                       &#8250;
                   </button>

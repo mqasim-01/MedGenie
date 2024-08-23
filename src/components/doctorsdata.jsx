@@ -186,7 +186,7 @@ const DoctorList = () => {
             <p className="text-base mb-2"><span className="font-semibold">Check up timing:</span> {selectedDoctor.checkupStartTime} to {selectedDoctor.checkupEndTime}</p>
             <div className="flex justify-center space-x-4 mt-6">
               <button
-                className="px-4 py-2 bg-gradient-to-r from-seagreen to-seagreen-200 text-white rounded-lg"
+                className={`px-4 py-2 ${isPatient ? 'bg-gradient-to-r from-seagreen to-seagreen-200' : 'bg-black'} text-white rounded-lg`}
                 onClick={closeModal}
               >
                 Close

@@ -3,6 +3,8 @@ import assets from "../../assets/images";
 import { Link } from "react-router-dom";
 import { db, auth } from "../../firebase"; 
 import { doc, getDoc } from "firebase/firestore";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 export default function PatientProfile() {
   const [patientData, setPatientData] = useState(null);
@@ -57,6 +59,9 @@ export default function PatientProfile() {
               id="blackOverlay"
               className="w-full h-full absolute opacity-50 bg-black"
             ></span>
+             <Link to="/patientdashboard" className="absolute top-4 left-4 text-white">
+              <FontAwesomeIcon icon={faArrowLeft} size="2x" />
+            </Link>
           </div>
           <div
             className="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden"
@@ -94,31 +99,32 @@ export default function PatientProfile() {
                     </div>
                   </div>
                 </div>
-                <div className="text-center mt-20">
-                  <h3 className="text-4xl font-semibold leading-normal text-gray-800 mb-2">
-                    {patientData?.name || "Name"}
+                <div className="text-center p-6 mt-20">
+                  <h3 className="text-4xl font-semibold uppercase leading-normal text-black mb-2">
+                    {patientData?.name || "not provided"}
                   </h3>
-                  <div className="text-sm leading-normal mt-0 mb-2 text-gray-500 font-bold uppercase">
-                    <i className="fas fa-map-marker-alt mr-2 text-lg text-gray-500"></i>{" "}
-                    {patientData?.address || "Address"}
-                  </div>
-                  <div className="text-sm leading-normal mt-0 mb-2 text-gray-500 font-bold uppercase">
-                    <i className="fas fa-phone-alt mr-2 text-lg text-gray-500"></i>{" "}
-                    {patientData?.phone || "Phone Number"}
-                  </div>
-                  <div className="text-sm leading-normal mt-0 mb-2 text-gray-500 font-bold uppercase">
-                    <i className="fas fa-flag mr-2 text-lg text-gray-500"></i>{" "}
-                    {patientData?.nationality || "Nationality"}
-                  </div>
-                  <div className="mb-2 text-gray-700 mt-10">
-                    <i className="fas fa-tint mr-2 text-lg text-gray-500"></i>
-                    {patientData?.bloodGroup || "Blood Group"}
-                  </div>
-                  <div className="mb-2 text-gray-700">
-                    <i className="fas fa-genderless mr-2 text-lg text-gray-500"></i>
-                    {patientData?.gender || "Gender"}
-                  </div>
+                  
                 </div>
+                <div className="text-start pl-20"><div className="text-base leading-normal mt-2 mb-2 text-darkgray">
+                    <i className="fas fa-map-marker-alt mr-2 font-bold uppercase text-darkgray">Address:</i>{" "}
+                    {patientData?.address || "not provided"}
+                  </div>
+                  <div className="text-base leading-normal mt-0 mb-2 text-darkgray uppercase">
+                    <i className="fas fa-phone-alt mr-2 text-darkgray font-bold">Phone Number:</i>{" "}
+                    {patientData?.phone || "not provided"}
+                  </div>
+                  <div className="text-base leading-normal mt-0 mb-2 text-darkgray uppercase">
+                    <i className="fas fa-flag mr-2 text-darkgray font-bold">Nationality:</i>{" "}
+                    {patientData?.nationality || "not provided"}
+                  </div>
+                  <div className="mb-2 mt-10 text-base">
+                    <i className="fas fa-tint mr-2 text-darkgray font-bold">Blood Group:</i>
+                    {patientData?.bloodGroup || "not provided"}
+                  </div>
+                  <div className="mb-2 text-base">
+                    <i className="fas fa-genderless mr-2 text-darkgray font-bold">Gender:</i>
+                    {patientData?.gender || "not provided"}
+                  </div></div>
                 <div className="mt-10 py-10 border-t border-gray-300 text-center flex justify-center">
                   <div className="py-6 px-3 sm:mx-2">
                     <Link to="/patient-addinformation">

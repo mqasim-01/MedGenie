@@ -1,23 +1,37 @@
 import React from "react";
 import { createPopper } from "@popperjs/core";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 import assets from "../assets/images";
+import AddNewAdmin from "./addadmin"; // Import the new component
 
 const AdminDropdown = () => {
   // dropdown props
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
+  const [showAddAdminPopup, setShowAddAdminPopup] = React.useState(false);
   const btnDropdownRef = React.createRef();
   const popoverDropdownRef = React.createRef();
+
   const openDropdownPopover = () => {
     createPopper(btnDropdownRef.current, popoverDropdownRef.current, {
       placement: "bottom-end"
     });
     setDropdownPopoverShow(true);
   };
+
   const closeDropdownPopover = () => {
     setDropdownPopoverShow(false);
   };
+
+  const openAddAdminPopup = () => {
+    setShowAddAdminPopup(true);
+    closeDropdownPopover(); // Close dropdown when opening popup
+  };
+
+  const closeAddAdminPopup = () => {
+    setShowAddAdminPopup(false);
+  };
+
   return (
     <>
       <a
@@ -37,7 +51,6 @@ const AdminDropdown = () => {
               src={assets.Profile}
             />
           </span>
-          
         </div>
       </a>
       <div
@@ -49,14 +62,24 @@ const AdminDropdown = () => {
         style={{ minWidth: "12rem" }}
       >
         <div className="flex flex-col">
-          
-          
+          <button 
+            onClick={openAddAdminPopup}
+            className="flex items-center px-4 py-1 text-left hover:bg-gray-200 rounded-b"
+          >
+            <FontAwesomeIcon icon={faPlus} className="mr-2" />
+            Add Admin
+          </button>
+
+          <hr className="my-2 md:min-w-full" />
           <button className="flex items-center px-4 py-2 text-left hover:bg-gray-200 rounded-b">
             <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />
             Logout
           </button>
         </div>
       </div>
+
+      {/* Conditionally render the AddNewAdmin component */}
+      {showAddAdminPopup && <AddNewAdmin closePopup={closeAddAdminPopup} />}
     </>
   );
 };

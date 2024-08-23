@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "../../firebase"; // Adjust the path as needed
+import { auth, db } from "../../firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -56,8 +56,8 @@ function PatientSignInForm() {
 
   return (
     <div className="h-[100vh] items-center bg-gray flex justify-center px-5 lg:px-0">
-      <div className="max-w-screen-xl bg-gradient-to-tr from-gray to-seagreen-200 border-2 shadow shadow-darkgray sm:rounded-lg flex justify-center flex-1">
-        <div className="flex-1 bg-seagreen text-center hidden md:flex">
+      <div className="max-w-screen-xl bg-gradient-to-tr from-gray to-seagreen-200 shadow-lg shadow-darkgray sm:rounded-lg flex justify-center flex-1">
+        <div className="flex-1 bg-seagreen rounded hidden md:flex">
           <div
             className="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat"
             style={{

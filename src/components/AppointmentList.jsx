@@ -82,7 +82,7 @@ const Popup = ({ onClose, doctorId, appointmentId, updateAppointmentStatus }) =>
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+    <div className="fixed inset-0 flex items-center justify-center z-50">
       <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
         <h2 className="text-2xl font-bold mb-4">Confirmation Details</h2>
 
@@ -92,7 +92,7 @@ const Popup = ({ onClose, doctorId, appointmentId, updateAppointmentStatus }) =>
           </label>
           <select
             id="days"
-            className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+            className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-darkgray sm:text-sm"
             value={selectedDay}
             onChange={(e) => setSelectedDay(e.target.value)}
           >
@@ -129,7 +129,7 @@ const Popup = ({ onClose, doctorId, appointmentId, updateAppointmentStatus }) =>
           </label>
           <select
             id="time"
-            className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+            className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-darkgray sm:text-sm"
             value={selectedTime}
             onChange={(e) => setSelectedTime(e.target.value)}
           >
@@ -144,13 +144,13 @@ const Popup = ({ onClose, doctorId, appointmentId, updateAppointmentStatus }) =>
 
         <div className="flex gap-4">
           <button
-            className="px-4 py-2 bg-gradient-to-r from-seagreen to-seagreen-200 text-white rounded-lg"
+            className="px-4 py-2 bg-darkgray text-white rounded-lg"
             onClick={onClose}
           >
             Close
           </button>
           <button
-            className="px-4 py-2 bg-gradient-to-r from-seagreen to-seagreen-200 text-white rounded-lg"
+            className="px-4 py-2 bg-darkgray text-white rounded-lg"
             onClick={confirmAppointment}
             disabled={!selectedDay || !selectedTime}
           >

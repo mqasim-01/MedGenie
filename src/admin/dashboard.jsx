@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import DoctorList from '../components/doctorsdata';
 import PatientList from '../components/patientdata';
-import AppointmentList from '../components/AppointmentList'; // Correct import
+import AppointmentList from '../components/AppointmentList';
 import assets from '../assets/images';
 
 function AdminDashboard() {
