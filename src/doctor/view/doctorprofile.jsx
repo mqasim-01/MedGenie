@@ -10,30 +10,34 @@ export default function DoctorProfile() {
   const [doctorData, setDoctorData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
-    const fetchPatientData = async () => {
-      try {
-        const user = auth.currentUser;
-        if (!user) {
-          throw new Error("User not authenticated");
-        }
-        const docRef = doc(db, "Doctors", user.uid);
-        const docSnap = await getDoc(docRef);
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        setAuthenticated(true);
+        try {
+          const docRef = doc(db, "Doctors", user.uid);
+          const docSnap = await getDoc(docRef);
 
-        if (docSnap.exists()) {
-          setDoctorData(docSnap.data());
-        } else {
-          console.log("No such document!");
+          if (docSnap.exists()) {
+            setDoctorData(docSnap.data());
+          } else {
+            console.log("No such document!");
+          }
+        } catch (err) {
+          setError(err.message);
+        } finally {
+          setLoading(false);
         }
-      } catch (err) {
-        setError(err.message);
-      } finally {
+      } else {
+        setError("User not authenticated");
         setLoading(false);
       }
-    };
+    });
 
-    fetchPatientData();
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
   }, []);
 
   if (loading) {
@@ -133,7 +137,7 @@ export default function DoctorProfile() {
                       {doctorData?.days || "not provided"}
                     </div>
                     <div className="mb-2 ">
-                      <i className="fas fa-university mr-2 font-bold text-darkgray">CheckUp Timmings:</i>
+                      <i className="fas fa-university mr-2 font-bold text-darkgray">CheckUp Timings:</i>
                       {doctorData?.checkupStartTime || "not provided"} to {doctorData?.checkupEndTime || "not provided"}
                     </div>
                     <div className="mb-2 ">

@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import assets from "../../assets/images";
-import { db, auth } from "../../firebase";
+import { db, auth, storage } from "../../firebase";
 import { doc, getDoc, setDoc } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const DoctorInformation = () => {
   const [image, setImage] = useState(null);
@@ -53,16 +56,28 @@ const DoctorInformation = () => {
     document.getElementById('file-upload').click();
   };
 
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result);
-      };
-      reader.readAsDataURL(file);
+      try {
+  
+        const fileName = 'profile_image.jpg';
+        const storageRef = ref(storage, `Doctors_profile_images/${auth.currentUser.uid}/${fileName}`);
+
+        const uploadResult = await uploadBytes(storageRef, file);
+
+        const downloadURL = await getDownloadURL(uploadResult.ref);
+  
+        setImage(downloadURL);
+        setDoctorData((prevData) => ({ ...prevData, photo: downloadURL }));
+  
+      } catch (err) {
+       
+        setError(err.message);
+      }
     }
   };
+  
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -86,6 +101,12 @@ const DoctorInformation = () => {
 
   return (
     <div className="bg-gradient-to-r from-seablue to-seablue-200 font-sans">
+      <button
+        onClick={() => navigate(-1)}
+        className="absolute top-4 left-4 p-10 text-white focus:outline-none"
+      >
+        <FontAwesomeIcon icon={faArrowLeft} size="2x" />
+      </button>
       <h3 className="w-full my-1 pt-10 text-5xl font-bold leading-tight text-center text-white">
         Profile Information
       </h3>

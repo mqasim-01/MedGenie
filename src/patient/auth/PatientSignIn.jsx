@@ -56,7 +56,7 @@ function PatientSignInForm() {
 
   return (
     <div className="h-[100vh] items-center bg-gray flex justify-center px-5 lg:px-0">
-      <div className="max-w-screen-xl bg-gradient-to-tr from-gray to-seagreen-200 shadow-lg shadow-darkgray sm:rounded-lg flex justify-center flex-1">
+      <div className="max-w-screen-xl bg-gradient-to-tr from-gray to-seagreen-200 border-2 shadow shadow-darkgray sm:rounded-lg flex justify-center flex-1">
         <div className="flex-1 bg-seagreen rounded hidden md:flex">
           <div
             className="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat"

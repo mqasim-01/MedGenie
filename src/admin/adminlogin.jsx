@@ -57,10 +57,10 @@ function AdminLogin() {
     <div className="flex min-h-screen flex-col justify-center bg-gray py-6 sm:py-12">
       <div className="relative py-3 sm:mx-auto sm:max-w-xl">
         <div className="absolute inset-0 -skew-y-6 transform bg-gradient-to-r from-seagreen to-seablue-200 shadow-lg sm:-rotate-6 sm:skew-y-0 sm:rounded-3xl"></div>
-        <div className="relative bg-white px-4 py-10 shadow-lg sm:rounded-3xl sm:p-20">
+        <div className="relative bg-white px-4 py-10 shadow-lg sm:rounded-3xl sm:p-12 md:p-16 lg:p-20">
           <div className="mx-auto max-w-md">
             <div>
-              <h1 className="text-center text-2xl font-semibold">
+              <h1 className="text-center text-2xl font-semibold sm:text-3xl">
                 Admin Login
               </h1>
             </div>
@@ -68,17 +68,18 @@ function AdminLogin() {
               <div className="space-y-4 py-8 text-base leading-6 text-gray-700 sm:text-lg sm:leading-7">
                 <div className="relative">
                   <input
-                    autocomplete="off"
+                    autoComplete="off"
                     id="email"
                     name="email"
                     type="text"
                     value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                    className="focus:borer-rose-600 peer h-10 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none"
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="peer h-12 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:border-rose-600 focus:outline-none sm:text-lg"
                     placeholder=""
+                    aria-label="Email Address"
                   />
                   <label
-                    for="email"
+                    htmlFor="email"
                     className="peer-placeholder-shown:text-gray-440 absolute -top-3.5 left-0 text-sm text-gray-600 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-gray-600"
                   >
                     Email Address
@@ -86,17 +87,18 @@ function AdminLogin() {
                 </div>
                 <div className="relative">
                   <input
-                    autocomplete="off"
+                    autoComplete="off"
                     id="password"
                     name="password"
                     type="password"
                     value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                    className="focus:borer-rose-600 peer h-10 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none"
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="peer h-12 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:border-rose-600 focus:outline-none sm:text-lg"
                     placeholder=""
+                    aria-label="Password"
                   />
                   <label
-                    for="password"
+                    htmlFor="password"
                     className="peer-placeholder-shown:text-gray-440 absolute -top-3.5 left-0 text-sm text-gray-600 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-gray-600"
                   >
                     Password
@@ -104,8 +106,9 @@ function AdminLogin() {
                 </div>
                 <div className="relative">
                   <button 
-                  onClick={handleLogin}
-                  className="rounded-md bg-gradient-to-r from-seagreen to-seablue-200 px-2 py-1 text-white hover:underline">
+                    onClick={handleLogin}
+                    className="w-full rounded-md bg-gradient-to-r from-seagreen to-seablue-200 px-4 py-2 text-white hover:underline focus:outline-none sm:py-3"
+                  >
                     Submit
                   </button>
                 </div>

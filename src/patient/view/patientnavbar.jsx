@@ -46,41 +46,41 @@ export default function PatientNavbar() {
 
   return (
     <>
-      {/* Navbar */}
-      <nav className="absolute top-0 left-0 w-full z-10 bg-gradient-to-r from-seagreen-200 to-seagreen md:flex-row md:flex-nowrap md:justify-start flex items-center p-4">
-        <div className="w-full mx-auto items-center flex justify-between md:flex-nowrap flex-wrap md:px-10 px-4">
-          {/* Brand */}
-          <a
-            className="text-white text-lg shadow-sm uppercase hidden lg:inline-block font-semibold"
-            href="#pablo"
-            onClick={(e) => e.preventDefault()}
-          >
-            Dashboard
-          </a>
-          {/* Form */}
-          <form className="md:flex hidden flex-row flex-wrap items-center lg:ml-auto mr-3 relative">
-            <div className="relative flex w-full flex-wrap items-stretch">
-              <input
-                type="text"
-                placeholder="Search here..."
-                className="border-0 px-3 py-3 placeholder-darkgray relative bg-gray rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10"
-              />
-              <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                <FontAwesomeIcon
-                  icon={faSearch}
-                  className="text-blueGray-300"
-                />
-              </span>
-            </div>
-          </form>
-          {/* User */}
-          <ul className="flex-col md:flex-row list-none items-center hidden md:flex">
-            <PatientDropdown userDetails={userDetails} handleLogout={handleLogout} />
-          </ul>
+  {/* Navbar */}
+  <nav className="absolute top-0 left-0 w-full z-10 bg-gradient-to-r from-seagreen-200 to-seagreen flex flex-col md:flex-row md:items-center md:justify-between p-4">
+    <div className="w-full flex flex-col md:flex-row md:items-center md:justify-between">
+      {/* Brand */}
+      <a
+        className="text-white text-lg shadow-sm lg:pl-6 uppercase font-semibold md:ml-0 mb-2 md:mb-0"
+        href="#"
+        onClick={(e) => e.preventDefault()}
+      >
+        Dashboard
+      </a>
+
+      {/* Form */}
+      <form className="flex flex-col md:flex-row items-center md:ml-auto mb-2 md:mb-0 w-full md:w-auto relative">
+        <div className="relative flex w-full items-stretch">
+          <input
+            type="text"
+            placeholder="Search here..."
+            className="border-0 px-3 py-3 placeholder-darkgray bg-gray rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10"
+          />
+          <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+            <FontAwesomeIcon icon={faSearch} className="text-blueGray-300" />
+          </span>
         </div>
-      </nav>
-      {/* End Navbar */}
-      <ToastContainer />
-    </>
+      </form>
+
+      {/* User */}
+      <ul className="flex flex-col md:flex-row list-none items-center w-full md:w-auto mt-2 md:mt-0 pr-4 pl-6">
+        <PatientDropdown userDetails={userDetails} handleLogout={handleLogout} />
+      </ul>
+    </div>
+  </nav>
+  {/* End Navbar */}
+  <ToastContainer />
+</>
+
   );
 }

@@ -3,6 +3,8 @@ import assets from "../../assets/images";
 import { useNavigate } from "react-router-dom";
 import { db, auth } from "../../firebase"; // Adjust the path if necessary
 import { doc, updateDoc } from "firebase/firestore";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 export default function AddPatientInformation() {
   const [image, setImage] = useState(null);
@@ -78,6 +80,12 @@ export default function AddPatientInformation() {
 
   return (
     <div className="bg-gradient-to-r from-seagreen to-seagreen-200 font-sans">
+      <button
+        onClick={() => navigate(-1)}
+        className="absolute top-4 left-4 p-10 text-white focus:outline-none"
+      >
+        <FontAwesomeIcon icon={faArrowLeft} size="2x" />
+      </button>
       <h3 className="w-full my-1 pt-10 text-5xl font-bold leading-tight text-center text-white">
         Add Personal Information
       </h3>

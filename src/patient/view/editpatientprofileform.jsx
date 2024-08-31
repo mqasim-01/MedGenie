@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import assets from "../../assets/images";
-import { db, auth } from "../../firebase"; 
+import { db, auth, storage } from "../../firebase"; 
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const PatientInformation = () => {
   const [image, setImage] = useState(null);
@@ -54,17 +57,27 @@ const PatientInformation = () => {
     document.getElementById("file-upload").click();
   };
 
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result);
-      };
-      reader.readAsDataURL(file);
+      try {
+  
+        const fileName = 'profile_image.jpg';
+        const storageRef = ref(storage, `Patients_profile_images/${auth.currentUser.uid}/${fileName}`);
+
+        const uploadResult = await uploadBytes(storageRef, file);
+
+        const downloadURL = await getDownloadURL(uploadResult.ref);
+  
+        setImage(downloadURL);
+        setPatientData((prevData) => ({ ...prevData, photo: downloadURL }));
+  
+      } catch (err) {
+       
+        setError(err.message);
+      }
     }
   };
-
 
 
   const handleSubmit = async (e) => {
@@ -86,6 +99,12 @@ const PatientInformation = () => {
 
   return (
     <div className="bg-gradient-to-r from-seagreen to-seagreen-200 font-sans">
+      <button
+        onClick={() => navigate(-1)}
+        className="absolute top-4 left-4 p-10 text-white focus:outline-none"
+      >
+        <FontAwesomeIcon icon={faArrowLeft} size="2x" />
+      </button>
       <h3 className="w-full my-1 pt-10 text-5xl font-bold leading-tight text-center text-white">
         Profile Information
       </h3>
@@ -351,19 +370,19 @@ const PatientInformation = () => {
             </div>
           </fieldset>
 
-          <div className="flex items-center justify-between">
+          <div className="flex gap-10 justify-center mt-2">
             <button
-              className="bg-seagreen hover:bg-seagreen-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="submit"
-            >
-              Save
-            </button>
-            <button
-              className="bg-white text-seagreen font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="button"
+              className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seagreen to-seagreen-200 text-white hover:font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
               onClick={handleCancel}
             >
               Cancel
+            </button>
+            <button
+              type="submit"
+              className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seagreen to-seagreen-200 text-white hover:font-bold rounded-full mt-4 lg:mt-0 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+            >
+              Submit
             </button>
           </div>
         </form>

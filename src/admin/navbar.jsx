@@ -15,7 +15,7 @@ export default function Adminnavbar() {
             href=""
             onClick={e => e.preventDefault()}
           >
-            Dashboard
+            Dashboardghfhgf
           </a>
           {/* Form */}
           <form className="md:flex hidden flex-row flex-wrap items-center lg:ml-auto mr-3 relative">
