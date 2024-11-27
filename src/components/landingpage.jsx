@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import assets from "../assets/images";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom"; 
+import { Link as ScrollLink } from "react-scroll"; 
 import Testimonials from "./testimonial/testimonials";
 import Services from "./services";
 
@@ -62,7 +63,7 @@ const LandingPage = () => {
           }`}
         >
           <div className="w-full container mx-auto flex flex-wrap items-center justify-between py-4 px-6">
-            <Link to="/">
+            <RouterLink to="/">
               <div className="flex items-center">
                 <img src={assets.Logo} alt="logo" className="h-8 mr-2" />
                 <a
@@ -73,7 +74,7 @@ const LandingPage = () => {
                   MedGinie
                 </a>
               </div>
-            </Link>
+            </RouterLink>
             <div className="block lg:hidden pr-4">
               <button
                 id="nav-toggle"
@@ -108,13 +109,14 @@ const LandingPage = () => {
                   </a>
                 </li>
                 <li className="mr-4">
-                  <a
-                    className={`inline-block text-${
-                      scrollNav ? "black" : "white"
-                    } no-underline hover:text-gray-800 hover:text-underline py-2 px-4`}
+                  <ScrollLink
+                    to="services"
+                    smooth={true}
+                    duration={500}
+                    className={`inline-block text-${scrollNav ? "black" : "white"} no-underline hover:text-gray-800 hover:text-underline py-2 px-4`}
                   >
                     Services
-                  </a>
+                  </ScrollLink>
                 </li>
                 <li className="mr-4">
                   <a
@@ -211,7 +213,7 @@ const LandingPage = () => {
             </g>
           </svg>
 
-          <div>
+          <div id="services">
             <Services />
           </div>
 
@@ -271,16 +273,16 @@ const LandingPage = () => {
                   Sign In As
                 </h2>
                 <div className="flex gap-4">
-                  <Link to="/patient-signin">
+                  <RouterLink to="/patient-signin">
                     <button className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seablue to-seablue-200 text-white hover:font-bold rounded-full my-6 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-100 duration-300 ease-in-out">
                       Patient
                     </button>
-                  </Link>
-                  <Link to="/doctor-signin">
+                  </RouterLink>
+                  <RouterLink to="/doctor-signin">
                     <button className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seablue-200 to-seablue text-white hover:font-bold rounded-full my-6 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-100 duration-300 ease-in-out">
                       Doctor
                     </button>
-                  </Link>
+                  </RouterLink>
                 </div>
               </>
             )}
@@ -290,16 +292,16 @@ const LandingPage = () => {
                   Sign Up As
                 </h2>
                 <div className="flex gap-4">
-                  <Link to="/patient-signup">
+                  <RouterLink to="/patient-signup">
                     <button className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seablue to-seablue-200 text-white hover:font-bold rounded-full my-6 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-100 duration-300 ease-in-out">
                       Patient
                     </button>
-                  </Link>
-                  <Link to="/doctor-signup">
+                  </RouterLink>
+                  <RouterLink to="/doctor-signup">
                     <button className="mx-auto lg:mx-0 hover:underline bg-gradient-to-r from-seablue-200 to-seablue text-white hover:font-bold rounded-full my-6 py-3 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-100 duration-300 ease-in-out">
                       Doctor
                     </button>
-                  </Link>
+                  </RouterLink>
                 </div>
               </>
             )}
