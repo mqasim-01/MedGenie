@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import assets from "../assets/images";
-import { Link as RouterLink } from "react-router-dom"; 
-import { Link as ScrollLink } from "react-scroll"; 
+import { Link as RouterLink } from "react-router-dom";
+import { Link as ScrollLink } from "react-scroll";
 import Testimonials from "./testimonial/testimonials";
 import Services from "./services";
 
@@ -101,6 +101,7 @@ const LandingPage = () => {
               <ul className="list-reset lg:flex justify-end flex-1 items-center">
                 <li className="mr-4">
                   <a
+                    href="/"
                     className={`inline-block py-2 px-4 text-${
                       scrollNav ? "black" : "white"
                     } font-bold no-underline`}
@@ -113,19 +114,21 @@ const LandingPage = () => {
                     to="services"
                     smooth={true}
                     duration={500}
-                    className={`inline-block text-${scrollNav ? "black" : "white"} no-underline hover:text-gray-800 hover:text-underline py-2 px-4`}
+                    className={`inline-block text-${
+                      scrollNav ? "black" : "white"
+                    } no-underline hover:text-gray-800 hover:text-underline py-2 px-4`}
                   >
                     Services
                   </ScrollLink>
                 </li>
                 <li className="mr-4">
-                  <a
+                  <RouterLink
+                    to="/contactform"
                     className={`inline-block text-${
                       scrollNav ? "black" : "white"
                     } no-underline hover:text-gray-800 hover:text-underline py-2 px-4`}
-                  >
-                    Contact Us
-                  </a>
+                  
+                  >Contact Us</RouterLink>
                 </li>
               </ul>
               <button

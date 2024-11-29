@@ -19,6 +19,7 @@ import AddDoctorInformation from './doctor/view/adddoctorinformation';
 import AddPatientInformation from './patient/view/addpatientinformation';
 import AdminDashboard from './admin/dashboard';
 import ChatScreen from './components/ChatComponent';
+import ContactSection from './components/contactform';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -87,6 +88,10 @@ let allroutes = createBrowserRouter(
     {
       path:'/chat/:chatId' ,
       element:<ChatScreen/>
+    },
+    {
+      path:'/contactform',
+      element:<ContactSection/>
     }
   ]
 )
