@@ -3,9 +3,17 @@ import PatientNavbar from "./view/patientnavbar";
 import DoctorList from "../components/doctorsdata";
 import AppointmentsData from "../components/appointmentsdata";
 import assets from "../assets/images";
+import Chatbot from "../components/chatbot";
+import { useNavigate } from 'react-router-dom';
 
 function PatientDashboard() {
   const [activeSection, setActiveSection] = useState(null);
+  const navigate = useNavigate();
+
+  const handleSectionChange = (section) => {
+    setActiveSection(section); 
+    navigate(`/patientdashboard/${section}`);
+  };
 
   const handleBackClick = () => {
     setActiveSection(null);
@@ -47,9 +55,10 @@ function PatientDashboard() {
             </button>
 
             {/* View Appointments Section */}
+            
             <button
               className="bg-white p-8 m-4 border-2 border-seagreen shadow-2xl hover:border-4 hover:shadow-2xl hover:shadow-darkgray rounded-lg flex-1 transition-transform duration-300 ease-out transform hover:scale-105 flex flex-col items-center justify-center"
-              onClick={() => setActiveSection("")}
+              onClick={() => handleSectionChange("chatbot")}
             >
               <img
                 src={assets.ChatBot}
@@ -58,6 +67,7 @@ function PatientDashboard() {
               />
               <h2 className="text-xl font-semibold mb-4">ChatBot</h2>
             </button>
+            
           </div>
         )}
 
@@ -75,6 +85,9 @@ function PatientDashboard() {
               {activeSection === "doctors" && <DoctorList key="doctors" />}
               {activeSection === "appointments" && (
                 <AppointmentsData key="appointments" />
+              )}
+              {activeSection === "chatbot" && (
+                <Chatbot key="chatbot" />
               )}
             </div>
           </div>
