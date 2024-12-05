@@ -20,6 +20,15 @@ const DoctorSignUpForm = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
+
+    const nameRegex = /^[A-Za-z\s]+$/;
+  if (!nameRegex.test(name)) {
+    toast.error("Name must only contain letters and spaces.", {
+      position: "top-center",
+    });
+    return;
+  }
+  
     if (password !== cpass) {
       toast.error("Passwords do not match", {
         position: "top-center",
