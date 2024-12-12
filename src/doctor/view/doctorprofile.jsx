@@ -137,6 +137,10 @@ export default function DoctorProfile() {
                       {doctorData?.days || "not provided"}
                     </div>
                     <div className="mb-2 ">
+                      <i className="fas fa-university mr-2 font-bold text-darkgray">CheckUp Fees:</i>
+                      {doctorData?.fees || "not provided"} Rs
+                    </div>
+                    <div className="mb-2 ">
                       <i className="fas fa-university mr-2 font-bold text-darkgray">CheckUp Timings:</i>
                       {doctorData?.checkupStartTime || "not provided"} to {doctorData?.checkupEndTime || "not provided"}
                     </div>

@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import { auth, db } from '../../firebase'; // Adjust the path to your firebase.js
 import { getDoc, doc } from 'firebase/firestore';
 import { ToastContainer, toast } from 'react-toastify';
+import { Link } from "react-router-dom";
 
 
 export default function PatientNavbar() {
@@ -50,13 +51,13 @@ export default function PatientNavbar() {
   <nav className="absolute top-0 left-0 w-full z-10 bg-gradient-to-r from-seagreen-200 to-seagreen flex flex-col md:flex-row md:items-center md:justify-between p-4">
     <div className="w-full flex flex-col md:flex-row md:items-center md:justify-between">
       {/* Brand */}
-      <a
+      <Link to='/patientdashboard'
         className="text-white text-lg shadow-sm lg:pl-6 uppercase font-semibold md:ml-0 mb-2 md:mb-0"
-        href="#"
+        
         onClick={(e) => e.preventDefault()}
       >
         Dashboard
-      </a>
+      </Link>
 
       {/* Form */}
       <form className="flex flex-col md:flex-row items-center md:ml-auto mb-2 md:mb-0 w-full md:w-auto relative">

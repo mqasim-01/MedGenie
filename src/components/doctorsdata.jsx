@@ -99,6 +99,7 @@ const DoctorList = () => {
         patientName: patientData.name,
         doctorId: doctor.id,
         doctorName: doctor.name,
+        doctorFees: doctor.fees,
         status: "Pending",
       };
 
@@ -139,20 +140,23 @@ const DoctorList = () => {
                   {doctor.name}
                 </h5>
                 <span className="text-sm text-gray-500 dark:text-gray-400">
-                  <span className="font-semibold">Gender: </span> {doctor.gender}
+                  <span className="font-semibold">Gender: </span> {doctor.gender || "Not Provided"}
                 </span>
 
                 <span className="text-sm text-gray-500 dark:text-gray-400">
-                  <span className="font-semibold">Specialization: </span>{doctor.specialization}
+                  <span className="font-semibold">Specialization: </span>{doctor.specialization || "Not Provided"}
                 </span>
                 <span className="text-sm text-gray-500 dark:text-gray-400">
-                  <span className="font-semibold">Country: </span> {doctor.country}
+                  <span className="font-semibold">Country: </span> {doctor.country || "Not Provided"}
                 </span>
                 <span className="text-sm text-gray-500 dark:text-gray-400">
-                  <span className="font-semibold">Checkup Days: </span> {doctor.days}
+                  <span className="font-semibold">Checkup Days: </span> {doctor.days || "Not Provided"}
                 </span>
                 <span className="text-sm text-gray-500 dark:text-gray-400">
-                  <span className="font-semibold">Check up timing: </span> {doctor.checkupStartTime} to {doctor.checkupEndTime}
+                  <span className="font-semibold">Checkup Fees: </span> {doctor.fees || "Not Provided"}
+                </span>
+                <span className="text-sm text-gray-500 dark:text-gray-400">
+                  <span className="font-semibold">Check up timing: </span> {doctor.checkupStartTime || "Not Provided"} to {doctor.checkupEndTime}
                 </span>
               </div>
             </div>

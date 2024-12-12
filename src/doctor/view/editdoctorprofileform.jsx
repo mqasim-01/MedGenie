@@ -429,7 +429,22 @@ const DoctorInformation = () => {
                   className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
                 />
               </div>
-              <div className="w-full px-3 mb-6 md:w-full md:mb-0">
+              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+                <label
+                  htmlFor="checkupFees"
+                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
+                >
+                  Checkup Fees
+                </label>
+                <input
+                  id="fees"
+                  type="text"
+                  value={doctorData?.fees || "not added yet"}
+                  onChange={handleChange}
+                  className="appearance-none block w-full bg-white text-darkgray border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-darkgray"
+                />
+              </div>
+              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
                   htmlFor="checkupDays"
                   className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"

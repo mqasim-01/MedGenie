@@ -215,15 +215,20 @@ const AppointmentList = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
+  // Filter out confirmed appointments before rendering
+  const pendingAppointments = appointments.filter(
+    (appointment) => appointment.status !== "Confirmed"
+  );
+
   return (
     <div className="p-8">
       <h1 className="text-3xl text-center pb-5 font-bold mb-4">Appointment Requests</h1>
 
-      {appointments.length === 0 ? (
+      {pendingAppointments.length === 0 ? (
         <p>No appointment requests found.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {appointments.map((appointment) => (
+          {pendingAppointments.map((appointment) => (
             <div
               key={appointment.id}
               className="border p-4 rounded-lg shadow-md"

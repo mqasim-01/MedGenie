@@ -21,6 +21,7 @@ export default function AddDoctorInformation() {
   const [checkupStartTime, setCheckupStartTime] = useState("");
   const [checkupEndTime, setCheckupEndTime] = useState("");
   const [days, setDays] = useState("");
+  const [fees, setfees] = useState("");
   const navigate = useNavigate();
 
   const handleCancel = () => {
@@ -52,6 +53,7 @@ export default function AddDoctorInformation() {
         checkupStartTime,
         checkupEndTime,
         days,
+        fees,
         photo: image || "",
       });
 
@@ -366,6 +368,24 @@ export default function AddDoctorInformation() {
                   type="time"
                   value={checkupEndTime}
                   onChange={(e) => setCheckupEndTime(e.target.value)}
+                  required
+                  className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                />
+              </div>
+
+              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+                <label
+                  htmlFor="phone"
+                  className="block uppercase tracking-wide text-darkgray text-xs font-bold mb-2"
+                >
+                  Checkup Fees*
+                </label>
+                <input
+                  id="fees"
+                  type="text"
+                  value={fees}
+                  onChange={(e) => setfees(e.target.value)}
+                  placeholder="Checkup Fees"
                   required
                   className="appearance-none block w-full bg-gray text-darkgray border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 />
